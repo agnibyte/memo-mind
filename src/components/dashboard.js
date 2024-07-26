@@ -1,7 +1,7 @@
 // components/Dashboard.js
 import React, { useState } from "react";
-import CommonModal from "./common/commonModal";
 import AddReminderForm from "./molecules/addReminderForm";
+import CommonModal from "./common/commonModal";
 
 const Dashboard = () => {
   const items = [
@@ -11,7 +11,7 @@ const Dashboard = () => {
     { name: "PERMIT", count: 0 },
     { name: "TAX", count: 0 },
   ];
-  const [addReminder, setAddReminder] = useState(false);
+  const [addReminder, setAddReminder] = useState(true);
 
   return (
     <>
@@ -78,6 +78,7 @@ const Dashboard = () => {
       </div>
 
       <CommonModal
+        modalTitle={"Add New Reminder"}
         modalOpen={addReminder}
         setModalOpen={setAddReminder}
         className={""}

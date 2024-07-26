@@ -1,7 +1,11 @@
 import { reminderValidation } from "@/utilities/formValidation";
 import commonStyle from "@/styles/common/common.module.scss";
 import React, { useState } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
+import CustomSearch from "../common/customSearch";
+import CustomDatePicker from "../common/customDatePicker";
+import moment from "moment";
+
 const AddReminderForm = ({}) => {
   const onSubmit = (data) => {
     addReminder(data);
@@ -14,6 +18,7 @@ const AddReminderForm = ({}) => {
     reset,
     control,
     formState: { errors },
+    clearErrors: clearErrors,
   } = useForm();
 
   const validation = {
@@ -23,38 +28,47 @@ const AddReminderForm = ({}) => {
     priority: register("priority", reminderValidation.priority),
     // gender: register("gender", reminderValidation.gender),
   };
-  const [formData, setFormData] = useState({
+  const defaultData = {
     title: "",
     description: "",
     date: "",
     priority: "",
-  });
+  };
+  const [formData, setFormData] = useState(defaultData);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: value,
-    }));
+  const updateSelectedForm = (type, value) => {
+    const temp = { ...formData };
+    temp[type] = value;
+    setFormData(temp);
   };
 
-  const submitform = (e) => {
-    e.preventDefault();
+  const submitform = () => {
     console.log("New Reminder:", formData);
-    setFormData({
-      title: "",
-      description: "",
-      date: "",
-      priority: "",
-    });
+    setFormData(defaultData);
+  };
+
+  const priorityListArr = [
+    {
+      label: "Low",
+      value: "low",
+    },
+    {
+      label: "Medium",
+      value: "medium",
+    },
+    {
+      label: "High",
+      value: "high",
+    },
+  ];
+
+  const handleDateChange = (date) => {
+    updateSelectedForm("date", date);
   };
 
   return (
-    <div className="container mt-5">
+    <div className="container">
       <div className="card">
-        <div className="card-header bg-light">
-          <h2 className="h5 mb-0">Add New Reminder</h2>
-        </div>
         <div className="card-body">
           <form onSubmit={handleSubmit(submitform)}>
             <div className="mb-3">
@@ -65,12 +79,14 @@ const AddReminderForm = ({}) => {
                 Title
               </label>
               <input
+                {...validation.title}
                 type="text"
+                placeholder="Enter title"
                 className="form-control"
                 id="title"
                 name="title"
                 value={formData.title}
-                onChange={handleChange}
+                onChange={(e) => updateSelectedForm("title", e.target.value)}
                 required
               />
 
@@ -89,12 +105,16 @@ const AddReminderForm = ({}) => {
                 Description
               </label>
               <textarea
+                {...validation.description}
                 className="form-control"
                 id="description"
                 name="description"
-                rows="3"
+                placeholder="Enter description"
+                rows="2"
                 value={formData.description}
-                onChange={handleChange}
+                onChange={(e) =>
+                  updateSelectedForm("description", e.target.value)
+                }
                 required
               ></textarea>
               <span
@@ -105,21 +125,7 @@ const AddReminderForm = ({}) => {
               </span>
             </div>
             <div className="mb-3">
-              <label
-                htmlFor="date"
-                className="form-label"
-              >
-                Date
-              </label>
-              <input
-                type="date"
-                className="form-control"
-                id="date"
-                name="date"
-                value={formData.date}
-                onChange={handleChange}
-                required
-              />
+              <CustomDatePicker onChange={handleDateChange} />
               <span
                 className={commonStyle["errorMsg"]}
                 aria-hidden="true"
@@ -134,19 +140,26 @@ const AddReminderForm = ({}) => {
               >
                 Priority
               </label>
-              <select
-                className="form-control"
-                id="priority"
+              <Controller
+                control={control}
                 name="priority"
-                value={formData.priority}
-                onChange={handleChange}
-                required
-              >
-                <option value="">Select Priority</option>
-                <option value="low">Low</option>
-                <option value="medium">Medium</option>
-                <option value="high">High</option>
-              </select>
+                render={({ field }) => (
+                  <CustomSearch
+                    {...validation.priority}
+                    name="priority"
+                    selectedValue={formData["priority"]}
+                    options={priorityListArr}
+                    onChange={(e) => {
+                      field.onChange(e);
+                      clearErrors("priority");
+                      updateSelectedForm("priority", e);
+                    }}
+                    className="pdp_contact_lens_power"
+                    placeholder="Please Select"
+                    isSearchable={true}
+                  />
+                )}
+              />
               <span
                 className={commonStyle["errorMsg"]}
                 aria-hidden="true"

@@ -5,6 +5,7 @@ import {
   validationForAddress,
   validationPincodePattern,
   validationNumberOnly,
+  validationForNumbersAndAlphabets,
 } from "./patterns";
 
 export const partnerValidation = {
@@ -204,14 +205,14 @@ export const reminderValidation = {
   title: {
     required: "Please enter the title",
     pattern: {
-      value: validationForText(),
+      value: validationForNumbersAndAlphabets(),
       message: "Please enter a valid title",
     },
   },
   description: {
     required: "Please enter the description",
     pattern: {
-      value: validationForText(),
+      value: validationForNumbersAndAlphabets(),
       message: "Please enter a valid description",
     },
   },

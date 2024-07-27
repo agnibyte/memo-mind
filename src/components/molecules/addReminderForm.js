@@ -6,7 +6,12 @@ import CustomSearch from "../common/customSearch";
 import CustomDatePicker from "../common/customDatePicker";
 import moment from "moment";
 
-const AddReminderForm = ({ setReminderModal, reminderData, setReminderData }) => {
+const AddReminderForm = ({
+  setReminderModal,
+  reminderData,
+  setReminderData,
+  addReminderData,
+}) => {
   const {
     register,
     handleSubmit,
@@ -26,8 +31,8 @@ const AddReminderForm = ({ setReminderModal, reminderData, setReminderData }) =>
     // gender: register("gender", reminderValidation.gender),
   };
   const defaultData = {
-    title: "",
-    description: "",
+    title: "t1",
+    description: "d1",
     date: "",
     priority: "",
   };
@@ -40,6 +45,7 @@ const AddReminderForm = ({ setReminderModal, reminderData, setReminderData }) =>
   };
 
   const submitform = () => {
+    addReminderData(formData);
     console.log("New Reminder:", formData);
     setFormData(defaultData);
     setReminderModal(false);
@@ -70,7 +76,6 @@ const AddReminderForm = ({ setReminderModal, reminderData, setReminderData }) =>
   return (
     <div className="container">
       <div className="">
-        <button onClick={() => setReminderData("hhhhhhhhhhhhhhh")}>hii</button>
         <div className="card-body">
           <form onSubmit={handleSubmit(submitform)}>
             <div className="mb-3">

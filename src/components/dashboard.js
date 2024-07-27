@@ -14,6 +14,15 @@ const Dashboard = () => {
   const [reminderModal, setReminderModal] = useState(true);
   const [reminderData, setReminderData] = useState("");
 
+  const addReminderData = (data) => {
+    const existingDataString = localStorage.getItem("reminderData");
+    let existingData = existingDataString ? JSON.parse(existingDataString) : [];
+    localStorage.setItem(
+      "reminderData",
+      JSON.stringify([...existingData, data])
+    );
+  };
+
   return (
     <>
       <div className="container mt-5">
@@ -89,6 +98,7 @@ const Dashboard = () => {
           reminderModal={reminderModal}
           reminderData={reminderData}
           setReminderData={setReminderData}
+          addReminderData={addReminderData}
         />
       </CommonModal>
     </>

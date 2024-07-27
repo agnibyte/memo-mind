@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 import AddReminderForm from "./molecules/addReminderForm";
 import CommonModal from "./common/commonModal";
+import Tab from "react-bootstrap/Tab";
+import Tabs from "react-bootstrap/Tabs";
 
 const Dashboard = () => {
   const items = [
@@ -40,7 +42,7 @@ const Dashboard = () => {
             <h1 className="h4 mb-0">DASHBORD</h1>
           </div>
           <button onClick={() => setReminderModal(true)}>Add</button>
-          <div className="d-flex border-bottom w-10">
+          {/* <div className="d-flex border-bottom w-10">
             {dashboardTabs.map((tab, index) => (
               <button
                 key={index}
@@ -52,7 +54,24 @@ const Dashboard = () => {
                 {tab.label}
               </button>
             ))}
-          </div>
+          </div> */}
+          <Tabs
+            defaultActiveKey={dashboardTabs[0].value}
+            transition={false}
+            id="noanim-tab-example"
+            className="mb-3"
+          >
+            {dashboardTabs.map((tab, index) => (
+              <Tab
+                key={index}
+                onClick={() => onClickDashboardTab(tab.value)}
+                eventKey={tab.value}
+                title={tab.label}
+              >
+                {tab.label}
+              </Tab>
+            ))}
+          </Tabs>
           <div className="card-body">
             <div className="row mb-4">
               {items.map((item) => (

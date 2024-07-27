@@ -11,7 +11,8 @@ const Dashboard = () => {
     { name: "PERMIT", count: 0 },
     { name: "TAX", count: 0 },
   ];
-  const [addReminder, setAddReminder] = useState(true);
+  const [reminderModal, setReminderModal] = useState(true);
+  const [reminderData, setReminderData] = useState("");
 
   return (
     <>
@@ -20,7 +21,7 @@ const Dashboard = () => {
           <div className="card-header bg-light">
             <h1 className="h4 mb-0">DASHBORD</h1>
           </div>
-          <button onClick={() => setAddReminder(true)}>Add </button>
+          <button onClick={() => setReminderModal(true)}>Add </button>
           <div className="d-flex border-bottom">
             <button className="btn btn-dark flex-fill">Document</button>
             <button
@@ -79,11 +80,16 @@ const Dashboard = () => {
 
       <CommonModal
         modalTitle={"Add New Reminder"}
-        modalOpen={addReminder}
-        setModalOpen={setAddReminder}
+        modalOpen={reminderModal}
+        setModalOpen={setReminderModal}
         className={""}
       >
-        <AddReminderForm />
+        <AddReminderForm
+          setReminderModal={setReminderModal}
+          reminderModal={reminderModal}
+          reminderData={reminderData}
+          setReminderData={setReminderData}
+        />
       </CommonModal>
     </>
   );

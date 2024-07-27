@@ -9,6 +9,16 @@ export default function CustomDatePicker(props) {
       <DatePicker
         views={["year", "month", "day"]}
         {...options}
+        PopoverProps={{
+          anchorOrigin: {
+            vertical: 'top',
+            horizontal: 'left',
+          },
+          transformOrigin: {
+            vertical: 'bottom',
+            horizontal: 'left',
+          },
+        }}
       />
     </LocalizationProvider>
   );

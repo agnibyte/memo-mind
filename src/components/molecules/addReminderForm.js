@@ -6,12 +6,7 @@ import CustomSearch from "../common/customSearch";
 import CustomDatePicker from "../common/customDatePicker";
 import moment from "moment";
 
-const AddReminderForm = ({}) => {
-  const onSubmit = (data) => {
-    addReminder(data);
-    reset();
-  };
-
+const AddReminderForm = ({ setReminderModal, reminderData, setReminderData }) => {
   const {
     register,
     handleSubmit,
@@ -19,6 +14,8 @@ const AddReminderForm = ({}) => {
     control,
     formState: { errors },
     clearErrors: clearErrors,
+    trigger,
+    setValue,
   } = useForm();
 
   const validation = {
@@ -45,6 +42,8 @@ const AddReminderForm = ({}) => {
   const submitform = () => {
     console.log("New Reminder:", formData);
     setFormData(defaultData);
+    setReminderModal(false);
+    reset();
   };
 
   const priorityListArr = [
@@ -64,11 +63,15 @@ const AddReminderForm = ({}) => {
 
   const handleDateChange = (date) => {
     updateSelectedForm("date", date);
+    trigger("date");
+    setValue("date", date);
   };
 
+  console.log("reminderData", reminderData);
   return (
     <div className="container">
-      <div className="card">
+      <div className="">
+        <button onClick={() => setReminderData("hhhhhhhhhhhhhhh")}>hii</button>
         <div className="card-body">
           <form onSubmit={handleSubmit(submitform)}>
             <div className="mb-3">
@@ -87,7 +90,7 @@ const AddReminderForm = ({}) => {
                 name="title"
                 value={formData.title}
                 onChange={(e) => updateSelectedForm("title", e.target.value)}
-                required
+                // required
               />
 
               <span
@@ -115,7 +118,7 @@ const AddReminderForm = ({}) => {
                 onChange={(e) =>
                   updateSelectedForm("description", e.target.value)
                 }
-                required
+                // required
               ></textarea>
               <span
                 className={commonStyle["errorMsg"]}
@@ -125,6 +128,12 @@ const AddReminderForm = ({}) => {
               </span>
             </div>
             <div className="mb-3">
+              <label
+                htmlFor="date"
+                className="form-label"
+              >
+                Select Date
+              </label>
               <CustomDatePicker onChange={handleDateChange} />
               <span
                 className={commonStyle["errorMsg"]}

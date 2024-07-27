@@ -11,8 +11,13 @@ const Dashboard = () => {
     { name: "PERMIT", count: 0 },
     { name: "TAX", count: 0 },
   ];
-  const [reminderModal, setReminderModal] = useState(true);
+  const dashboardTabs = [
+    { id: "01", label: "Document", value: "document" },
+    { id: "02", label: "EMI", value: "emi" },
+  ];
+  const [reminderModal, setReminderModal] = useState(false);
   const [reminderData, setReminderData] = useState("");
+  const [selectedTab, setSelectedTab] = useState(dashboardTabs[0].value);
 
   const addReminderData = (data) => {
     const existingDataString = localStorage.getItem("reminderData");
@@ -23,6 +28,10 @@ const Dashboard = () => {
     );
   };
 
+  const onClickDashboardTab = (val) => {
+    setSelectedTab(val);
+  };
+
   return (
     <>
       <div className="container mt-5">
@@ -30,15 +39,19 @@ const Dashboard = () => {
           <div className="card-header bg-light">
             <h1 className="h4 mb-0">DASHBORD</h1>
           </div>
-          <button onClick={() => setReminderModal(true)}>Add </button>
-          <div className="d-flex border-bottom">
-            <button className="btn btn-dark flex-fill">Document</button>
-            <button
-              className="btn btn-light flex-fill"
-              disabled
-            >
-              EMI
-            </button>
+          <button onClick={() => setReminderModal(true)}>Add</button>
+          <div className="d-flex border-bottom w-10">
+            {dashboardTabs.map((tab, index) => (
+              <button
+                key={index}
+                className={`btn flex-fill ${
+                  selectedTab == tab.value && "btn-dark"
+                }`}
+                onClick={() => onClickDashboardTab(tab.value)}
+              >
+                {tab.label}
+              </button>
+            ))}
           </div>
           <div className="card-body">
             <div className="row mb-4">

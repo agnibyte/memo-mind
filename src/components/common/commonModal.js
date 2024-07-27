@@ -18,7 +18,6 @@ export default function CommonModal({
 		setModalOpen(!modalOpen);
 	};
 
-	console.log('modalTitle', modalTitle, modalTitle=="")
 	return (
 		<Modal
 			isOpen={modalOpen}

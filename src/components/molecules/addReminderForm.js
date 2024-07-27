@@ -67,7 +67,6 @@ const AddReminderForm = ({ setReminderModal, reminderData, setReminderData }) =>
     setValue("date", date);
   };
 
-  console.log("reminderData", reminderData);
   return (
     <div className="container">
       <div className="">

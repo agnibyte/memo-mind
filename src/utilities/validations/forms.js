@@ -231,3 +231,34 @@ export const reminderValidation = {
     },
   },
 };
+
+export const DocValidation = {
+  masterNo: {
+    required: "Please enter the master number",
+    pattern: {
+      value: validationForNumbersAndAlphabets(),
+      message: "Please enter a valid master number",
+    },
+  },
+  vehicleNo: {
+    required: "Please enter the vehicle number",
+    pattern: {
+      value: validationForNumbersAndAlphabets(),
+      message: "Please enter a valid vehicle number",
+    },
+  },
+  expiryDate: {
+    required: "Please enter the expiry date",
+    pattern: {
+      value: validationForDate(),
+      message: "Please enter a valid expiry date",
+    },
+  },
+  alertDate: {
+    required: "Please enter the alert date",
+    pattern: {
+      value: validationForDate(),
+      message: "Please enter a valid alert date",
+    },
+  },
+};

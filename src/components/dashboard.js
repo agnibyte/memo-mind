@@ -4,18 +4,19 @@ import AddReminderForm from "./molecules/addReminderForm";
 import CommonModal from "./common/commonModal";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
+import DocumentsSection from "./layouts/documentsSection";
+import EmiSection from "./layouts/emiSection";
+import AddDocumentForm from "./molecules/addDocumentForm";
 
 const Dashboard = () => {
-  const items = [
-    { name: "PUC", count: 0 },
-    { name: "INSURANCE", count: 0 },
-    { name: "FITNESS", count: 0 },
-    { name: "PERMIT", count: 0 },
-    { name: "TAX", count: 0 },
-  ];
   const dashboardTabs = [
-    { id: "01", label: "Document", value: "document" },
-    { id: "02", label: "EMI", value: "emi" },
+    {
+      id: "01",
+      label: "Document",
+      value: "document",
+      component: <DocumentsSection />,
+    },
+    { id: "02", label: "EMI", value: "emi", component: <EmiSection /> },
   ];
   const [reminderModal, setReminderModal] = useState(false);
   const [reminderData, setReminderData] = useState("");
@@ -33,6 +34,7 @@ const Dashboard = () => {
   const onClickDashboardTab = (val) => {
     setSelectedTab(val);
   };
+  console.log("selectedTab", selectedTab);
 
   return (
     <>
@@ -42,11 +44,11 @@ const Dashboard = () => {
             <h1 className="h4 mb-0">DASHBORD</h1>
           </div>
           <button onClick={() => setReminderModal(true)}>Add</button>
-          {/* <div className="d-flex border-bottom w-10">
+          {/* <div className="d-flex border-bottom">
             {dashboardTabs.map((tab, index) => (
               <button
                 key={index}
-                className={`btn flex-fill ${
+                className={`btn rounded-top ${
                   selectedTab == tab.value && "btn-dark"
                 }`}
                 onClick={() => onClickDashboardTab(tab.value)}
@@ -68,54 +70,10 @@ const Dashboard = () => {
                 eventKey={tab.value}
                 title={tab.label}
               >
-                {tab.label}
+                {tab.component}
               </Tab>
             ))}
           </Tabs>
-          <div className="card-body">
-            <div className="row mb-4">
-              {items.map((item) => (
-                <div
-                  key={item.name}
-                  className="col text-center"
-                >
-                  <div className="h5">{item.name}</div>
-                  <div className="text-danger display-6">{item.count}</div>
-                </div>
-              ))}
-            </div>
-            <table className="table table-bordered">
-              <thead>
-                <tr>
-                  {[
-                    "SR No",
-                    "Master No.",
-                    "Vehicle No.",
-                    "Alert Date",
-                    "Expire Date",
-                    "Action",
-                  ].map((header) => (
-                    <th
-                      key={header}
-                      className="p-2"
-                    >
-                      {header}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td
-                    colSpan="6"
-                    className="text-center"
-                  >
-                    No Data Found
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
         </div>
       </div>
 
@@ -125,11 +83,15 @@ const Dashboard = () => {
         setModalOpen={setReminderModal}
         className={""}
       >
-        <AddReminderForm
+        {/* <AddReminderForm
           setReminderModal={setReminderModal}
           reminderModal={reminderModal}
           reminderData={reminderData}
           setReminderData={setReminderData}
+          addReminderData={addReminderData}
+        /> */}
+        <AddDocumentForm
+          setReminderModal={setReminderModal}
           addReminderData={addReminderData}
         />
       </CommonModal>

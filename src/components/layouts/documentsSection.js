@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import DocumentsTables from "./tables/documentsTables";
 
 export default function DocumentsSection() {
+  const [tableData, setTableData] = useState([]);
   const items = [
     { name: "PUC", count: 0 },
     { name: "INSURANCE", count: 0 },
@@ -17,6 +19,19 @@ export default function DocumentsSection() {
     { id: "01", name: "Expire Date" },
     { id: "01", name: "Action" },
   ];
+
+  const getTabelData = () => {
+    const existingDataString = localStorage.getItem("reminderData");
+    let existingData = existingDataString ? JSON.parse(existingDataString) : [];
+    setTableData(existingData);
+  };
+
+  useEffect(() => {
+    getTabelData();
+  }, []);
+
+  console.log("tableData", tableData);
+
   return (
     <div>
       <div className="card-body">
@@ -31,7 +46,7 @@ export default function DocumentsSection() {
             </div>
           ))}
         </div>
-        <table className="table table-bordered">
+        {/* <table className="">
           <thead>
             <tr>
               {columns.map((item, i) => (
@@ -54,7 +69,8 @@ export default function DocumentsSection() {
               </td>
             </tr>
           </tbody>
-        </table>
+        </table> */}
+        <DocumentsTables tableData={tableData} />
       </div>
     </div>
   );

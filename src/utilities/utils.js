@@ -26,3 +26,8 @@ export const formatDate = (date, format = 1) => {
 export const getConstant = (key) => {
   return constantsList[key.toUpperCase()] ?? null;
 };
+
+export const getDataFromLocalStorage = (keyName) => {
+  let data = JSON.parse(localStorage.getItem(keyName));
+  return data;
+};

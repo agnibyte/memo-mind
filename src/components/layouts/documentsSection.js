@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 import DocumentsTables from "./tables/documentsTables";
 
-export default function DocumentsSection() {
+export default function DocumentsSection({
+  setReminderData,
+  setReminderModal,
+  setIsEdit,
+}) {
   const [tableData, setTableData] = useState([]);
   const items = [
     { name: "PUC", count: 0 },
@@ -30,7 +34,20 @@ export default function DocumentsSection() {
     getTabelData();
   }, []);
 
-  console.log("tableData", tableData);
+  const onClickEdit = (id) => {
+    const selectedItem = tableData.filter((item) => item.id == id);
+    setReminderData(selectedItem[0]);
+    setReminderModal(true);
+    setIsEdit(true);
+  };
+
+  const onClickDelete = (e) => {
+    let id = e.currentTarget.id;
+    const updatedData = ogdata.filter((item) => item.id !== id);
+    localStorage.setItem("taskData", JSON.stringify(updatedData));
+    settaskData(updatedData);
+    setRefresh(!refresh);
+  };
 
   return (
     <div>
@@ -70,7 +87,10 @@ export default function DocumentsSection() {
             </tr>
           </tbody>
         </table> */}
-        <DocumentsTables tableData={tableData} />
+        <DocumentsTables
+          tableData={tableData}
+          onClickEdit={onClickEdit}
+        />
       </div>
     </div>
   );

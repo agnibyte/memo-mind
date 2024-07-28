@@ -7,19 +7,29 @@ import Tabs from "react-bootstrap/Tabs";
 import DocumentsSection from "./layouts/documentsSection";
 import EmiSection from "./layouts/emiSection";
 import AddDocumentForm from "./molecules/addDocumentForm";
+import { getUniqueKey } from "@/utilities/utils";
 
 const Dashboard = () => {
+  const [reminderModal, setReminderModal] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
+  const [reminderData, setReminderData] = useState("");
+
   const dashboardTabs = [
     {
       id: "01",
       label: "Document",
       value: "document",
-      component: <DocumentsSection />,
+      component: (
+        <DocumentsSection
+          setReminderData={setReminderData}
+          setReminderModal={setReminderModal}
+          setIsEdit={setIsEdit}
+        />
+      ),
     },
     { id: "02", label: "EMI", value: "emi", component: <EmiSection /> },
   ];
-  const [reminderModal, setReminderModal] = useState(false);
-  const [reminderData, setReminderData] = useState("");
+
   const [selectedTab, setSelectedTab] = useState(dashboardTabs[0].value);
 
   const addReminderData = (data) => {
@@ -27,14 +37,31 @@ const Dashboard = () => {
     let existingData = existingDataString ? JSON.parse(existingDataString) : [];
     localStorage.setItem(
       "reminderData",
-      JSON.stringify([...existingData, data])
+      JSON.stringify([...existingData, { id: getUniqueKey(), ...data }])
     );
+  };
+
+  const updateReminderData = (updatedData) => {
+    const existingDataString = localStorage.getItem("reminderData");
+    let existingData = existingDataString ? JSON.parse(existingDataString) : [];
+
+    existingData = existingData.map((item) =>
+      item.id === updatedData.id ? { ...item, ...updatedData } : item
+    );
+
+    localStorage.setItem("reminderData", JSON.stringify(existingData));
   };
 
   const onClickDashboardTab = (val) => {
     setSelectedTab(val);
   };
-  console.log("selectedTab", selectedTab);
+
+  const onClickAddReminder = (val) => {
+    setIsEdit(false);
+    setReminderModal(true);
+  };
+
+  console.log("reminderData", reminderData);
 
   return (
     <>
@@ -43,7 +70,7 @@ const Dashboard = () => {
           <div className="card-header bg-light">
             <h1 className="h4 mb-0">DASHBORD</h1>
           </div>
-          <button onClick={() => setReminderModal(true)}>Add</button>
+          <button onClick={onClickAddReminder}>Add</button>
           {/* <div className="d-flex border-bottom">
             {dashboardTabs.map((tab, index) => (
               <button
@@ -93,6 +120,10 @@ const Dashboard = () => {
         <AddDocumentForm
           setReminderModal={setReminderModal}
           addReminderData={addReminderData}
+          reminderData={reminderData}
+          isEdit={isEdit}
+          setIsEdit={setIsEdit}
+          updateReminderData={updateReminderData}
         />
       </CommonModal>
     </>

@@ -4,7 +4,7 @@ import { Button } from "reactstrap";
 import { formatDate, getConstant } from "@/utilities/utils";
 import moment from "moment";
 
-export default function DocumentsTables({ tableData = [] }) {
+export default function DocumentsTables({ tableData = [], onClickEdit }) {
   const columns = [
     { id: "01", name: "SR No" },
     { id: "02", name: "Master No." },
@@ -54,6 +54,8 @@ export default function DocumentsTables({ tableData = [] }) {
                 className="btn  btn-outline-warning"
                 variant="outline-warning "
                 // style={{ backgroundColor: "transparent" }}
+
+                onClick={() => onClickEdit(item.id)}
               >
                 Edit
               </Button>

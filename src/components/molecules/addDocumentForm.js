@@ -7,14 +7,21 @@ import commonStyle from "@/styles/common/common.module.scss";
 import { vehicleNoListArr } from "@/utilities/dummyData";
 import CustomSearch from "../common/customSearch";
 
-export default function AddDocumentForm({ setReminderModal, addReminderData }) {
+export default function AddDocumentForm({
+  setReminderModal,
+  addReminderData,
+  reminderData,
+  isEdit,
+  setIsEdit,
+  updateReminderData,
+}) {
   const defaultData = {
-    masterNo: "11",
+    masterNo: "",
     vehicleNo: "",
     expiryDate: "",
     alertDate: "",
   };
-  const [formData, setFormData] = useState(defaultData);
+  const [formData, setFormData] = useState(isEdit ? reminderData : defaultData);
 
   const {
     register,
@@ -43,6 +50,7 @@ export default function AddDocumentForm({ setReminderModal, addReminderData }) {
     addReminderData(formData);
     console.log("formData", formData);
     setReminderModal(false);
+    setIsEdit(false);
 
     setFormData(defaultData);
   };
@@ -84,30 +92,6 @@ export default function AddDocumentForm({ setReminderModal, addReminderData }) {
         </span>
       </div>
 
-      {/* <div className="mb-3">
-        <label
-          htmlFor="vehicleNo"
-          className="form-label"
-        >
-          Vehicle Number
-        </label>
-        <input
-          {...validation.vehicleNo}
-          type="text"
-          placeholder="Enter vehicle number"
-          className="form-control"
-          id="vehicleNo"
-          name="vehicleNo"
-          value={formData.vehicleNo}
-          onChange={(e) => updateSelectedForm("vehicleNo", e.target.value)}
-        />
-        <span
-          className="text-danger"
-          aria-hidden="true"
-        >
-          {errors?.vehicleNo && errors.vehicleNo.message}
-        </span>
-      </div> */}
       <div className="mb-3">
         <label
           htmlFor="vehicleNo"
@@ -143,29 +127,6 @@ export default function AddDocumentForm({ setReminderModal, addReminderData }) {
         </span>
       </div>
 
-      {/* <iv className="mb-3">
-        <label
-          htmlFor="expiryDate"
-          className="form-label"
-        >
-          Expiry Date
-        </label>
-        <input
-          type="date"
-          className="form-control"
-          id="expiryDate"
-          name="expiryDate"
-          value={formData.expiryDate}
-          onChange={(e) => updateSelectedForm("expiryDate", e.target.value)}
-        />
-        <span
-          className="text-danger"
-          aria-hidden="true"
-        >
-          {errors?.expiryDate && errors.expiryDate.message}
-        </span>
-      </iv>d */}
-
       <div className="mb-3">
         <label
           htmlFor="date"
@@ -198,35 +159,21 @@ export default function AddDocumentForm({ setReminderModal, addReminderData }) {
         </span>
       </div> */}
 
-      {/* <div className="mb-3">
-        <label
-          htmlFor="alertDate"
-          className="form-label"
+      {!isEdit ? (
+        <button
+          type="submit"
+          className="btn btn-primary"
         >
-          Alert Date
-        </label>
-        <input
-          type="date"
-          className="form-control"
-          id="alertDate"
-          name="alertDate"
-          value={formData.alertDate}
-          onChange={(e) => updateSelectedForm("alertDate", e.target.value)}
-        />
-        <span
-          className="text-danger"
-          aria-hidden="true"
+          Submit
+        </button>
+      ) : (
+        <button
+          type="submit"
+          className="btn btn-warning"
         >
-          {errors?.alertDate && errors.alertDate.message}
-        </span>
-      </div> */}
-
-      <button
-        type="submit"
-        className="btn btn-primary"
-      >
-        Submit
-      </button>
+          Update
+        </button>
+      )}
     </form>
   );
 }

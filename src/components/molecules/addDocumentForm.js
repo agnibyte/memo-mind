@@ -46,6 +46,7 @@ export default function AddDocumentForm({
     temp[type] = value;
     setFormData(temp);
   };
+
   const onClickSubmit = () => {
     addReminderData(formData);
     console.log("formData", formData);
@@ -54,11 +55,14 @@ export default function AddDocumentForm({
 
     setFormData(defaultData);
   };
+
   const handleExpiryDateChange = (date) => {
-    updateSelectedForm("expiryDate", date);
+    clearErrors("expiryDate");
     trigger("expiryDate");
+    updateSelectedForm("expiryDate", date);
     setValue("expiryDate", date);
   };
+  
   const handleAlertDateChange = (date) => {
     updateSelectedForm("alertDate", date);
     trigger("alertDate");
@@ -101,6 +105,7 @@ export default function AddDocumentForm({
         </label>
         <Controller
           control={control}
+          rules={validation.vehicleNo}
           name="vehicleNo"
           render={({ field }) => (
             <CustomSearch
@@ -134,7 +139,21 @@ export default function AddDocumentForm({
         >
           Select Expiry Date
         </label>
-        <CustomDatePicker onChange={handleExpiryDateChange} />
+        <Controller
+          name="expiryDate"
+          control={control}
+          rules={validation.expiryDate}
+          render={({ field }) => (
+            <CustomDatePicker
+              value={field.value}
+              onChange={(e) => {
+                field.onChange(e);
+                handleExpiryDateChange();
+              }}
+            />
+          )}
+        />
+        {/* <CustomDatePicker onChange={handleExpiryDateChange} /> */}
         <span
           className={commonStyle["errorMsg"]}
           aria-hidden="true"

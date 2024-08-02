@@ -63,30 +63,7 @@ export default function DocumentsSection({
             </div>
           ))}
         </div>
-        {/* <table className="">
-          <thead>
-            <tr>
-              {columns.map((item, i) => (
-                <th
-                  key={i}
-                  className="p-2"
-                >
-                  {item.name}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td
-                colSpan="6"
-                className="text-center"
-              >
-                No Data Found
-              </td>
-            </tr>
-          </tbody>
-        </table> */}
+
         <DocumentsTables
           tableData={tableData}
           onClickEdit={onClickEdit}

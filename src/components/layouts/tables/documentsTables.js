@@ -4,7 +4,11 @@ import { Button } from "reactstrap";
 import { formatDate, getConstant } from "@/utilities/utils";
 import moment from "moment";
 
-export default function DocumentsTables({ tableData = [], onClickEdit }) {
+export default function DocumentsTables({
+  tableData = [],
+  onClickEdit,
+  onClickDelete,
+}) {
   const columns = [
     { id: "01", name: "SR No" },
     { id: "02", name: "Master No." },
@@ -58,6 +62,15 @@ export default function DocumentsTables({ tableData = [], onClickEdit }) {
                 onClick={() => onClickEdit(item.id)}
               >
                 Edit
+              </Button>
+              <Button
+                className="btn  btn-outline-danger"
+                variant="outline-danger "
+                // style={{ backgroundColor: "transparent" }}
+
+                onClick={() => onClickDelete(item.id)}
+              >
+                Delete
               </Button>
             </td>
           </tr>

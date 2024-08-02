@@ -41,12 +41,11 @@ export default function DocumentsSection({
     setIsEdit(true);
   };
 
-  const onClickDelete = (e) => {
-    let id = e.currentTarget.id;
-    const updatedData = ogdata.filter((item) => item.id !== id);
-    localStorage.setItem("taskData", JSON.stringify(updatedData));
-    settaskData(updatedData);
-    setRefresh(!refresh);
+  const onClickDelete = (id) => {
+    const updatedData = tableData.filter((item) => item.id !== id);
+    localStorage.setItem("reminderData", JSON.stringify(updatedData));
+    setTableData(updatedData);
+    // setRefresh(!refresh);
   };
 
   return (
@@ -67,6 +66,7 @@ export default function DocumentsSection({
         <DocumentsTables
           tableData={tableData}
           onClickEdit={onClickEdit}
+          onClickDelete={onClickDelete}
         />
       </div>
     </div>

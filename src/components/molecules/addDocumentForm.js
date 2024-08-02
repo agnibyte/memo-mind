@@ -62,7 +62,7 @@ export default function AddDocumentForm({
     updateSelectedForm("expiryDate", date);
     setValue("expiryDate", date);
   };
-  
+
   const handleAlertDateChange = (date) => {
     updateSelectedForm("alertDate", date);
     trigger("alertDate");
@@ -105,7 +105,7 @@ export default function AddDocumentForm({
         </label>
         <Controller
           control={control}
-          rules={validation.vehicleNo}
+          // rules={validation.vehicleNo}
           name="vehicleNo"
           render={({ field }) => (
             <CustomSearch
@@ -142,12 +142,13 @@ export default function AddDocumentForm({
         <Controller
           name="expiryDate"
           control={control}
-          rules={validation.expiryDate}
+          // rules={{ required: "Expiry date is required" }}
           render={({ field }) => (
             <CustomDatePicker
               value={field.value}
               onChange={(e) => {
                 field.onChange(e);
+                clearErrors("expiryDate");
                 handleExpiryDateChange();
               }}
             />

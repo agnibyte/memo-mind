@@ -20,3 +20,21 @@ export const vehicleNoListArr = [
   { id: "19", label: "MH 19 IJ 8901", value: "mh19ij8901" },
   { id: "20", label: "MH 20 KL 2345", value: "mh20kl2345" },
 ];
+
+export const DOCUMENTS_TYPE_LIST = [
+  {id: "1", label: "PUC", value: "puc", count: 0 },
+  {id: "2", label: "INSURANCE", value: "insurance", count: 0 },
+  {id: "3", label: "FITNESS", value: "fitness", count: 0 },
+  {id: "4", label: "PERMIT", value: "permit", count: 0 },
+  {id: "5", label: "TAX", value: "tax", count: 0 },
+];
+
+export const DOCUMENTS_SECTION_COLUMNS = [
+  { id: "01", name: "SR No" },
+  { id: "02", name: "Master No." },
+  { id: "03", name: "Vehicle No." },
+  { id: "07", name: "Document Type" },
+  { id: "05", name: "Expire Date" },
+  { id: "04", name: "Alert Date" },
+  { id: "06", name: "Action" },
+];

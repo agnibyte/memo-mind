@@ -3,25 +3,16 @@ import Table from "react-bootstrap/Table";
 import { Button } from "reactstrap";
 import { formatDate, getConstant } from "@/utilities/utils";
 import moment from "moment";
+import { DOCUMENTS_SECTION_COLUMNS } from "@/utilities/dummyData";
 
-export default function DocumentsTables({
-  tableData = [],
-  onClickEdit,
-  onClickDelete,
-}) {
-  const columns = [
-    { id: "01", name: "SR No" },
-    { id: "02", name: "Master No." },
-    { id: "03", name: "Vehicle No." },
-    { id: "05", name: "Expire Date" },
-    { id: "04", name: "Alert Date" },
-    { id: "06", name: "Action" },
-  ];
+export default function DocumentsTables(props) {
+  const { tableData = [], onClickEdit, onClickDelete } = props;
 
   const getDateBeforeDays = (date, days) => {
     if (!date || typeof days !== "number") return "-";
     return moment(date).subtract(days, "days").format("DD MMM, YYYY");
   };
+
   return (
     <Table
       striped
@@ -30,7 +21,7 @@ export default function DocumentsTables({
     >
       <thead>
         <tr>
-          {columns.map((item, i) => (
+          {DOCUMENTS_SECTION_COLUMNS.map((item, i) => (
             <th
               key={i}
               className="p-2"
@@ -46,6 +37,7 @@ export default function DocumentsTables({
             <td>{index + 1}</td>
             <td>{item.masterNo || "-"}</td>
             <td>{item.vehicleNo.label || "-"}</td>
+            <td>{item.documentType.label || "-"}</td>
             <td>{formatDate(item.expiryDate)}</td>
             <td>
               {getDateBeforeDays(

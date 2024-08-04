@@ -241,10 +241,17 @@ export const DocValidation = {
     },
   },
   vehicleNo: {
-    required: "Please enter the vehicle number",
+    required: "Please select vehicle number",
     pattern: {
       value: validationForNumbersAndAlphabets(),
-      message: "Please enter a valid vehicle number",
+      message: "Please select valid vehicle number",
+    },
+  },
+  documentType: {
+    required: "Please select Document type",
+    pattern: {
+      value: validationForNumbersAndAlphabets(),
+      message: "Please select Document type",
     },
   },
   expiryDate: {

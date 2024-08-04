@@ -4,7 +4,7 @@ import { DocValidation } from "@/utilities/formValidation";
 import { Controller, useForm } from "react-hook-form";
 import CustomDatePicker from "../common/customDatePicker";
 import commonStyle from "@/styles/common/common.module.scss";
-import { vehicleNoListArr } from "@/utilities/dummyData";
+import { DOCUMENTS_TYPE_LIST, vehicleNoListArr } from "@/utilities/dummyData";
 import CustomSearch from "../common/customSearch";
 import moment from "moment";
 
@@ -19,6 +19,7 @@ export default function AddDocumentForm({
   const defaultData = {
     masterNo: "",
     vehicleNo: "",
+    documentType: "",
     expiryDate: "",
     alertDate: "",
   };
@@ -38,6 +39,7 @@ export default function AddDocumentForm({
   const validation = {
     masterNo: register("masterNo", DocValidation.masterNo),
     vehicleNo: register("vehicleNo", DocValidation.vehicleNo),
+    documentType: register("documentType", DocValidation.documentType),
     expiryDate: register("expiryDate", DocValidation.expiryDate),
     // alertDate: register("alertDate", DocValidation.alertDate),
   };
@@ -59,9 +61,10 @@ export default function AddDocumentForm({
 
   useEffect(() => {
     if (isEdit) {
-      setValue("vehicleNo", reminderData.vehicleNo),
-        setValue("expiryDate", reminderData.expiryDate),
-        setValue("expiryDate", moment(reminderData.expiryDate));
+      setValue("vehicleNo", reminderData.vehicleNo);
+      setValue("documentType", reminderData.documentType);
+      setValue("expiryDate", reminderData.expiryDate);
+      // setValue("expiryDate", moment(reminderData.expiryDate));
     }
   }, [isEdit, setValue]);
 
@@ -132,6 +135,40 @@ export default function AddDocumentForm({
           aria-hidden="true"
         >
           {errors?.vehicleNo && errors.vehicleNo.message}
+        </span>
+      </div>
+      <div className="mb-3">
+        <label
+          htmlFor="documentType"
+          className="form-label"
+        >
+          Document Type
+        </label>
+        <Controller
+          control={control}
+          name="documentType"
+          render={({ field }) => (
+            <CustomSearch
+              {...validation.documentType}
+              name="documentType"
+              selectedValue={formData["documentType"]}
+              options={DOCUMENTS_TYPE_LIST}
+              onChange={(e) => {
+                field.onChange(e);
+                clearErrors("documentType");
+                updateSelectedForm("documentType", e);
+              }}
+              className="pdp_contact_lens_power"
+              placeholder="Please select Document type"
+              isSearchable={true}
+            />
+          )}
+        />
+        <span
+          className={commonStyle["errorMsg"]}
+          aria-hidden="true"
+        >
+          {errors?.documentType && errors.documentType.message}
         </span>
       </div>
 

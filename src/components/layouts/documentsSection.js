@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import DocumentsTables from "./tables/documentsTables";
+import { DOCUMENTS_TYPE_LIST } from "@/utilities/dummyData";
 
 export default function DocumentsSection({
   setReminderData,
@@ -7,13 +8,6 @@ export default function DocumentsSection({
   setIsEdit,
 }) {
   const [tableData, setTableData] = useState([]);
-  const items = [
-    { name: "PUC", count: 0 },
-    { name: "INSURANCE", count: 0 },
-    { name: "FITNESS", count: 0 },
-    { name: "PERMIT", count: 0 },
-    { name: "TAX", count: 0 },
-  ];
 
   const columns = [
     { id: "01", name: "SR No" },
@@ -52,12 +46,12 @@ export default function DocumentsSection({
     <div>
       <div className="card-body">
         <div className="row mb-4">
-          {items.map((item) => (
+          {DOCUMENTS_TYPE_LIST.map((item, i) => (
             <div
-              key={item.name}
+              key={i}
               className="col text-center"
             >
-              <div className="h5">{item.name}</div>
+              <div className="h5">{item.label}</div>
               <div className="text-danger display-6">{item.count}</div>
             </div>
           ))}

@@ -25,8 +25,9 @@ export default function Login() {
   return (
     <div className={styles['login-container']}>
       <div className={styles['rolling-text']}>
-        <div className={styles['text']}>Memo-Mind By AgniByte</div>
+        <div className={styles['text']}>Memo-Mind by AgniByte</div>
       </div>
+      <div className={styles['icon']}></div> {/* ICO File Display */}
       <Container className={styles['login-form-container']}>
         <Typography variant="h4" component="h2" gutterBottom>
           Login

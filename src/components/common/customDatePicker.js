@@ -8,6 +8,7 @@ export default function CustomDatePicker(props) {
     <LocalizationProvider dateAdapter={AdapterMoment}>
       <DatePicker
         views={["year", "month", "day"]}
+        format="DD/MM/YYYY"
         {...options}
       />
     </LocalizationProvider>

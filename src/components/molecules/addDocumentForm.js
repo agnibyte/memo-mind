@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { DocValidation } from "@/utilities/formValidation";
 import { Controller, useForm } from "react-hook-form";
@@ -6,6 +6,7 @@ import CustomDatePicker from "../common/customDatePicker";
 import commonStyle from "@/styles/common/common.module.scss";
 import { vehicleNoListArr } from "@/utilities/dummyData";
 import CustomSearch from "../common/customSearch";
+import moment from "moment";
 
 export default function AddDocumentForm({
   setReminderModal,
@@ -22,7 +23,7 @@ export default function AddDocumentForm({
     alertDate: "",
   };
   const [formData, setFormData] = useState(isEdit ? reminderData : defaultData);
-
+  console.log("reminderData", reminderData);
   const {
     register,
     handleSubmit,
@@ -56,17 +57,19 @@ export default function AddDocumentForm({
     setFormData(defaultData);
   };
 
-  const handleExpiryDateChange = (date) => {
-    clearErrors("expiryDate");
-    trigger("expiryDate");
-    updateSelectedForm("expiryDate", date);
-    setValue("expiryDate", date);
-  };
+  useEffect(() => {
+    if (isEdit) {
+      setValue("vehicleNo", reminderData.vehicleNo),
+        setValue("expiryDate", reminderData.expiryDate),
+        setValue("expiryDate", moment(reminderData.expiryDate));
+    }
+  }, [isEdit, setValue]);
 
-  const handleAlertDateChange = (date) => {
-    updateSelectedForm("alertDate", date);
-    trigger("alertDate");
-    setValue("alertDate", date);
+  const onClickEdit = () => {
+    updateReminderData(formData);
+    setReminderModal(false);
+    setIsEdit(false);
+    setFormData(defaultData);
   };
 
   return (
@@ -142,14 +145,16 @@ export default function AddDocumentForm({
         <Controller
           name="expiryDate"
           control={control}
-          // rules={{ required: "Expiry date is required" }}
+          defaultValue={isEdit ? moment(formData.expiryDate) : moment()}
           render={({ field }) => (
             <CustomDatePicker
+              {...validation.expiryDate}
               value={field.value}
               onChange={(e) => {
                 field.onChange(e);
                 clearErrors("expiryDate");
-                handleExpiryDateChange();
+                // handleExpiryDateChange();
+                updateSelectedForm("expiryDate", e);
               }}
             />
           )}
@@ -188,8 +193,9 @@ export default function AddDocumentForm({
         </button>
       ) : (
         <button
-          type="submit"
+          type="button"
           className="btn btn-warning"
+          onClick={onClickEdit}
         >
           Update
         </button>

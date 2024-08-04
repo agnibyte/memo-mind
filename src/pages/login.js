@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import styles from '../styles/login.module.scss';
+import { TextField, Button, Container, Typography, Box } from '@mui/material';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -23,31 +24,41 @@ export default function Login() {
 
   return (
     <div className={styles['login-container']}>
-      <form className={styles['login-form']} onSubmit={handleSubmit}>
-        <h2>Login</h2>
-        {error && <p>{error}</p>}
-        <div className={styles['form-group']}>
-          <label>Email</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
-        <div className={styles['form-group']}>
-          <label>Password</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        <div className={styles['form-group']}>
-          <button type="submit">Login</button>
-        </div>
-      </form>
+      <div className={styles['rolling-text']}>
+        <div className={styles['text']}>Memo-Mind By AgniByte</div>
+      </div>
+      <Container className={styles['login-form-container']}>
+        <Typography variant="h4" component="h2" gutterBottom>
+          Login
+        </Typography>
+        {error && <Typography color="error">{error}</Typography>}
+        <form onSubmit={handleSubmit}>
+          <Box mb={2}>
+            <TextField
+              label="Email"
+              variant="outlined"
+              fullWidth
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </Box>
+          <Box mb={2}>
+            <TextField
+              label="Password"
+              type="password"
+              variant="outlined"
+              fullWidth
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </Box>
+          <Button type="submit" variant="contained" color="primary" fullWidth>
+            Login
+          </Button>
+        </form>
+      </Container>
     </div>
   );
 }

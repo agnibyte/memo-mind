@@ -63,8 +63,7 @@ export default function AddDocumentForm({
     if (isEdit) {
       setValue("vehicleNo", reminderData.vehicleNo);
       setValue("documentType", reminderData.documentType);
-      setValue("expiryDate", reminderData.expiryDate);
-      // setValue("expiryDate", moment(reminderData.expiryDate));
+      setValue("expiryDate", moment(reminderData.expiryDate));
     }
   }, [isEdit, setValue]);
 
@@ -182,7 +181,7 @@ export default function AddDocumentForm({
         <Controller
           name="expiryDate"
           control={control}
-          defaultValue={isEdit ? moment(formData.expiryDate) : moment()}
+          defaultValue={moment()}
           render={({ field }) => (
             <CustomDatePicker
               {...validation.expiryDate}

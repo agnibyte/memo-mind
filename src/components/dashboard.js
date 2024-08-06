@@ -61,7 +61,7 @@ const Dashboard = () => {
     setReminderModal(true);
   };
 
-  console.log("reminderData", reminderData);
+  // console.log("reminderData", reminderData);
 
   return (
     <>

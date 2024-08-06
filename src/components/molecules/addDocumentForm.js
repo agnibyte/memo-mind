@@ -24,7 +24,7 @@ export default function AddDocumentForm({
     alertDate: "",
   };
   const [formData, setFormData] = useState(isEdit ? reminderData : defaultData);
-  console.log("reminderData", reminderData);
+  // console.log("reminderData", reminderData);
   const {
     register,
     handleSubmit,

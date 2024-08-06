@@ -1,22 +1,15 @@
 import React, { useEffect, useState } from "react";
 import DocumentsTables from "./tables/documentsTables";
+import moment from "moment";
+import { getConstant } from "@/utilities/utils";
 import { DOCUMENTS_TYPE_LIST } from "@/utilities/dummyData";
 
-export default function DocumentsSection({
-  setReminderData,
-  setReminderModal,
-  setIsEdit,
-}) {
-  const [tableData, setTableData] = useState([]);
+export default function DocumentsSection(props) {
+  const { setReminderData, setReminderModal, setIsEdit } = props;
 
-  const columns = [
-    { id: "01", name: "SR No" },
-    { id: "01", name: "Master No." },
-    { id: "01", name: "Vehicle No." },
-    { id: "01", name: "Alert Date" },
-    { id: "01", name: "Expire Date" },
-    { id: "01", name: "Action" },
-  ];
+  const [tableData, setTableData] = useState([]);
+  const [documentsTypeList, setDocumentsTypeList] =
+    useState(DOCUMENTS_TYPE_LIST);
 
   const getTabelData = () => {
     const existingDataString = localStorage.getItem("reminderData");
@@ -42,11 +35,38 @@ export default function DocumentsSection({
     // setRefresh(!refresh);
   };
 
+  useEffect(() => {
+    const today = moment();
+    const updatedDocsList = [...documentsTypeList];
+
+    tableData.forEach((item) => {
+      const expiryDate = moment(item.expiryDate);
+      const alertDate = expiryDate.subtract(
+        getConstant("DAYS_BEFORE_ALERT"),
+        "days"
+      );
+
+      if (today.isSameOrAfter(alertDate, "day")) {
+        const documentTypeValue = item.documentType.value;
+        const docIndex = updatedDocsList.findIndex(
+          (doc) => doc.value === documentTypeValue
+        );
+
+        if (docIndex !== -1) {
+          updatedDocsList[docIndex].count += 1;
+        }
+      }
+    });
+    console.log("updatedDocsList", updatedDocsList);
+
+    setDocumentsTypeList(updatedDocsList);
+  }, [tableData]);
+
   return (
     <div>
       <div className="card-body">
         <div className="row mb-4">
-          {DOCUMENTS_TYPE_LIST.map((item, i) => (
+          {documentsTypeList.map((item, i) => (
             <div
               key={i}
               className="col text-center"

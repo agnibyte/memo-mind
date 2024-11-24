@@ -20,11 +20,12 @@ export default function AddDocumentForm({
     masterNo: "",
     vehicleNo: "",
     documentType: "",
-    expiryDate: "",
+    expiryDate: moment(),
     alertDate: "",
   };
   const [formData, setFormData] = useState(isEdit ? reminderData : defaultData);
-  // console.log("reminderData", reminderData);
+  const [expiryDateError, setExpiryDateError] = useState("");
+  // console.log("formData", formData);
   const {
     register,
     handleSubmit,
@@ -40,7 +41,7 @@ export default function AddDocumentForm({
     masterNo: register("masterNo", DocValidation.masterNo),
     vehicleNo: register("vehicleNo", DocValidation.vehicleNo),
     documentType: register("documentType", DocValidation.documentType),
-    expiryDate: register("expiryDate", DocValidation.expiryDate),
+    // expiryDate: register("expiryDate", DocValidation.expiryDate),
     // alertDate: register("alertDate", DocValidation.alertDate),
   };
 
@@ -50,9 +51,23 @@ export default function AddDocumentForm({
     setFormData(temp);
   };
 
+  const onChangeExpiryDate = (e) => {
+    // clearErrors("expiryDate");
+    // handleExpiryDateChange();
+    updateSelectedForm("expiryDate", e);
+    if (e == null) {
+      setExpiryDateError("Please enter the expiry date");
+    } else {
+      setExpiryDateError("");
+    }
+  };
+
   const onClickSubmit = () => {
+    if (formData.expiryDate == null) {
+      setExpiryDateError("Please enter the expiry date");
+      return;
+    }
     addReminderData(formData);
-    console.log("formData", formData);
     setReminderModal(false);
     setIsEdit(false);
 
@@ -63,7 +78,7 @@ export default function AddDocumentForm({
     if (isEdit) {
       setValue("vehicleNo", reminderData.vehicleNo);
       setValue("documentType", reminderData.documentType);
-      setValue("expiryDate", moment(reminderData.expiryDate));
+      // setValue("expiryDate", moment(reminderData.expiryDate));
     }
   }, [isEdit, setValue]);
 
@@ -184,13 +199,10 @@ export default function AddDocumentForm({
           defaultValue={moment()}
           render={({ field }) => (
             <CustomDatePicker
-              {...validation.expiryDate}
+              // {...validation.expiryDate}
               value={field.value}
               onChange={(e) => {
-                field.onChange(e);
-                clearErrors("expiryDate");
-                // handleExpiryDateChange();
-                updateSelectedForm("expiryDate", e);
+                onChangeExpiryDate(e);
               }}
             />
           )}
@@ -200,25 +212,10 @@ export default function AddDocumentForm({
           className={commonStyle["errorMsg"]}
           aria-hidden="true"
         >
-          {errors?.expiryDate && errors.expiryDate.message}
+          {/* {errors?.expiryDate && errors.expiryDate.message} */}
+          {expiryDateError && expiryDateError}
         </span>
       </div>
-
-      {/* <div className="mb-3">
-        <label
-          htmlFor="date"
-          className="form-label"
-        >
-          Select Expiry Date
-        </label>
-        <CustomDatePicker onChange={handleAlertDateChange} />
-        <span
-          className={commonStyle["errorMsg"]}
-          aria-hidden="true"
-        >
-          {errors?.alertDate && errors.alertDate.message}
-        </span>
-      </div> */}
 
       {!isEdit ? (
         <button

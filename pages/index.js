@@ -1,6 +1,5 @@
 import Head from "next/head";
 import Dashboard from "@/components/dashboard";
-import FrameCompareCam from "./camn";
 
 export default function Home() {
   return (
@@ -16,8 +15,7 @@ export default function Home() {
           href="/favicon.ico"
         />
       </Head>
-      {/* <Dashboard /> */}
-      <FrameCompareCam />
+      <Dashboard />
     </div>
   );
 }

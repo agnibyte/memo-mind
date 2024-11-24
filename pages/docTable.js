@@ -19,7 +19,7 @@ export default function DocTable() {
       { id: "carbs", numeric: true, disablePadding: false, label: "Carbs" },
       { id: "protein", numeric: true, disablePadding: false, label: "Protein" },
     ],
-    rows: [
+    rowsData: [
       {
         id: 1,
         masterNo: "M123",
@@ -42,7 +42,7 @@ export default function DocTable() {
   return (
     <div>
       <DocumentTable
-        rows={tableData.rows}
+        rows={tableData.rowsData}
         headCells={tableData.headCells}
         title="Nutrition Information"
       />

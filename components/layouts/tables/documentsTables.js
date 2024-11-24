@@ -1,6 +1,5 @@
 import React from "react";
 import Table from "react-bootstrap/Table";
-import { Button } from "reactstrap";
 import { formatDate, getConstant } from "@/utilities/utils";
 import moment from "moment";
 import { DOCUMENTS_SECTION_COLUMNS } from "@/utilities/dummyData";
@@ -46,24 +45,22 @@ export default function DocumentsTables(props) {
               )}
             </td>
             <td>
-              <Button
-                className="btn  btn-outline-warning"
+              <button
+                className="btn  btn-outline-warning mx-2"
                 variant="outline-warning "
                 // style={{ backgroundColor: "transparent" }}
-
                 onClick={() => onClickEdit(item.id)}
               >
                 Edit
-              </Button>
-              <Button
-                className="btn  btn-outline-danger"
+              </button>
+              <button
+                className="btn  btn-outline-danger mx-2"
                 variant="outline-danger "
                 // style={{ backgroundColor: "transparent" }}
-
                 onClick={() => onClickDelete(item.id)}
               >
                 Delete
-              </Button>
+              </button>
             </td>
           </tr>
         ))}

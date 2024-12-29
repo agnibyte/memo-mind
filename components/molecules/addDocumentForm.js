@@ -7,6 +7,7 @@ import commonStyle from "@/styles/common/common.module.scss";
 import { DOCUMENTS_TYPE_LIST, vehicleNoListArr } from "@/utilities/dummyData";
 import CustomSearch from "../common/customSearch";
 import moment from "moment";
+import "../../styles/formStyles.module.scss";
 
 export default function AddDocumentForm({
   setReminderModal,
@@ -107,8 +108,11 @@ export default function AddDocumentForm({
   };
 
   return (
-    <form onSubmit={handleSubmit(onClickSubmit)}>
-      <div className="mb-3">
+    <form
+      onSubmit={handleSubmit(onClickSubmit)}
+      className="form-container"
+    >
+      <div className="form-group">
         <label
           htmlFor="masterNo"
           className="form-label"
@@ -119,30 +123,26 @@ export default function AddDocumentForm({
           {...validation.masterNo}
           type="text"
           placeholder="Enter master number"
-          className="form-control"
+          className={`form-control ${errors?.masterNo ? "is-invalid" : ""}`}
           id="masterNo"
           name="masterNo"
           value={formData.masterNo}
           onChange={(e) => updateSelectedForm("masterNo", e.target.value)}
         />
-        <span
-          className="text-danger"
-          aria-hidden="true"
-        >
-          {errors?.masterNo && errors.masterNo.message}
-        </span>
+        {errors?.masterNo && (
+          <div className="invalid-feedback">{errors.masterNo.message}</div>
+        )}
       </div>
 
-      <div className="mb-3">
+      <div className="form-group">
         <label
           htmlFor="vehicleNo"
           className="form-label"
         >
-          vehicleNo
+          Vehicle Number
         </label>
         <Controller
           control={control}
-          // rules={validation.vehicleNo}
           name="vehicleNo"
           render={({ field }) => (
             <CustomSearch
@@ -155,20 +155,18 @@ export default function AddDocumentForm({
                 clearErrors("vehicleNo");
                 updateSelectedForm("vehicleNo", e);
               }}
-              className="pdp_contact_lens_power"
-              placeholder="Please Select vehicle No"
+              className="form-control"
+              placeholder="Please Select Vehicle Number"
               isSearchable={true}
             />
           )}
         />
-        <span
-          className={commonStyle["errorMsg"]}
-          aria-hidden="true"
-        >
-          {errors?.vehicleNo && errors.vehicleNo.message}
-        </span>
+        {errors?.vehicleNo && (
+          <div className="text-danger">{errors.vehicleNo.message}</div>
+        )}
       </div>
-      <div className="mb-3">
+
+      <div className="form-group">
         <label
           htmlFor="documentType"
           className="form-label"
@@ -189,100 +187,52 @@ export default function AddDocumentForm({
                 clearErrors("documentType");
                 updateSelectedForm("documentType", e);
               }}
-              className="pdp_contact_lens_power"
-              placeholder="Please select Document type"
+              className="form-control"
+              placeholder="Please Select Document Type"
               isSearchable={true}
             />
           )}
         />
-        <span
-          className={commonStyle["errorMsg"]}
-          aria-hidden="true"
-        >
-          {errors?.documentType && errors.documentType.message}
-        </span>
+        {errors?.documentType && (
+          <div className="text-danger">{errors.documentType.message}</div>
+        )}
       </div>
 
-      {/* <div className="mb-3">
+      <div className="form-group">
         <label
           htmlFor="date"
           className="form-label"
         >
           Select Expiry Date
         </label>
-        <Controller
-          name="expiryDate"
-          control={control}
-          // defaultValue={moment()}
-          render={({ field }) => (
-            <CustomDatePicker
-              // {...validation.expiryDate}
-              value={field.value}
-              onChange={(e) => {
-                onChangeExpiryDate(e);
-              }}
-            />
-          )}
+        <CustomDatePicker
+          value={expiryDate ? moment(expiryDate) : null}
+          onChange={onChangeExpiryDate}
+          className="form-control"
         />
-        <span
-          className={commonStyle["errorMsg"]}
-          aria-hidden="true"
-        >
-          {expiryDateError && expiryDateError}
-        </span>
-      </div> */}
-
-      <div className="mb-3">
-        <label
-          htmlFor="date"
-          className="form-label"
-        >
-          Select Expiry Date
-        </label>
-        {/* <Controller
-          name="expiryDate"
-          control={control}
-          render={({ field }) => (
-            <CustomDatePicker
-              // {...validation.expiryDate}
-              value={field.value}
-              onChange={(e) => {
-                onChangeExpiryDate(e);
-              }}
-            />
-          )}
-        /> */}
-        <div>
-          <CustomDatePicker
-            value={expiryDate ? moment(expiryDate) : null} // Convert ISO string to Moment object
-            onChange={onChangeExpiryDate}
-          />
-          {expiryDateError && <p style={{ color: "red" }}>{expiryDateError}</p>}
-        </div>
-        <span
-          className={commonStyle["errorMsg"]}
-          aria-hidden="true"
-        >
-          {expiryDateError && expiryDateError}
-        </span>
+        {expiryDateError && (
+          <div className="text-danger">{expiryDateError}</div>
+        )}
       </div>
 
-      {!isEdit ? (
-        <button
-          type="submit"
-          className="btn btn-primary"
-        >
-          Submit
-        </button>
-      ) : (
-        <button
-          type="button"
-          className="btn btn-warning"
-          onClick={onClickEdit}
-        >
-          Update
-        </button>
-      )}
+      <div className="form-actions">
+        {!isEdit ? (
+          <button
+            type="submit"
+            className="btn btn-primary"
+          >
+            Submit
+          </button>
+        ) : (
+          <button
+            type="button"
+            className="btn btn-warning"
+            onClick={onClickEdit}
+          >
+            Update
+          </button>
+        )}
+      </div>
     </form>
   );
 }

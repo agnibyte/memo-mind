@@ -8,6 +8,7 @@ import { DOCUMENTS_TYPE_LIST, vehicleNoListArr } from "@/utilities/dummyData";
 import CustomSearch from "../common/customSearch";
 import moment from "moment";
 import "../../styles/formStyles.module.scss";
+import { InputWithVoice } from "../common/inputWithVoice";
 
 export default function AddDocumentForm({
   setReminderModal,
@@ -30,6 +31,7 @@ export default function AddDocumentForm({
   const [expiryDate, setExpiryDate] = useState(
     isEdit ? reminderData.expiryDate : defaultData.expiryDate
   );
+  const [note, setNote] = useState("");
 
   const {
     register,
@@ -133,6 +135,11 @@ export default function AddDocumentForm({
           <div className="invalid-feedback">{errors.masterNo.message}</div>
         )}
       </div>
+      <InputWithVoice
+        note={note}
+        setNote={setNote}
+        label={"Add Note"}
+      />
 
       <div className="form-group  mt-3">
         <label

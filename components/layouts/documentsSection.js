@@ -5,21 +5,16 @@ import { getConstant } from "@/utilities/utils";
 import { DOCUMENTS_TYPE_LIST } from "@/utilities/dummyData";
 
 export default function DocumentsSection(props) {
-  const { setReminderData, setReminderModal, setIsEdit } = props;
+  const {
+    setReminderData,
+    setReminderModal,
+    setIsEdit,
+    tableData,
+    setTableData,
+  } = props;
 
-  const [tableData, setTableData] = useState([]);
   const [documentsTypeList, setDocumentsTypeList] =
     useState(DOCUMENTS_TYPE_LIST);
-
-  const getTabelData = () => {
-    const existingDataString = localStorage.getItem("reminderData");
-    let existingData = existingDataString ? JSON.parse(existingDataString) : [];
-    setTableData(existingData);
-  };
-
-  useEffect(() => {
-    getTabelData();
-  }, []);
 
   const onClickEdit = (id) => {
     const selectedItem = tableData.filter((item) => item.id == id);

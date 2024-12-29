@@ -25,7 +25,7 @@ export default function AddDocumentForm({
   };
   const [formData, setFormData] = useState(isEdit ? reminderData : defaultData);
   const [expiryDateError, setExpiryDateError] = useState("");
-  // console.log("formData", formData);
+  console.log("formData", formData);
   const {
     register,
     handleSubmit,
@@ -78,6 +78,10 @@ export default function AddDocumentForm({
     if (isEdit) {
       setValue("vehicleNo", reminderData.vehicleNo);
       setValue("documentType", reminderData.documentType);
+      setFormData((prev) => ({
+        ...prev,
+        expiryDate: "2024-10-14T16:32:34.000Z",
+      }));
       // setValue("expiryDate", moment(reminderData.expiryDate));
     }
   }, [isEdit, setValue]);
@@ -186,7 +190,7 @@ export default function AddDocumentForm({
         </span>
       </div>
 
-      <div className="mb-3">
+      {/* <div className="mb-3">
         <label
           htmlFor="date"
           className="form-label"
@@ -196,7 +200,7 @@ export default function AddDocumentForm({
         <Controller
           name="expiryDate"
           control={control}
-          defaultValue={moment()}
+          // defaultValue={moment()}
           render={({ field }) => (
             <CustomDatePicker
               // {...validation.expiryDate}
@@ -207,12 +211,39 @@ export default function AddDocumentForm({
             />
           )}
         />
-        {/* <CustomDatePicker onChange={handleExpiryDateChange} /> */}
         <span
           className={commonStyle["errorMsg"]}
           aria-hidden="true"
         >
-          {/* {errors?.expiryDate && errors.expiryDate.message} */}
+          {expiryDateError && expiryDateError}
+        </span>
+      </div> */}
+
+      <div className="mb-3">
+        <label
+          htmlFor="date"
+          className="form-label"
+        >
+          Select Expiry Date
+        </label>
+        {/* <Controller
+          name="expiryDate"
+          control={control}
+          render={({ field }) => (
+            <CustomDatePicker
+              // {...validation.expiryDate}
+              value={field.value}
+              onChange={(e) => {
+                onChangeExpiryDate(e);
+              }}
+            />
+          )}
+        /> */}
+        <CustomDatePicker onChange={onChangeExpiryDate} />
+        <span
+          className={commonStyle["errorMsg"]}
+          aria-hidden="true"
+        >
           {expiryDateError && expiryDateError}
         </span>
       </div>

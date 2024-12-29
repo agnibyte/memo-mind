@@ -1,5 +1,5 @@
 // components/Dashboard.js
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AddReminderForm from "./molecules/addReminderForm";
 import CommonModal from "./common/commonModal";
 import Tab from "react-bootstrap/Tab";
@@ -13,6 +13,7 @@ const Dashboard = () => {
   const [reminderModal, setReminderModal] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [reminderData, setReminderData] = useState("");
+  const [documentTableData, setDocumentTableData] = useState([]);
 
   const dashboardTabs = [
     {
@@ -24,6 +25,8 @@ const Dashboard = () => {
           setReminderData={setReminderData}
           setReminderModal={setReminderModal}
           setIsEdit={setIsEdit}
+          tableData={documentTableData}
+          setTableData={setDocumentTableData}
         />
       ),
     },
@@ -35,10 +38,9 @@ const Dashboard = () => {
   const addReminderData = (data) => {
     const existingDataString = localStorage.getItem("reminderData");
     let existingData = existingDataString ? JSON.parse(existingDataString) : [];
-    localStorage.setItem(
-      "reminderData",
-      JSON.stringify([...existingData, { id: getUniqueKey(), ...data }])
-    );
+    const LatestData = [...existingData, { id: getUniqueKey(), ...data }];
+    setDocumentTableData(LatestData);
+    localStorage.setItem("reminderData", JSON.stringify(LatestData));
   };
 
   const updateReminderData = (updatedData) => {
@@ -63,6 +65,16 @@ const Dashboard = () => {
 
   // console.log("reminderData", reminderData);
 
+  const getTabelData = () => {
+    const existingDataString = localStorage.getItem("reminderData");
+    let existingData = existingDataString ? JSON.parse(existingDataString) : [];
+    setDocumentTableData(existingData);
+  };
+
+  useEffect(() => {
+    getTabelData();
+  }, []);
+
   return (
     <>
       <div className="container mt-5">
@@ -71,19 +83,7 @@ const Dashboard = () => {
             <h1 className="h4 mb-0">DASHBORD</h1>
           </div>
           <button onClick={onClickAddReminder}>Add</button>
-          {/* <div className="d-flex border-bottom">
-            {dashboardTabs.map((tab, index) => (
-              <button
-                key={index}
-                className={`btn rounded-top ${
-                  selectedTab == tab.value && "btn-dark"
-                }`}
-                onClick={() => onClickDashboardTab(tab.value)}
-              >
-                {tab.label}
-              </button>
-            ))}
-          </div> */}
+
           <Tabs
             defaultActiveKey={dashboardTabs[0].value}
             transition={false}

@@ -52,7 +52,6 @@ export default function DocumentsSection(props) {
         }
       }
     });
-    console.log("updatedDocsList", updatedDocsList);
 
     setDocumentsTypeList(updatedDocsList);
   }, [tableData]);

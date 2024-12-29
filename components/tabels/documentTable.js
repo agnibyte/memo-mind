@@ -39,7 +39,15 @@ function getComparator(order, orderBy) {
 }
 
 // EnhancedTableHead Component
-function EnhancedTableHead({ headCells, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort }) {
+function EnhancedTableHead({
+  headCells,
+  onSelectAllClick,
+  order,
+  orderBy,
+  numSelected,
+  rowCount,
+  onRequestSort,
+}) {
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
@@ -72,7 +80,10 @@ function EnhancedTableHead({ headCells, onSelectAllClick, order, orderBy, numSel
             >
               {headCell.label}
               {orderBy === headCell.id ? (
-                <Box component="span" sx={visuallyHidden}>
+                <Box
+                  component="span"
+                  sx={visuallyHidden}
+                >
                   {order === "desc" ? "sorted descending" : "sorted ascending"}
                 </Box>
               ) : null}
@@ -113,11 +124,21 @@ function EnhancedTableToolbar({ numSelected, title }) {
       ]}
     >
       {numSelected > 0 ? (
-        <Typography sx={{ flex: "1 1 100%" }} color="inherit" variant="subtitle1" component="div">
+        <Typography
+          sx={{ flex: "1 1 100%" }}
+          color="inherit"
+          variant="subtitle1"
+          component="div"
+        >
           {numSelected} selected
         </Typography>
       ) : (
-        <Typography sx={{ flex: "1 1 100%" }} variant="h6" id="tableTitle" component="div">
+        <Typography
+          sx={{ flex: "1 1 100%" }}
+          variant="h6"
+          id="tableTitle"
+          component="div"
+        >
           {title}
         </Typography>
       )}
@@ -186,7 +207,8 @@ const DocumentTable = ({ rows, headCells, title }) => {
     setDense(event.target.checked);
   };
 
-  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+  const emptyRows =
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
   const visibleRows = useMemo(
     () =>
@@ -199,9 +221,16 @@ const DocumentTable = ({ rows, headCells, title }) => {
   return (
     <Box sx={{ width: "100%" }}>
       <Paper sx={{ width: "100%", mb: 2 }}>
-        <EnhancedTableToolbar numSelected={selected.length} title={title} />
+        <EnhancedTableToolbar
+          numSelected={selected.length}
+          title={title}
+        />
         <TableContainer>
-          <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle" size={dense ? "small" : "medium"}>
+          <Table
+            sx={{ minWidth: 750 }}
+            aria-labelledby="tableTitle"
+            size={dense ? "small" : "medium"}
+          >
             <EnhancedTableHead
               headCells={headCells}
               numSelected={selected.length}
@@ -236,10 +265,15 @@ const DocumentTable = ({ rows, headCells, title }) => {
                         }}
                       />
                     </TableCell>
-                    <TableCell component="th" id={labelId} scope="row" padding="none">
+                    <TableCell
+                      component="th"
+                      id={labelId}
+                      scope="row"
+                      padding="none"
+                    >
                       {row.masterNo}
                     </TableCell>
-                    <TableCell align="right">{row.vehicleNo}</TableCell>
+                    <TableCell align="right">{row.vehicleNo?.label}</TableCell>
                     <TableCell align="right">{row.fat}</TableCell>
                     <TableCell align="right">{row.carbs}</TableCell>
                     <TableCell align="right">{row.protein}</TableCell>
@@ -265,7 +299,12 @@ const DocumentTable = ({ rows, headCells, title }) => {
         />
       </Paper>
       <FormControlLabel
-        control={<Switch checked={dense} onChange={handleChangeDense} />}
+        control={
+          <Switch
+            checked={dense}
+            onChange={handleChangeDense}
+          />
+        }
         label="Dense padding"
       />
     </Box>

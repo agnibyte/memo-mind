@@ -134,7 +134,7 @@ export default function AddDocumentForm({
         )}
       </div>
 
-      <div className="form-group">
+      <div className="form-group  mt-3">
         <label
           htmlFor="vehicleNo"
           className="form-label"
@@ -166,7 +166,7 @@ export default function AddDocumentForm({
         )}
       </div>
 
-      <div className="form-group">
+      <div className="form-group  mt-3">
         <label
           htmlFor="documentType"
           className="form-label"
@@ -198,7 +198,7 @@ export default function AddDocumentForm({
         )}
       </div>
 
-      <div className="form-group">
+      <div className="form-group  mt-3">
         <label
           htmlFor="date"
           className="form-label"
@@ -215,7 +215,7 @@ export default function AddDocumentForm({
         )}
       </div>
 
-      <div className="form-actions">
+      <div className="form-actions mt-3">
         {!isEdit ? (
           <button
             type="submit"

@@ -23,9 +23,13 @@ export default function AddDocumentForm({
     expiryDate: moment(),
     alertDate: "",
   };
+
   const [formData, setFormData] = useState(isEdit ? reminderData : defaultData);
   const [expiryDateError, setExpiryDateError] = useState("");
-  console.log("formData", formData);
+  const [expiryDate, setExpiryDate] = useState(
+    isEdit ? reminderData.expiryDate : defaultData.expiryDate
+  );
+
   const {
     register,
     handleSubmit,
@@ -51,14 +55,23 @@ export default function AddDocumentForm({
     setFormData(temp);
   };
 
-  const onChangeExpiryDate = (e) => {
-    // clearErrors("expiryDate");
-    // handleExpiryDateChange();
-    updateSelectedForm("expiryDate", e);
-    if (e == null) {
+  // const onChangeExpiryDate = (e) => {
+  //   // clearErrors("expiryDate");
+  //   // handleExpiryDateChange();
+  //   console.log({ e });
+  //   updateSelectedForm("expiryDate", e);
+  //   if (e == null) {
+  //     setExpiryDateError("Please enter the expiry date");
+  //   } else {
+  //     setExpiryDateError("");
+  //   }
+  // };
+  const onChangeExpiryDate = (date) => {
+    if (date == null) {
       setExpiryDateError("Please enter the expiry date");
     } else {
       setExpiryDateError("");
+      setExpiryDate(moment(date).toISOString()); // Save the updated date in ISO format
     }
   };
 
@@ -239,7 +252,13 @@ export default function AddDocumentForm({
             />
           )}
         /> */}
-        <CustomDatePicker onChange={onChangeExpiryDate} />
+        <div>
+          <CustomDatePicker
+            value={expiryDate ? moment(expiryDate) : null} // Convert ISO string to Moment object
+            onChange={onChangeExpiryDate}
+          />
+          {expiryDateError && <p style={{ color: "red" }}>{expiryDateError}</p>}
+        </div>
         <span
           className={commonStyle["errorMsg"]}
           aria-hidden="true"

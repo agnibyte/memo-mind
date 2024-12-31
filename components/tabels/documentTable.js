@@ -12,7 +12,12 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
 import { visuallyHidden } from "@mui/utils";
 import { useState, useMemo } from "react";
-import { formatDate, getConstant, getDateBeforeDays } from "@/utilities/utils";
+import {
+  formatDate,
+  getConstant,
+  getDateBeforeDays,
+  truncateString,
+} from "@/utilities/utils";
 import {
   Table,
   TableBody,
@@ -73,7 +78,8 @@ function EnhancedTableHead({
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
-            align={headCell.numeric ? "right" : "left"}
+            // align={headCell.numeric ? "right" : "left"}
+            align={headCell.numeric ? "right" : "center"}
             padding={headCell.disablePadding ? "none" : "normal"}
             sortDirection={orderBy === headCell.id ? order : false}
           >
@@ -341,6 +347,12 @@ const DocumentTable = ({
                       {row.masterNo}
                     </TableCell>
                     <TableCell align="left">{row.vehicleNo?.label}</TableCell>
+                    <TableCell
+                      align={row.note ? "left" : "center"}
+                      title={row.note}
+                    >
+                      {truncateString(row.note) || "-"}
+                    </TableCell>
                     <TableCell align="left">
                       {row.documentType?.label}
                     </TableCell>

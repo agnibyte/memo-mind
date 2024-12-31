@@ -36,3 +36,13 @@ export const getDateBeforeDays = (date, days) => {
   if (!date || typeof days !== "number") return "-";
   return moment(date).subtract(days, "days").format("DD MMM, YYYY");
 };
+
+export const truncateString = (input) => {
+  const maxLength = 20;
+  if (!input) return "";
+  const words = input.split(" ");
+  if (words.length > 3 || input.length > maxLength) {
+    return input.substring(0, maxLength).trim() + "...";
+  }
+  return input;
+};

@@ -12,6 +12,12 @@ export const docTableHeadCells = [
     label: "Vehicle No.",
   },
   {
+    id: "note",
+    numeric: false,
+    disablePadding: false,
+    label: "Note",
+  },
+  {
     id: "documentType",
     numeric: false,
     disablePadding: false,

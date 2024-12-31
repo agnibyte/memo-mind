@@ -24,6 +24,7 @@ export default function AddDocumentForm({
     documentType: "",
     expiryDate: moment(),
     alertDate: "",
+    note: "",
   };
 
   const [formData, setFormData] = useState(isEdit ? reminderData : defaultData);
@@ -108,6 +109,7 @@ export default function AddDocumentForm({
     setIsEdit(false);
     setFormData(defaultData);
   };
+  console.log('formData', formData)
 
   return (
     <form
@@ -136,8 +138,8 @@ export default function AddDocumentForm({
         )}
       </div>
       <InputWithVoice
-        note={note}
-        setNote={setNote}
+        note={formData.note}
+        setNote={(value) => updateSelectedForm("note", value)}
         label={"Add Note"}
       />
 

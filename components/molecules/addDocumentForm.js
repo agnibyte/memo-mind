@@ -54,7 +54,6 @@ export default function AddDocumentForm({
   };
 
   const updateSelectedForm = (type, value) => {
-    console.log("type, value", type, value);
     const temp = { ...formData };
     temp[type] = value;
     setFormData(temp);
@@ -115,7 +114,6 @@ export default function AddDocumentForm({
     setIsEdit(false);
     setFormData(defaultData);
   };
-  console.log("formData", formData);
 
   return (
     <form

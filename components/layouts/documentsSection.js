@@ -57,7 +57,7 @@ export default function DocumentsSection(props) {
 
     setDocumentsTypeList(updatedDocsList);
   }, [tableData]);
-  console.log("tableData", tableData);
+  
   return (
     <div>
       <div className="card-body">

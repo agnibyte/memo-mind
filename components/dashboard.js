@@ -8,6 +8,7 @@ import DocumentsSection from "./layouts/documentsSection";
 import EmiSection from "./layouts/emiSection";
 import AddDocumentForm from "./molecules/addDocumentForm";
 import { getUniqueKey } from "@/utilities/utils";
+import { postApiData } from "@/utilities/services/apiService";
 
 const Dashboard = () => {
   const [reminderModal, setReminderModal] = useState(false);
@@ -35,12 +36,22 @@ const Dashboard = () => {
 
   const [selectedTab, setSelectedTab] = useState(dashboardTabs[0].value);
 
-  const addReminderData = (data) => {
-    const existingDataString = localStorage.getItem("reminderData");
-    let existingData = existingDataString ? JSON.parse(existingDataString) : [];
-    const LatestData = [...existingData, { id: getUniqueKey(), ...data }];
-    setDocumentTableData(LatestData);
-    localStorage.setItem("reminderData", JSON.stringify(LatestData));
+  const addReminderData = async (data) => {
+    const payload = {
+      vehicleNo: data.vehicleNo,
+      documentType: data.documentType,
+      expiryDate: data.expiryDate,
+      note: data.note,
+    };
+    try {
+      const response = await postApiData("ADD_NEW_VEHICALE_DOCUMENTS", payload);
+      if (response.status) {
+        const LatestData = [...documentTableData, { id: response.id, ...data }];
+        setDocumentTableData(LatestData);
+      }
+    } catch (error) {
+      console.error("Error occurred during form submission:", error);
+    }
   };
 
   const updateReminderData = (updatedData) => {
@@ -65,14 +76,32 @@ const Dashboard = () => {
 
   // console.log("reminderData", reminderData);
 
-  const getTabelData = () => {
-    const existingDataString = localStorage.getItem("reminderData");
-    let existingData = existingDataString ? JSON.parse(existingDataString) : [];
-    setDocumentTableData(existingData);
+  // const getTabelData = () => {
+  //   const existingDataString = localStorage.getItem("reminderData");
+  //   let existingData = existingDataString ? JSON.parse(existingDataString) : [];
+  //   setDocumentTableData(existingData);
+  // };
+
+  // useEffect(() => {
+  //   getTabelData();
+  // }, []);
+
+  const getAllVehicleDocuments = async () => {
+    try {
+      const response = await postApiData("GET_ALL_VEHICALE_DOCUMENTS");
+      console.log(response.data )
+      if (response.status && response.data.length > 0) {
+        setDocumentTableData(response.data);
+      } else {
+        setDocumentTableData([]);
+      }
+    } catch (error) {
+      console.error("Error occurred during form submission:", error);
+    }
   };
 
   useEffect(() => {
-    getTabelData();
+    getAllVehicleDocuments();
   }, []);
 
   return (

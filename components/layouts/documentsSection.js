@@ -3,6 +3,8 @@ import DocumentsTables from "./tables/documentsTables";
 import moment from "moment";
 import { getConstant } from "@/utilities/utils";
 import { DOCUMENTS_TYPE_LIST } from "@/utilities/dummyData";
+import DocumentTable from "../tabels/documentTable";
+import { docTableHeadCells } from "@/utilities/masterData";
 
 export default function DocumentsSection(props) {
   const {
@@ -55,7 +57,7 @@ export default function DocumentsSection(props) {
 
     setDocumentsTypeList(updatedDocsList);
   }, [tableData]);
-
+  console.log("tableData", tableData);
   return (
     <div>
       <div className="card-body">
@@ -71,10 +73,15 @@ export default function DocumentsSection(props) {
           ))}
         </div>
 
-        <DocumentsTables
+        {/* <DocumentsTables
           tableData={tableData}
           onClickEdit={onClickEdit}
           onClickDelete={onClickDelete}
+        /> */}
+        <DocumentTable
+          rows={tableData}
+          headCells={docTableHeadCells}
+          title="All Records"
         />
       </div>
     </div>

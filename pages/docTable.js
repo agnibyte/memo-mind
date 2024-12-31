@@ -1,50 +1,69 @@
 import DocumentTable from "@/components/tabels/documentTable";
+import { docTableHeadCells } from "@/utilities/masterData";
 
 export default function DocTable() {
-  const tableData = {
-    headCells: [
-      {
-        id: "masterNo",
-        numeric: false,
-        disablePadding: false,
-        label: "Master No.",
+  const rowsData = [
+    {
+      id: "vZhHQykiUwDX",
+      masterNo: "qsqasax",
+      vehicleNo: {
+        id: "18",
+        label: "MH 18 GH 4567",
+        value: "mh18gh4567",
       },
-      {
-        id: "vehicleNo",
-        numeric: true,
-        disablePadding: false,
-        label: "Vehicle No.",
+      documentType: {
+        id: "2",
+        label: "INSURANCE",
+        value: "insurance",
+        count: 5,
       },
-      { id: "fat", numeric: true, disablePadding: false, label: "Fat" },
-      { id: "carbs", numeric: true, disablePadding: false, label: "Carbs" },
-      { id: "protein", numeric: true, disablePadding: false, label: "Protein" },
-    ],
-    rowsData: [
-      {
-        id: 1,
-        masterNo: "M123",
-        vehicleNo: "A1",
-        fat: 5.2,
-        carbs: 30,
-        protein: 10,
+      expiryDate: "2024-10-14T16:32:34.000Z",
+      protein: 10,
+    },
+    {
+      id: "xscd",
+      masterNo: "qsqasax",
+      vehicleNo: {
+        id: "18",
+        label: "MH 18 GH 4567",
+        value: "mh18gh4567",
       },
-      {
-        id: 2,
-        masterNo: "M124",
-        vehicleNo: "A2",
-        fat: 4.5,
-        carbs: 32,
-        protein: 12,
+      documentType: {
+        id: "2",
+        label: "INSURANCE",
+        value: "insurance",
+        count: 5,
       },
-    ],
-  };
+      expiryDate: "2024-10-14T16:32:34.000Z",
+      protein: 12,
+    },
+  ];
+  const data = [
+    {
+      id: "vZhHQykiUwDX",
+      masterNo: "qsqasax",
+      vehicleNo: {
+        id: "18",
+        label: "MH 18 GH 4567",
+        value: "mh18gh4567",
+      },
+      documentType: {
+        id: "2",
+        label: "INSURANCE",
+        value: "insurance",
+        count: 5,
+      },
+      expiryDate: "2024-10-14T16:32:34.000Z",
+      alertDate: "",
+    },
+  ];
 
   return (
     <div>
       <DocumentTable
-        rows={tableData.rowsData}
-        headCells={tableData.headCells}
-        title="Nutrition Information"
+        rows={rowsData}
+        headCells={docTableHeadCells}
+        title="Document Table"
       />
     </div>
   );

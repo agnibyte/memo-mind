@@ -2,24 +2,28 @@ import * as React from "react";
 import PropTypes from "prop-types";
 import { alpha } from "@mui/material/styles";
 import Box from "@mui/material/Box";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
-import TableRow from "@mui/material/TableRow";
 import TableSortLabel from "@mui/material/TableSortLabel";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import Paper from "@mui/material/Paper";
-import Checkbox from "@mui/material/Checkbox";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
 import { visuallyHidden } from "@mui/utils";
 import { useState, useMemo } from "react";
+import { formatDate, getConstant, getDateBeforeDays } from "@/utilities/utils";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Checkbox,
+  Button,
+  Paper,
+} from "@mui/material";
 
 // Utility functions for sorting
 function descendingComparator(a, b, orderBy) {
@@ -106,7 +110,12 @@ EnhancedTableHead.propTypes = {
 };
 
 // EnhancedTableToolbar Component
-function EnhancedTableToolbar({ numSelected, title }) {
+function EnhancedTableToolbar({
+  numSelected,
+  title,
+  onClickDelete,
+  onClickEdit,
+}) {
   return (
     <Toolbar
       sx={[
@@ -124,15 +133,43 @@ function EnhancedTableToolbar({ numSelected, title }) {
       ]}
     >
       {numSelected > 0 ? (
-        <Typography
-          sx={{ flex: "1 1 100%" }}
-          color="inherit"
-          variant="subtitle1"
-          component="div"
-        >
-          {numSelected} selected
-        </Typography>
+        <>
+          {/* Selected Count */}
+          <Typography
+            sx={{ flex: "1 1 100%" }}
+            color="inherit"
+            variant="subtitle1"
+            component="div"
+          >
+            {numSelected} selected
+          </Typography>
+
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
+              padding: "10px",
+            }}
+          >
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={onClickEdit}
+              style={{ marginRight: "10px" }}
+            >
+              Edit
+            </Button>
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={onClickDelete}
+            >
+              Delete
+            </Button>
+          </div>
+        </>
       ) : (
+        // Title Display
         <Typography
           sx={{ flex: "1 1 100%" }}
           variant="h6"
@@ -152,7 +189,13 @@ EnhancedTableToolbar.propTypes = {
 };
 
 // Main DocumentTable Component
-const DocumentTable = ({ rows, headCells, title }) => {
+const DocumentTable = ({
+  rows,
+  headCells,
+  title,
+  onClickDelete,
+  onClickEdit,
+}) => {
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState(headCells[0].id);
   const [selected, setSelected] = useState([]);
@@ -218,13 +261,37 @@ const DocumentTable = ({ rows, headCells, title }) => {
     [order, orderBy, page, rowsPerPage, rows]
   );
 
+  console.log({ selected });
   return (
     <Box sx={{ width: "100%" }}>
       <Paper sx={{ width: "100%", mb: 2 }}>
         <EnhancedTableToolbar
           numSelected={selected.length}
           title={title}
+          onClickDelete={onClickDelete}
+          onClickEdit={onClickEdit}
         />
+        {/* {selected.length > 0 && (
+          <div  className="d-flex justify-content-end" style={{}}>
+            <div style={{ padding: "10px" }}>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={onClickEdit}
+                style={{ marginRight: "10px" }}
+              >
+                Edit
+              </Button>
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={onClickDelete}
+              >
+                Delete
+              </Button>
+            </div>
+          </div>
+        )} */}
         <TableContainer>
           <Table
             sx={{ minWidth: 750 }}
@@ -273,10 +340,29 @@ const DocumentTable = ({ rows, headCells, title }) => {
                     >
                       {row.masterNo}
                     </TableCell>
-                    <TableCell align="right">{row.vehicleNo?.label}</TableCell>
-                    <TableCell align="right">{row.fat}</TableCell>
-                    <TableCell align="right">{row.carbs}</TableCell>
-                    <TableCell align="right">{row.protein}</TableCell>
+                    <TableCell align="left">{row.vehicleNo?.label}</TableCell>
+                    <TableCell align="left">
+                      {row.documentType?.label}
+                    </TableCell>
+                    <TableCell align="left">
+                      {formatDate(row.expiryDate)}
+                    </TableCell>
+                    <TableCell align="left">
+                      {getDateBeforeDays(
+                        row.expiryDate,
+                        getConstant("DAYS_BEFORE_ALERT")
+                      )}
+                    </TableCell>
+                    <TableCell align="left">
+                      <button
+                        className="btn  btn-outline-warning mx-2"
+                        variant="outline-warning "
+                        // style={{ backgroundColor: "transparent" }}
+                        onClick={() => onClickEdit(item.id)}
+                      >
+                        Edit
+                      </button>
+                    </TableCell>
                   </TableRow>
                 );
               })}
@@ -318,7 +404,7 @@ DocumentTable.propTypes = {
 };
 
 DocumentTable.defaultProps = {
-  title: "Document Table",
+  title: "",
 };
 
 export default DocumentTable;

@@ -19,7 +19,7 @@ export default function AddDocumentForm({
   updateReminderData,
 }) {
   const defaultData = {
-    masterNo: "",
+    // masterNo: "",
     vehicleNo: "",
     documentType: "",
     expiryDate: moment(),
@@ -46,7 +46,7 @@ export default function AddDocumentForm({
   } = useForm();
 
   const validation = {
-    masterNo: register("masterNo", DocValidation.masterNo),
+    // masterNo: register("masterNo", DocValidation.masterNo),
     vehicleNo: register("vehicleNo", DocValidation.vehicleNo),
     documentType: register("documentType", DocValidation.documentType),
     // expiryDate: register("expiryDate", DocValidation.expiryDate),
@@ -54,6 +54,7 @@ export default function AddDocumentForm({
   };
 
   const updateSelectedForm = (type, value) => {
+    console.log("type, value", type, value);
     const temp = { ...formData };
     temp[type] = value;
     setFormData(temp);
@@ -84,7 +85,12 @@ export default function AddDocumentForm({
       setExpiryDateError("Please enter the expiry date");
       return;
     }
-    addReminderData(formData);
+    const addData = {
+      ...formData,
+      vehicleNo: formData.vehicleNo.value,
+      documentType: formData.documentType.value,
+    };
+    addReminderData(addData);
     setReminderModal(false);
     setIsEdit(false);
 
@@ -109,14 +115,14 @@ export default function AddDocumentForm({
     setIsEdit(false);
     setFormData(defaultData);
   };
-  console.log('formData', formData)
+  console.log("formData", formData);
 
   return (
     <form
       onSubmit={handleSubmit(onClickSubmit)}
       className="form-container"
     >
-      <div className="form-group">
+      {/* <div className="form-group">
         <label
           htmlFor="masterNo"
           className="form-label"
@@ -136,7 +142,7 @@ export default function AddDocumentForm({
         {errors?.masterNo && (
           <div className="invalid-feedback">{errors.masterNo.message}</div>
         )}
-      </div>
+      </div> */}
       <InputWithVoice
         note={formData.note}
         setNote={(value) => updateSelectedForm("note", value)}

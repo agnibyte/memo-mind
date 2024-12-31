@@ -1,10 +1,10 @@
 export const docTableHeadCells = [
-  {
-    id: "masterNo",
-    numeric: false,
-    disablePadding: false,
-    label: "Master No.",
-  },
+  // {
+  //   id: "masterNo",
+  //   numeric: false,
+  //   disablePadding: false,
+  //   label: "Master No.",
+  // },
   {
     id: "vehicleNo",
     numeric: false,
@@ -35,5 +35,5 @@ export const docTableHeadCells = [
     disablePadding: false,
     label: "Alert Date",
   },
-  { id: "Action", numeric: false, disablePadding: false, label: "action" },
+  { id: "action", numeric: false, disablePadding: false, label: "Action" },
 ];

@@ -14,6 +14,7 @@ import { visuallyHidden } from "@mui/utils";
 import { useState, useMemo } from "react";
 import {
   formatDate,
+  formatVehicleNumber,
   getConstant,
   getDateBeforeDays,
   truncateString,
@@ -78,8 +79,8 @@ function EnhancedTableHead({
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
-            // align={headCell.numeric ? "right" : "left"}
-            align={headCell.numeric ? "right" : "center"}
+            align={headCell.numeric ? "right" : "left"}
+            // align={headCell.numeric ? "right" : "center"}
             padding={headCell.disablePadding ? "none" : "normal"}
             sortDirection={orderBy === headCell.id ? order : false}
           >
@@ -110,18 +111,19 @@ EnhancedTableHead.propTypes = {
   onSelectAllClick: PropTypes.func.isRequired,
   order: PropTypes.string.isRequired,
   orderBy: PropTypes.string.isRequired,
-  numSelected: PropTypes.number.isRequired,
+  selectedItems: PropTypes.array.isRequired,
   rowCount: PropTypes.number.isRequired,
   onRequestSort: PropTypes.func.isRequired,
 };
 
 // EnhancedTableToolbar Component
 function EnhancedTableToolbar({
-  numSelected,
+  selectedItems,
   title,
   onClickDelete,
   onClickEdit,
 }) {
+  const numSelected = selectedItems.length;
   return (
     <Toolbar
       sx={[
@@ -157,14 +159,16 @@ function EnhancedTableToolbar({
               padding: "10px",
             }}
           >
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={onClickEdit}
-              style={{ marginRight: "10px" }}
-            >
-              Edit
-            </Button>
+            {numSelected == 1 && (
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => onClickEdit(selectedItems[0])}
+                style={{ marginRight: "10px" }}
+              >
+                Edit
+              </Button>
+            )}
             <Button
               variant="contained"
               color="secondary"
@@ -267,12 +271,11 @@ const DocumentTable = ({
     [order, orderBy, page, rowsPerPage, rows]
   );
 
-  console.log({ selected });
   return (
     <Box sx={{ width: "100%" }}>
       <Paper sx={{ width: "100%", mb: 2 }}>
         <EnhancedTableToolbar
-          numSelected={selected.length}
+          selectedItems={selected}
           title={title}
           onClickDelete={onClickDelete}
           onClickEdit={onClickEdit}
@@ -338,15 +341,23 @@ const DocumentTable = ({
                         }}
                       />
                     </TableCell>
-                    <TableCell
+                    {/* <TableCell
                       component="th"
                       id={labelId}
                       scope="row"
                       padding="none"
                     >
                       {row.masterNo}
+                    </TableCell> */}
+                    <TableCell
+                      align="left"
+                      component="th"
+                      id={labelId}
+                      scope="row"
+                      padding="normal"
+                    >
+                      {formatVehicleNumber(row.vehicleNo)}
                     </TableCell>
-                    <TableCell align="left">{row.vehicleNo?.label}</TableCell>
                     <TableCell
                       align={row.note ? "left" : "center"}
                       title={row.note}
@@ -354,7 +365,7 @@ const DocumentTable = ({
                       {truncateString(row.note) || "-"}
                     </TableCell>
                     <TableCell align="left">
-                      {row.documentType?.label}
+                      {formatVehicleNumber(row.documentType)}
                     </TableCell>
                     <TableCell align="left">
                       {formatDate(row.expiryDate)}
@@ -370,7 +381,7 @@ const DocumentTable = ({
                         className="btn  btn-outline-warning mx-2"
                         variant="outline-warning "
                         // style={{ backgroundColor: "transparent" }}
-                        onClick={() => onClickEdit(item.id)}
+                        onClick={() => onClickEdit(row.id)}
                       >
                         Edit
                       </button>

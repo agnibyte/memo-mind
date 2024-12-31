@@ -45,11 +45,6 @@ export const InputWithVoice = ({ label, note, setNote }) => {
     recognition.start();
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    alert(`Note submitted: ${note}`);
-    setNote("");
-  };
 
   return (
     <div className="form-group">

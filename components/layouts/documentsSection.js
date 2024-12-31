@@ -82,6 +82,8 @@ export default function DocumentsSection(props) {
           rows={tableData}
           headCells={docTableHeadCells}
           title="All Records"
+          onClickEdit={onClickEdit}
+          onClickDelete={onClickDelete}
         />
       </div>
     </div>

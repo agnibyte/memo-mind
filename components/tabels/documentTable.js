@@ -14,7 +14,6 @@ import { visuallyHidden } from "@mui/utils";
 import { useState, useMemo } from "react";
 import {
   formatDate,
-  formatVehicleNumber,
   getConstant,
   getDateBeforeDays,
   truncateString,

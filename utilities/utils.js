@@ -51,11 +51,11 @@ export const formatVehicleNumber = (vehicleNumber="") => {
   if (!vehicleNumber) return "";
 
   // Ensure input is uppercase
-  const upperCaseNumber = vehicleNumber && vehicleNumber != "" && vehicleNumber?.toUpperCase();
+  // const upperCaseNumber = vehicleNumber && vehicleNumber != "" && vehicleNumber?.toUpperCase();
 
   // Flexible pattern for Indian vehicle numbers
   const regex = /^([A-Z]{2})(\d{1,2})([A-Z]{0,2})(\d{1,4})$/;
-  return upperCaseNumber.replace(regex, (_, state, rto, series, number) => {
+  return vehicleNumber.replace(regex, (_, state, rto, series, number) => {
     return [state, rto, series, number].filter(Boolean).join(" ");
   });
 };

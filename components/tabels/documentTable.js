@@ -356,7 +356,7 @@ const DocumentTable = ({
                       scope="row"
                       padding="normal"
                     >
-                      {formatVehicleNumber(row.vehicleNo)}
+                      {row.vehicleNo}
                     </TableCell>
                     <TableCell
                       align={row.note ? "left" : "center"}
@@ -365,7 +365,7 @@ const DocumentTable = ({
                       {truncateString(row.note) || "-"}
                     </TableCell>
                     <TableCell align="left">
-                      {formatVehicleNumber(row.documentType)}
+                      {row.documentType}
                     </TableCell>
                     <TableCell align="left">
                       {formatDate(row.expiryDate)}

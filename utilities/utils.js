@@ -51,7 +51,7 @@ export const formatVehicleNumber = (vehicleNumber="") => {
   if (!vehicleNumber) return "";
 
   // Ensure input is uppercase
-  const upperCaseNumber = vehicleNumber && vehicleNumber.toUpperCase();
+  const upperCaseNumber = vehicleNumber && vehicleNumber != "" && vehicleNumber?.toUpperCase();
 
   // Flexible pattern for Indian vehicle numbers
   const regex = /^([A-Z]{2})(\d{1,2})([A-Z]{0,2})(\d{1,4})$/;

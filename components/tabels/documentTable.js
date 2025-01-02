@@ -14,6 +14,7 @@ import { visuallyHidden } from "@mui/utils";
 import { useState, useMemo } from "react";
 import {
   formatDate,
+  formatVehicleNumber,
   getConstant,
   getDateBeforeDays,
   truncateString,
@@ -355,7 +356,7 @@ const DocumentTable = ({
                       scope="row"
                       padding="normal"
                     >
-                      {row.vehicleNo}
+                      {formatVehicleNumber(row.vehicleNo)}
                     </TableCell>
                     <TableCell
                       align={row.note ? "left" : "center"}
@@ -364,7 +365,7 @@ const DocumentTable = ({
                       {truncateString(row.note) || "-"}
                     </TableCell>
                     <TableCell align="left">
-                      {row.documentType}
+                      {formatVehicleNumber(row.documentType)}
                     </TableCell>
                     <TableCell align="left">
                       {formatDate(row.expiryDate)}

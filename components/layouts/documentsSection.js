@@ -5,6 +5,7 @@ import { getConstant } from "@/utilities/utils";
 import { DOCUMENTS_TYPE_LIST } from "@/utilities/dummyData";
 import DocumentTable from "../tabels/documentTable";
 import { docTableHeadCells } from "@/utilities/masterData";
+import { FaEdit, FaTrashAlt } from "react-icons/fa"; // Import icons
 
 export default function DocumentsSection(props) {
   const {
@@ -15,11 +16,10 @@ export default function DocumentsSection(props) {
     setTableData,
   } = props;
 
-  const [documentsTypeList, setDocumentsTypeList] =
-    useState(DOCUMENTS_TYPE_LIST);
+  const [documentsTypeList, setDocumentsTypeList] = useState(DOCUMENTS_TYPE_LIST);
 
   const onClickEdit = (id) => {
-    const selectedItem = tableData.filter((item) => item.id == id);
+    const selectedItem = tableData.filter((item) => item.id === id);
     setReminderData(selectedItem[0]);
     setReminderModal(true);
     setIsEdit(true);
@@ -29,7 +29,6 @@ export default function DocumentsSection(props) {
     const updatedData = tableData.filter((item) => item.id !== id);
     localStorage.setItem("reminderData", JSON.stringify(updatedData));
     setTableData(updatedData);
-    // setRefresh(!refresh);
   };
 
   useEffect(() => {
@@ -57,34 +56,57 @@ export default function DocumentsSection(props) {
 
     setDocumentsTypeList(updatedDocsList);
   }, [tableData]);
-  
-  return (
-    <div>
-      <div className="card-body">
-        <div className="row mb-4">
-          {documentsTypeList.map((item, i) => (
-            <div
-              key={i}
-              className="col text-center"
-            >
-              <div className="h5">{item.label}</div>
-              <div className="text-danger display-6">{item.count}</div>
-            </div>
-          ))}
-        </div>
 
-        {/* <DocumentsTables
-          tableData={tableData}
-          onClickEdit={onClickEdit}
-          onClickDelete={onClickDelete}
-        /> */}
-        <DocumentTable
-          rows={tableData}
-          headCells={docTableHeadCells}
-          title="All Records"
-          onClickEdit={onClickEdit}
-          onClickDelete={onClickDelete}
-        />
+  return (
+    <div className="container mt-5">
+      <div className="card shadow-lg rounded">
+        <div className="card-body">
+          {/* Section with document counts */}
+          <div className="row mb-4">
+            {documentsTypeList.map((item, i) => (
+              <div key={i} className="col-md-4 col-sm-6 text-center mb-3">
+                <div
+                  className="p-4 rounded shadow-sm"
+                  style={{
+                    backgroundColor: "#f8f9fa",
+                    borderRadius: "10px",
+                    transition: "transform 0.3s ease",
+                  }}
+                >
+                  <div className="h5 text-primary">{item.label}</div>
+                  <div className="display-6 text-danger">{item.count}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Document Table */}
+          <DocumentTable
+            rows={tableData}
+            headCells={docTableHeadCells}
+            title="All Records"
+            onClickEdit={onClickEdit}
+            onClickDelete={onClickDelete}
+            renderActions={(id) => (
+              <div className="d-flex justify-content-center">
+                <button
+                  className="btn btn-warning btn-sm mx-1"
+                  onClick={() => onClickEdit(id)}
+                  title="Edit"
+                >
+                  <FaEdit />
+                </button>
+                <button
+                  className="btn btn-danger btn-sm mx-1"
+                  onClick={() => onClickDelete(id)}
+                  title="Delete"
+                >
+                  <FaTrashAlt />
+                </button>
+              </div>
+            )}
+          />
+        </div>
       </div>
     </div>
   );

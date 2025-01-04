@@ -74,6 +74,18 @@ const Dashboard = () => {
     setIsEdit(false);
     setReminderModal(true);
   };
+  
+  // console.log("reminderData", reminderData);
+
+  // const getTabelData = () => {
+  //   const existingDataString = localStorage.getItem("reminderData");
+  //   let existingData = existingDataString ? JSON.parse(existingDataString) : [];
+  //   setDocumentTableData(existingData);
+  // };
+
+  // useEffect(() => {
+  //   getTabelData();
+  // }, []);
 
   const getAllVehicleDocuments = async () => {
     try {
@@ -134,8 +146,16 @@ const Dashboard = () => {
         modalTitle={"Add New Reminder"}
         modalOpen={reminderModal}
         setModalOpen={setReminderModal}
-        className={"custom-modal"}
-      >
+        className={""}
+        >
+          {/* <AddReminderForm
+            setReminderModal={setReminderModal}
+            reminderModal={reminderModal}
+            reminderData={reminderData}
+            setReminderData={setReminderData}
+            addReminderData={addReminderData}
+          /> */}
+      
         <AddDocumentForm
           setReminderModal={setReminderModal}
           addReminderData={addReminderData}

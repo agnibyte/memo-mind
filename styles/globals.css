@@ -286,3 +286,218 @@ p:last-child {
 	  .videoCard iframe{height: 133px;}
 	  .testimonialVideo .owl-item.center + .active .videoCard img{height: 94px;}
   }
+
+  /* Global Styles */
+body {
+	font-family: 'Poppins', sans-serif;
+	margin: 0;
+	padding: 0;
+	background-color: #f5f7fa;
+	color: #333;
+  }
+  
+  .dashboard-container {
+	background-color: #f8f9fa;
+  }
+  
+  .card {
+	border-radius: 16px;
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+	margin: 15px;
+	background: #fff;
+	border: none;
+  }
+  
+  .card-header {
+	background: #007bff;
+	color: white;
+	border-radius: 16px 16px 0 0;
+	padding: 20px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+  }
+  
+  .card-header h1 {
+	font-size: 26px;
+  }
+  
+  .card-header .btn {
+	background: #ffffff;
+	color: #007bff;
+	border-radius: 30px;
+	padding: 10px 20px;
+	font-size: 14px;
+	transition: all 0.3s ease;
+	box-shadow: 0 5px 10px rgba(0, 123, 255, 0.1);
+  }
+  
+  .card-header .btn:hover {
+	background-color: #e9f5ff;
+	box-shadow: 0 5px 15px rgba(0, 123, 255, 0.2);
+  }
+  
+  .nav-tabs .nav-link {
+	font-size: 16px;
+	font-weight: bold;
+	color: #333;
+	padding: 10px 20px;
+	border-radius: 30px;
+	transition: background-color 0.3s ease;
+  }
+  
+  .nav-tabs .nav-link.active {
+	background-color: #007bff;
+	color: white;
+  }
+  
+  .tab-content {
+	padding: 20px;
+  }
+  
+  .custom-modal .modal-dialog {
+	max-width: 600px;
+	border-radius: 20px;
+  }
+  
+  .custom-modal .modal-content {
+	border-radius: 20px;
+  }
+  
+  .custom-modal .modal-header {
+	background-color: #007bff;
+	color: white;
+	border-radius: 20px 20px 0 0;
+  }
+  
+  .custom-modal .modal-footer {
+	border-top: none;
+  }
+  
+  input, select, textarea {
+	border-radius: 8px;
+	border: 1px solid #ddd;
+	padding: 12px;
+	font-size: 14px;
+	width: 100%;
+	transition: border-color 0.3s ease;
+  }
+  
+  input:focus, select:focus, textarea:focus {
+	border-color: #007bff;
+	outline: none;
+  }
+  
+  button {
+	border-radius: 30px;
+	padding: 10px 25px;
+	font-size: 16px;
+	background-color: #007bff;
+	color: white;
+	border: none;
+	cursor: pointer;
+	transition: all 0.3s ease;
+  }
+  
+  button:hover {
+	background-color: #0056b3;
+	transform: translateY(-3px);
+  }
+  
+  button:active {
+	transform: translateY(1px);
+  }
+  
+  /* Mobile responsiveness */
+  @media (max-width: 768px) {
+	.card-header {
+	  padding: 15px;
+	}
+  
+	.nav-tabs {
+	  display: block;
+	  margin-bottom: 20px;
+	}
+  
+	.nav-tabs .nav-link {
+	  display: block;
+	  padding: 10px;
+	  margin: 5px 0;
+	}
+  
+	.card {
+	  margin: 0;
+	}
+  
+	.container {
+	  padding-left: 15px;
+	  padding-right: 15px;
+	}
+  }
+  
+  @media (max-width: 576px) {
+	.card-header h1 {
+	  font-size: 22px;
+	}
+  
+	.card-header .btn {
+	  font-size: 12px;
+	  padding: 8px 15px;
+	}
+  
+	.card {
+	  margin-top: 10px;
+	  padding: 10px;
+	}
+  
+	input, select, textarea {
+	  font-size: 12px;
+	  padding: 10px;
+	}
+  
+	button {
+	  padding: 8px 15px;
+	  font-size: 14px;
+	}
+  }
+  /* Global styles */
+body.dark-mode {
+	background-color: #121212;
+	color: #ffffff;
+  }
+  
+  /* Dark Mode Card */
+  .dark-card {
+	background-color: #1c1c1c;
+	border: 1px solid #333;
+  }
+  
+  /* Dark Mode Modal */
+  .dark-modal {
+	background-color: #333;
+	color: white;
+  }
+  
+  /* Card Header */
+  .card-header.bg-dark {
+	background-color: #333 !important;
+  }
+  
+  /* Buttons for Dark Mode */
+  button {
+	transition: all 0.3s ease;
+  }
+  
+  button:hover {
+	background-color: #444;
+  }
+  
+  /* Text Styling */
+  .text-light {
+	color: #f8f9fa !important;
+  }
+  
+  .text-dark {
+	color: #343a40 !important;
+  }
+  

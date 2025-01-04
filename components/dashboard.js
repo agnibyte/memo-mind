@@ -1,4 +1,3 @@
-// components/Dashboard.js
 import React, { useEffect, useState } from "react";
 import AddReminderForm from "./molecules/addReminderForm";
 import CommonModal from "./common/commonModal";
@@ -7,8 +6,10 @@ import Tabs from "react-bootstrap/Tabs";
 import DocumentsSection from "./layouts/documentsSection";
 import EmiSection from "./layouts/emiSection";
 import AddDocumentForm from "./molecules/addDocumentForm";
-import { getUniqueKey } from "@/utilities/utils";
 import { postApiData } from "@/utilities/services/apiService";
+import { Button, Row, Col } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 
 const Dashboard = () => {
   const [reminderModal, setReminderModal] = useState(false);
@@ -19,7 +20,7 @@ const Dashboard = () => {
   const dashboardTabs = [
     {
       id: "01",
-      label: "Document",
+      label: "Documents",
       value: "document",
       component: (
         <DocumentsSection
@@ -69,27 +70,14 @@ const Dashboard = () => {
     setSelectedTab(val);
   };
 
-  const onClickAddReminder = (val) => {
+  const onClickAddReminder = () => {
     setIsEdit(false);
     setReminderModal(true);
   };
 
-  // console.log("reminderData", reminderData);
-
-  // const getTabelData = () => {
-  //   const existingDataString = localStorage.getItem("reminderData");
-  //   let existingData = existingDataString ? JSON.parse(existingDataString) : [];
-  //   setDocumentTableData(existingData);
-  // };
-
-  // useEffect(() => {
-  //   getTabelData();
-  // }, []);
-
   const getAllVehicleDocuments = async () => {
     try {
       const response = await postApiData("GET_ALL_VEHICALE_DOCUMENTS");
-      console.log(response.data )
       if (response.status && response.data.length > 0) {
         setDocumentTableData(response.data);
       } else {
@@ -105,26 +93,35 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <>
+    <div className="dashboard-container">
       <div className="container mt-5">
-        <div className="card">
-          <div className="card-header bg-light">
-            <h1 className="h4 mb-0">DASHBORD</h1>
+        <div className="card shadow-lg rounded-lg">
+          <div className="card-header bg-gradient d-flex justify-content-between align-items-center p-4">
+            <h1 className="h4 text-white mb-0">Dashboard</h1>
+            <Button
+              variant="success"
+              onClick={onClickAddReminder}
+              className="d-flex align-items-center"
+            >
+              <FontAwesomeIcon icon={faPlusCircle} className="me-2" />
+              Add Reminder
+            </Button>
           </div>
-          <button onClick={onClickAddReminder}>Add</button>
 
           <Tabs
             defaultActiveKey={dashboardTabs[0].value}
             transition={false}
             id="noanim-tab-example"
             className="mb-3"
+            activeKey={selectedTab}
+            onSelect={(key) => onClickDashboardTab(key)}
           >
             {dashboardTabs.map((tab, index) => (
               <Tab
                 key={index}
-                onClick={() => onClickDashboardTab(tab.value)}
                 eventKey={tab.value}
                 title={tab.label}
+                className="text-center"
               >
                 {tab.component}
               </Tab>
@@ -137,15 +134,8 @@ const Dashboard = () => {
         modalTitle={"Add New Reminder"}
         modalOpen={reminderModal}
         setModalOpen={setReminderModal}
-        className={""}
+        className={"custom-modal"}
       >
-        {/* <AddReminderForm
-          setReminderModal={setReminderModal}
-          reminderModal={reminderModal}
-          reminderData={reminderData}
-          setReminderData={setReminderData}
-          addReminderData={addReminderData}
-        /> */}
         <AddDocumentForm
           setReminderModal={setReminderModal}
           addReminderData={addReminderData}
@@ -155,7 +145,7 @@ const Dashboard = () => {
           updateReminderData={updateReminderData}
         />
       </CommonModal>
-    </>
+    </div>
   );
 };
 

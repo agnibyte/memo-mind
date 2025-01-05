@@ -340,7 +340,7 @@ body {
   .nav-tabs .nav-link {
 	font-size: 16px;
 	font-weight: bold;
-	color: #333;
+	color: #a1a1a1;
 	padding: 10px 20px;
 	border-radius: 30px;
 	transition: background-color 0.3s ease;
@@ -352,7 +352,7 @@ body {
   }
   
   .tab-content {
-	padding: 20px;
+	/* padding: 20px; */
   }
   
   .custom-modal .modal-dialog {
@@ -462,7 +462,7 @@ body {
   }
   /* Global styles */
 body.dark-mode {
-	background-color: #121212;
+	background-color: #ff0000;
 	color: #ffffff;
   }
   

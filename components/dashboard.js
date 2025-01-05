@@ -75,18 +75,6 @@ const Dashboard = () => {
     setReminderModal(true);
   };
   
-  // console.log("reminderData", reminderData);
-
-  // const getTabelData = () => {
-  //   const existingDataString = localStorage.getItem("reminderData");
-  //   let existingData = existingDataString ? JSON.parse(existingDataString) : [];
-  //   setDocumentTableData(existingData);
-  // };
-
-  // useEffect(() => {
-  //   getTabelData();
-  // }, []);
-
   const getAllVehicleDocuments = async () => {
     try {
       const response = await postApiData("GET_ALL_VEHICALE_DOCUMENTS");
@@ -125,6 +113,7 @@ const Dashboard = () => {
             transition={false}
             id="noanim-tab-example"
             className="mb-3"
+            style={{border:'none'}}
             activeKey={selectedTab}
             onSelect={(key) => onClickDashboardTab(key)}
           >
@@ -148,14 +137,6 @@ const Dashboard = () => {
         setModalOpen={setReminderModal}
         className={""}
         >
-          {/* <AddReminderForm
-            setReminderModal={setReminderModal}
-            reminderModal={reminderModal}
-            reminderData={reminderData}
-            setReminderData={setReminderData}
-            addReminderData={addReminderData}
-          /> */}
-      
         <AddDocumentForm
           setReminderModal={setReminderModal}
           addReminderData={addReminderData}

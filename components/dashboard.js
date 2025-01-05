@@ -74,7 +74,7 @@ const Dashboard = () => {
     setIsEdit(false);
     setReminderModal(true);
   };
-  
+
   const getAllVehicleDocuments = async () => {
     try {
       const response = await postApiData("GET_ALL_VEHICALE_DOCUMENTS");
@@ -103,7 +103,10 @@ const Dashboard = () => {
               onClick={onClickAddReminder}
               className="d-flex align-items-center"
             >
-              <FontAwesomeIcon icon={faPlusCircle} className="me-2" />
+              <FontAwesomeIcon
+                icon={faPlusCircle}
+                className="me-2"
+              />
               Add Reminder
             </Button>
           </div>
@@ -113,7 +116,7 @@ const Dashboard = () => {
             transition={false}
             id="noanim-tab-example"
             className="mb-3"
-            style={{border:'none'}}
+            style={{ border: "none" }}
             activeKey={selectedTab}
             onSelect={(key) => onClickDashboardTab(key)}
           >
@@ -132,11 +135,11 @@ const Dashboard = () => {
       </div>
 
       <CommonModal
-        modalTitle={"Add New Reminder"}
+        modalTitle={isEdit ? "Edit Document" : "Add New Document"}
         modalOpen={reminderModal}
         setModalOpen={setReminderModal}
         className={""}
-        >
+      >
         <AddDocumentForm
           setReminderModal={setReminderModal}
           addReminderData={addReminderData}

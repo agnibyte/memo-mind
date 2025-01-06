@@ -58,13 +58,13 @@ export default function DocumentsSection(props) {
   }, [tableData]);
 
   return (
-    <div className="container mt-5">
-      <div className="card shadow-lg rounded">
-        <div className="card-body">
+    <div className="">
+      <div className="">
+        <div className="">
           {/* Section with document counts */}
-          <div className="row mb-4">
+          <div className="row    mx-3">
             {documentsTypeList.map((item, i) => (
-              <div key={i} className="col-md-4 col-sm-6 text-center mb-3">
+              <div key={i} className="col-md col-sm text-center my-3">
                 <div
                   className="p-4 rounded shadow-sm"
                   style={{

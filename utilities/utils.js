@@ -60,3 +60,17 @@ export const formatVehicleNumber = (vehicleNumber = "") => {
     return [state, rto, series, number].filter(Boolean).join(" ");
   });
 };
+
+export const checkBotUserAgent = (userAgent) => {
+  return Boolean(
+    userAgent.match(/bot|googlebot|crawler|spider|robot|crawling/i)
+  );
+};
+
+export const checkUserDeviceTypeByUserAgent = (userAgent) => {
+  return Boolean(
+    userAgent.match(
+      /Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i
+    )
+  );
+};

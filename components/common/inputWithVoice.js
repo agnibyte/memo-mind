@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import "@/styles/formStyles.module.scss";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMicrophone, faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 
 export const InputWithVoice = ({ label, note, setNote }) => {
   const [isListening, setIsListening] = useState(false);
@@ -45,35 +47,42 @@ export const InputWithVoice = ({ label, note, setNote }) => {
     recognition.start();
   };
 
-
   return (
-    <div className="form-group">
+    <div className="form-group ">
       <label
         htmlFor="note"
-        className="form-label"
+        className="form-label me-2"
       >
         {label}
       </label>
-      <input
-        type="text"
-        value={note}
-        name="note"
-        onChange={(e) => setNote(e.target.value)}
-        placeholder="Type or speak your note here..."
-        className={`form-control `}
-      />
-      <button
-        type="button"
-        onClick={handleSpeechRecognition}
-        disabled={isListening}
-        className="ml-2 text-gray-500 hover:text-blue-500"
-      >
-        {isListening ? (
-          <span className="animate-pulse">🎤</span>
-        ) : (
-          <span>🎙️</span>
-        )}
-      </button>
+
+      <div className="d-flex align-items-center">
+        <input
+          type="text"
+          value={note}
+          name="note"
+          onChange={(e) => setNote(e.target.value)}
+          placeholder="Type or speak your note here..."
+          className="form-control me-2"
+        />
+        <button
+          type="button"
+          onClick={handleSpeechRecognition}
+          disabled={isListening}
+          className="btn "
+        >
+          {isListening ? (
+            <span className="animate-pulse">🎤</span>
+          ) : (
+            <span>
+              <FontAwesomeIcon
+                icon={faMicrophone}
+                className="me-2"
+              />
+            </span>
+          )}
+        </button>
+      </div>
     </div>
   );
 };

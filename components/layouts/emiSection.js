@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import moment from 'moment';
-import { Button, TextField, Grid, Typography, Box, Card, CardContent, Select, MenuItem, InputLabel, FormControl } from '@mui/material';
+import { Button, TextField, Grid, Typography, Box, Card, CardContent, Select, MenuItem, InputLabel, FormControl, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 
 // Function to calculate EMI
 const calculateEmi = (loanAmount, interestRate, loanTenure) => {
@@ -31,7 +31,7 @@ const calculateEmi = (loanAmount, interestRate, loanTenure) => {
 };
 
 export default function EmiSection() {
-  // State for loan and truck details
+  // State for dynamic loan and truck details
   const [loanAmount, setLoanAmount] = useState('');
   const [interestRate, setInterestRate] = useState('');
   const [loanTenure, setLoanTenure] = useState('');
@@ -41,20 +41,19 @@ export default function EmiSection() {
   const [truckDriverName, setTruckDriverName] = useState('');
   const [truckColor, setTruckColor] = useState('');
   const [truckSizeType, setTruckSizeType] = useState('');
-  const [truckType, setTruckType] = useState(''); // New state for truck type (Container or Coil)
-
-  // Loans state
+  const [truckType, setTruckType] = useState('');
   const [loans, setLoans] = useState([]);
   const [emiDetails, setEmiDetails] = useState(null);
 
-  // Function to handle adding new loan with truck details
+  // Function to handle adding a new loan with truck details
   const addLoan = () => {
     const newLoan = {
+      srNo: loans.length + 1,  // Incremental serial number
       loanAmount,
       interestRate,
       loanTenure,
       emiDetails,
-      dueDate: moment().add(1, 'months').format('YYYY-MM-DD'), // Next month's EMI due date
+      dueDate: moment().add(1, 'months').format('YYYY-MM-DD'),
       truckDetails: {
         truckModel,
         truckNumberPlate,
@@ -62,12 +61,12 @@ export default function EmiSection() {
         truckDriverName,
         truckColor,
         truckSizeType,
-        truckType, // Include the truck type (Container or Coil)
+        truckType,
       },
     };
     setLoans([...loans, newLoan]);
 
-    // Clear the form
+    // Clear form after submission
     setLoanAmount('');
     setInterestRate('');
     setLoanTenure('');
@@ -94,7 +93,7 @@ export default function EmiSection() {
       <Card sx={{ boxShadow: 3, borderRadius: 2 }}>
         <CardContent>
           <Typography variant="h4" component="h2" align="center" sx={{ mb: 4 }}>
-            Truck Loan EMI
+            Truck Loan EMI Notifier Dashboard
           </Typography>
 
           {/* Add New Loan Form */}
@@ -278,51 +277,48 @@ export default function EmiSection() {
         </CardContent>
       </Card>
 
-      {/* Loan List */}
+      {/* Loan List Table */}
       <Box sx={{ mt: 4 }}>
         <Typography variant="h6">Loan List</Typography>
         {loans.length === 0 ? (
           <Typography variant="body2">No loans added yet.</Typography>
         ) : (
-          <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-            {loans.map((loan, index) => {
-              const dueDate = moment(loan.dueDate);
-              const daysRemaining = dueDate.diff(moment(), 'days');
-              const dueIn = daysRemaining <= 0 ? 'Due Today' : `${daysRemaining} Days Left`;
+          <TableContainer component={Paper}>
+            <Table sx={{ minWidth: 650 }} aria-label="loan table">
+              <TableHead>
+                <TableRow>
+                  <TableCell>Sr. No.</TableCell>
+                  <TableCell>Loan Amount</TableCell>
+                  <TableCell>EMI</TableCell>
+                  <TableCell>Total Payment</TableCell>
+                  <TableCell>Total Interest</TableCell>
+                  <TableCell>Truck Model</TableCell>
+                  <TableCell>Truck Type</TableCell>
+                  <TableCell>Due Date</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {loans.map((loan) => {
+                  const dueDate = moment(loan.dueDate);
+                  const daysRemaining = dueDate.diff(moment(), 'days');
+                  const dueIn = daysRemaining <= 0 ? 'Due Today' : `${daysRemaining} Days Left`;
 
-              return (
-                <Card
-                  key={index}
-                  sx={{
-                    mb: 2,
-                    boxShadow: 2,
-                    borderRadius: 2,
-                    bgcolor: daysRemaining <= 0 ? 'error.main' : 'background.paper',
-                  }}
-                >
-                  <CardContent>
-                    <Typography variant="h6">Loan Amount: ₹ {loan.loanAmount}</Typography>
-                    <Typography variant="body2">EMI: ₹ {loan.emiDetails.emi}</Typography>
-                    <Typography variant="body2" sx={{ mt: 1 }}>
-                      Due Date: {loan.dueDate} - {dueIn}
-                    </Typography>
-
-                    {/* Truck Details */}
-                    <Typography variant="subtitle2" sx={{ mt: 2 }}>Truck Details:</Typography>
-                    <ul>
-                      <li>Model: {loan.truckDetails.truckModel}</li>
-                      <li>Plate: {loan.truckDetails.truckNumberPlate}</li>
-                      <li>Purchase Date: {loan.truckDetails.truckPurchaseDate}</li>
-                      <li>Driver: {loan.truckDetails.truckDriverName}</li>
-                      <li>Color: {loan.truckDetails.truckColor}</li>
-                      <li>Size: {loan.truckDetails.truckSizeType}</li>
-                      <li>Type: {loan.truckDetails.truckType}</li>
-                    </ul>
-                  </CardContent>
-                </Card>
-              );
-            })}
-          </Box>
+                  return (
+                    <TableRow key={loan.srNo}>
+                      <TableCell>{loan.srNo}</TableCell>
+                      <TableCell>₹ {loan.loanAmount}</TableCell>
+                      <TableCell>₹ {loan.emiDetails.emi}</TableCell>
+                      <TableCell>₹ {loan.emiDetails.totalPayment}</TableCell>
+                      <TableCell>₹ {loan.emiDetails.totalInterest}</TableCell>
+                      <TableCell>{loan.truckDetails.truckModel}</TableCell>
+                      <TableCell>{loan.truckDetails.truckType}</TableCell>
+                      <TableCell>{dueDate.format('YYYY-MM-DD')} - {dueIn}</TableCell>
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+            </Table>
+          </TableContainer>
         )}
       </Box>
     </Box>

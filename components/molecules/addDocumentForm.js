@@ -76,6 +76,7 @@ export default function AddDocumentForm({
     } else {
       setExpiryDateError("");
       setExpiryDate(moment(date).toISOString()); // Save the updated date in ISO format
+      updateSelectedForm("expiryDate", moment(date).toISOString());
     }
   };
 
@@ -102,11 +103,12 @@ export default function AddDocumentForm({
       setValue("documentType", reminderData.documentType);
       setFormData((prev) => ({
         ...prev,
-        expiryDate: "2024-10-14T16:32:34.000Z",
+        expiryDate: reminderData.expiryDate,
       }));
       // setValue("expiryDate", moment(reminderData.expiryDate));
     }
-  }, [isEdit, setValue]);
+  }, []);
+  // }, [isEdit, setValue]);
 
   const onClickEdit = () => {
     updateReminderData(formData);

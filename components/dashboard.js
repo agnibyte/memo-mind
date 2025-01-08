@@ -56,14 +56,12 @@ const Dashboard = () => {
   };
 
   const updateReminderData = (updatedData) => {
-    const existingDataString = localStorage.getItem("reminderData");
-    let existingData = existingDataString ? JSON.parse(existingDataString) : [];
-
-    existingData = existingData.map((item) =>
-      item.id === updatedData.id ? { ...item, ...updatedData } : item
+    console.log('updatedData', updatedData)
+    setDocumentTableData((prevData) =>
+      prevData.map((item) =>
+        item.id === updatedData.id ? { ...item, ...updatedData } : item
+      )
     );
-
-    localStorage.setItem("reminderData", JSON.stringify(existingData));
   };
 
   const onClickDashboardTab = (val) => {
@@ -101,7 +99,7 @@ const Dashboard = () => {
             <Button
               variant="success"
               onClick={onClickAddReminder}
-              className="d-flex align-items-center"
+              className="d-flex align-items-center addButton"
             >
               <FontAwesomeIcon
                 icon={faPlusCircle}

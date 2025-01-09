@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import styles from "@/styles/common/tabComponent.module.scss";
-
 
 const tabsData = [
   { id: "one", label: "One" },
   { id: "two", label: "Two" },
   { id: "three", label: "Three" },
-  { id: "four", label: "Four" }
+  { id: "four", label: "Four" },
 ];
 
 const TabComponent = () => {
@@ -24,7 +23,7 @@ const TabComponent = () => {
           className={activeTab === tab.id ? styles.active : ""}
           onClick={() => handleTabClick(tab.id)}
         >
-          <a href={`#${tab.id}`}>{tab.label}</a>
+          <span  className={`${styles.tabsLabel}`}>{tab.label}</span>
         </div>
       ))}
     </div>
@@ -32,4 +31,3 @@ const TabComponent = () => {
 };
 
 export default TabComponent;
-

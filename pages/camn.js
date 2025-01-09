@@ -1,3 +1,4 @@
+import TabComponent from "@/components/common/tabComponent";
 import { useState, useEffect } from "react";
 
 export default function Home() {
@@ -50,13 +51,22 @@ export default function Home() {
     alert(`Note submitted: ${note}`);
     setNote("");
   };
-
+  const tabsData = [
+    { title: "Tab 1", content: "Content for the first tab." },
+    { title: "Tab 2", content: "Content for the second tab." },
+    { title: "Tab 3", content: "Content for the third tab." },
+  ];
   return (
     <div className="min-h-screen bg-gray-50 p-6">
+      <TabComponent tabsData={tabsData} />
+
       <div className="max-w-lg mx-auto bg-white shadow-lg rounded-lg p-6">
         <h1 className="text-2xl font-bold mb-4 text-center">Add a Note</h1>
         {error && <p className="text-red-500 mb-4">{error}</p>}
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form
+          onSubmit={handleSubmit}
+          className="space-y-4"
+        >
           <div className="flex items-center border rounded p-2 shadow-sm">
             <input
               type="text"

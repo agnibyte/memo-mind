@@ -10,6 +10,7 @@ import { postApiData } from "@/utilities/services/apiService";
 import { Button, Row, Col } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
+import TabComponent from "./common/tabComponent";
 
 const Dashboard = () => {
   const [reminderModal, setReminderModal] = useState(false);
@@ -56,7 +57,7 @@ const Dashboard = () => {
   };
 
   const updateReminderData = (updatedData) => {
-    console.log('updatedData', updatedData)
+    console.log("updatedData", updatedData);
     setDocumentTableData((prevData) =>
       prevData.map((item) =>
         item.id === updatedData.id ? { ...item, ...updatedData } : item
@@ -107,6 +108,9 @@ const Dashboard = () => {
               />
               Add Reminder
             </Button>
+          </div>
+          <div className="mt-3">
+            <TabComponent tabsData={dashboardTabs} />
           </div>
 
           <Tabs

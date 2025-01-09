@@ -1,7 +1,8 @@
 $color-primary: rgb(82, 63, 63);
-$color-secondary: #ddc385;
-$color-active: rgb(34, 255, 34);
+$color-secondary: #e4e4e4;
+$color-active: #007bff;
 $color-circle: #ffffff;
+$text-color: #ffffff;
 
 .tabs {
   div {
@@ -23,6 +24,8 @@ $color-circle: #ffffff;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
     cursor: pointer;
+    font-weight: 500;
+
   }
 
   .active {
@@ -30,7 +33,9 @@ $color-circle: #ffffff;
 
     .tabsLabel {
       background: $color-active;
-      color: black;
+      color: $text-color;
+      font-weight: 600;
+
     }
 
     &:before,

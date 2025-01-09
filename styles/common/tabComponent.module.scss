@@ -1,0 +1,100 @@
+
+.tabs div { 
+	/* Makes a horizontal row */
+	float: left; 
+	  
+	/* So the psueudo elements can be
+	   abs. positioned inside */
+	position: relative; 
+  }
+  .tabs a { 
+	/* Make them block level
+	   and only as wide as they need */
+	float: left; 
+	padding: 10px 40px; 
+	text-decoration: none;
+	
+	/* Default colors */ 
+	color: rgb(82, 63, 63);
+	background: #ddc385; 
+	
+	/* Only round the top corners */
+	-webkit-border-top-left-radius: 15px;
+	-webkit-border-top-right-radius: 15px;
+	-moz-border-radius-topleft: 15px;
+	-moz-border-radius-topright: 15px;
+	border-top-left-radius: 15px;
+	border-top-right-radius: 15px; 
+  }
+  .tabs .active {
+	/* Highest, active tab is on top */
+	z-index: 3;
+  }
+  .tabs .active a { 
+	/* Colors when tab is active */
+	background: rgb(34, 255, 34); 
+	color: black; 
+  }
+  .tabs div:before, .tabs div:after, 
+  .tabs div a:before, .tabs div a:after {
+	/* All pseudo elements are 
+	   abs. positioned and on bottom */
+	position: absolute;
+	bottom: 0;
+  }
+  /* Only the first, last, and active
+	 tabs need pseudo elements at all */
+  .tabs div:last-child:after,   .tabs div:last-child a:after,
+  .tabs div:first-child:before, .tabs div:first-child a:before,
+  .tabs .active:after,   .tabs .active:before, 
+  .tabs .active a:after, .tabs .active a:before {
+	content: "";
+  }
+  .tabs .active:before, .tabs .active:after {
+    background: rgb(34, 255, 34); 
+	
+	/* Squares below circles */
+	z-index: 1;
+  }
+  /* Squares */
+  .tabs div:before, .tabs div:after {
+	background: #ddc385;
+	width: 10px;
+	height: 10px;
+  }
+  .tabs div:before {
+	left: -10px;      
+  }
+  .tabs div:after { 
+	right: -10px;
+  }
+  /* Circles */
+  .tabs div a:after, .tabs div a:before {
+	width: 20px; 
+	height: 20px;
+	/* Circles are circular */
+	-webkit-border-radius: 10px;
+	-moz-border-radius:    10px;
+	border-radius:         10px;
+	background: #ffffff;
+	
+	/* Circles over squares */
+	z-index: 2;
+  }
+  .tabs .active a:after, .tabs .active a:before {
+	background: #ddc385;
+  }
+  /* First and last tabs have different
+	 outside color needs */
+  .tabs div:first-child.active a:before,
+  .tabs div:last-child.active a:after {
+	background: #ffffff;
+  }
+  .tabs div a:before {
+	left: -20px;
+  }
+  .tabs div a:after {
+	right: -20px;
+  }
+
+

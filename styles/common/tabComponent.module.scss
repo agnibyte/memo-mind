@@ -1,14 +1,13 @@
-$color-primary: rgb(82, 63, 63);
-$color-secondary: #e4e4e4;
-$color-active: #007bff;
-$color-circle: #ffffff;
-$text-color: #ffffff;
+@import "../../variable.scss";
 
 .tabs {
   div {
     float: left;
     left: 20px;
     position: relative;
+    &:not(:last-child) {
+      border-right: 1px solid lighten(#000, 30%); /* Adding vertical divider between tabs */
+    }
   }
 
   .tabsLabel {
@@ -16,7 +15,7 @@ $text-color: #ffffff;
     padding: 10px 40px;
     text-decoration: none;
     color: $color-primary;
-    background: $color-secondary;
+    background: $color-circle;
     -webkit-border-top-left-radius: 15px;
     -webkit-border-top-right-radius: 15px;
     -moz-border-radius-topleft: 15px;
@@ -26,7 +25,13 @@ $text-color: #ffffff;
     cursor: pointer;
     font-weight: 500;
 
-  }
+  } 
+  // .tabsLabel:hover {
+  //   background-color: #fdfdfd;
+  //   border-radius: 10px;
+
+
+  // }
 
   .active {
     z-index: 3;
@@ -66,7 +71,7 @@ $text-color: #ffffff;
 
   div:before,
   div:after {
-    background: $color-secondary;
+    background: $color-circle;
     width: 10px;
     height: 10px;
   }
@@ -92,7 +97,7 @@ $text-color: #ffffff;
 
   .active .tabsLabel:after,
   .active .tabsLabel:before {
-    background: $color-secondary;
+    background:  $color-circle;
   }
 
   div:first-child.active .tabsLabel:before,

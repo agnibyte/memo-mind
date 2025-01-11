@@ -11,6 +11,7 @@ import { Button, Row, Col } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import TabComponent from "./common/tabComponent";
+import dashboardStyle from "@/styles/dashBoard.module.scss";
 
 const Dashboard = () => {
   const [reminderModal, setReminderModal] = useState(false);
@@ -34,9 +35,11 @@ const Dashboard = () => {
       ),
     },
     { id: "02", label: "EMI", value: "emi", component: <EmiSection /> },
+    { id: "02", label: "Test", value: "test", component: <EmiSection /> },
   ];
 
-  const [selectedTab, setSelectedTab] = useState(dashboardTabs[0].value);
+  const [selectedTab, setSelectedTab] = useState("");
+  console.log({ selectedTab });
 
   const addReminderData = async (data) => {
     const payload = {
@@ -109,11 +112,15 @@ const Dashboard = () => {
               Add Reminder
             </Button>
           </div>
-          <div className="mt-3">
-            <TabComponent tabsData={dashboardTabs} />
+          <div className={dashboardStyle["mainTabel"]}>
+            <TabComponent
+              tabsData={dashboardTabs}
+              selectedTab={selectedTab}
+              setSelectedTab={setSelectedTab}
+            />
           </div>
 
-          <Tabs
+          {/* <Tabs
             defaultActiveKey={dashboardTabs[0].value}
             transition={false}
             id="noanim-tab-example"
@@ -132,7 +139,22 @@ const Dashboard = () => {
                 {tab.component}
               </Tab>
             ))}
-          </Tabs>
+          </Tabs> */}
+          <div className="mb-3">
+            {selectedTab == "document" ? (
+              <DocumentsSection
+                setReminderData={setReminderData}
+                setReminderModal={setReminderModal}
+                setIsEdit={setIsEdit}
+                tableData={documentTableData}
+                setTableData={setDocumentTableData}
+              />
+            ) : selectedTab == "emi" ? (
+              <EmiSection />
+            ) : (
+              <></>
+            )}
+          </div>
         </div>
       </div>
 

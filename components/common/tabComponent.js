@@ -8,17 +8,14 @@ import styles from "@/styles/common/tabComponent.module.scss";
 //   { id: "four", label: "Four" },
 // ];
 
-const TabComponent = ({ tabsData }) => {
-  const [activeTab, setActiveTab] = useState("");
-
+const TabComponent = ({ tabsData, setSelectedTab, selectedTab }) => {
   const handleTabClick = (tabId) => {
-    setActiveTab(tabId);
+    setSelectedTab(tabId);
   };
-  console.log(activeTab)
 
   useEffect(() => {
     if (tabsData && tabsData.length > 0) {
-      setActiveTab(tabsData[0].id);
+      setSelectedTab(tabsData[0].value);
     }
   }, []);
 
@@ -28,8 +25,8 @@ const TabComponent = ({ tabsData }) => {
         tabsData.map((tab) => (
           <div
             key={tab.id}
-            className={activeTab === tab.id ? styles.active : ""}
-            onClick={() => handleTabClick(tab.id)}
+            className={selectedTab === tab.value ? styles.active : ""}
+            onClick={() => handleTabClick(tab.value)}
           >
             <span className={`${styles.tabsLabel}`}>{tab.label}</span>
           </div>

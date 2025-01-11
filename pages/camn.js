@@ -58,7 +58,6 @@ export default function Home() {
   ];
   return (
     <div className="min-h-screen bg-gray-50 p-6">
-      <TabComponent tabsData={tabsData} />
 
       <div className="max-w-lg mx-auto bg-white shadow-lg rounded-lg p-6">
         <h1 className="text-2xl font-bold mb-4 text-center">Add a Note</h1>

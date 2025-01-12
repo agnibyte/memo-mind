@@ -1,3 +1,14 @@
+/* Import a Google Font or any custom font */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+
+/* Apply the font globally to all elements */
+html, body, * {
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 p + h1,
 ul + h1,
 ol + h1,

@@ -35,7 +35,6 @@ const Dashboard = () => {
       ),
     },
     { id: "02", label: "EMI", value: "emi", component: <EmiSection /> },
-    { id: "02", label: "Test", value: "test", component: <EmiSection /> },
   ];
 
   const [selectedTab, setSelectedTab] = useState("");

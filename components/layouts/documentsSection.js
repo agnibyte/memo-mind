@@ -6,6 +6,7 @@ import { DOCUMENTS_TYPE_LIST } from "@/utilities/dummyData";
 import DocumentTable from "../tabels/documentTable";
 import { docTableHeadCells } from "@/utilities/masterData";
 import { FaEdit, FaTrashAlt } from "react-icons/fa"; // Import icons
+import docSecStyle from "@/styles/docSec.module.scss";
 
 export default function DocumentsSection(props) {
   const {
@@ -16,7 +17,9 @@ export default function DocumentsSection(props) {
     setTableData,
   } = props;
 
-  const [documentsTypeList, setDocumentsTypeList] = useState(DOCUMENTS_TYPE_LIST);
+  const [documentsTypeList, setDocumentsTypeList] =
+    useState(DOCUMENTS_TYPE_LIST);
+  const [SelectedType, setSelectedType] = useState("");
 
   const onClickEdit = (id) => {
     const selectedItem = tableData.filter((item) => item.id === id);
@@ -33,26 +36,38 @@ export default function DocumentsSection(props) {
 
   useEffect(() => {
     const today = moment();
-    const updatedDocsList = [...documentsTypeList];
+    const updateDocumentCounts = (data, documentsTypes) => {
+      // Get today's date
+      const today = moment();
+      const thirtyDaysFromToday = moment().add(31, "days"); // 31 days from today
 
-    tableData.forEach((item) => {
-      const expiryDate = moment(item.expiryDate);
-      const alertDate = expiryDate.subtract(
-        getConstant("DAYS_BEFORE_ALERT"),
-        "days"
-      );
+      // Create a copy of documentsTypeList to avoid direct mutation
+      const updatedTypeList = [...documentsTypes];
+      console.log("updatedTypeList", updatedTypeList);
 
-      if (today.isSameOrAfter(alertDate, "day")) {
-        const documentTypeValue = item.documentType.value;
-        const docIndex = updatedDocsList.findIndex(
-          (doc) => doc.value === documentTypeValue
-        );
+      // Loop through the data and check if expiryDate is within 31 days
+      data.forEach((item) => {
+        // Parse the expiryDate from the item (it's already an ISO string)
+        const expiryDate = moment(item.expiryDate);
 
-        if (docIndex !== -1) {
-          updatedDocsList[docIndex].count += 1;
+        // Check if the expiryDate is within the next 31 days
+        if (expiryDate.isBetween(today, thirtyDaysFromToday, null, "[]")) {
+          // Find the document type in documentsTypes and update its count
+          const docTypeIndex = updatedTypeList.findIndex(
+            (type) => type.value === item.documentType
+          );
+
+          if (docTypeIndex !== -1) {
+            // Increment the count if document type is found
+            updatedTypeList[docTypeIndex].count += 1;
+          }
         }
-      }
-    });
+      });
+
+      // Return the updated documentsTypes
+      return updatedTypeList;
+    };
+    const updatedDocsList = updateDocumentCounts(tableData, documentsTypeList);
 
     setDocumentsTypeList(updatedDocsList);
   }, [tableData]);
@@ -62,22 +77,23 @@ export default function DocumentsSection(props) {
       <div className="">
         <div className="">
           {/* Section with document counts */}
-          <div className="row    mx-3">
-            {documentsTypeList.map((item, i) => (
-              <div key={i} className="col-md col-sm text-center my-3">
-                <div
-                  className="p-4 rounded shadow-sm"
-                  style={{
-                    backgroundColor: "#f8f9fa",
-                    borderRadius: "10px",
-                    transition: "transform 0.3s ease",
-                  }}
+          <div className="row mx-1">
+            {documentsTypeList &&
+              documentsTypeList.map((item, i) => (
+                <button
+                  key={i}
+                  className={` ${docSecStyle.documentCard} col-12 col-md text-center`}
                 >
-                  <div className="h5 text-primary">{item.label}</div>
-                  <div className="display-6 text-danger">{item.count}</div>
-                </div>
-              </div>
-            ))}
+                  <div className={` ${docSecStyle.labelWrap} `}>
+                    <div className={`${docSecStyle.label} text-primary`}>
+                      {item.label}
+                    </div>
+                    <div className={`${docSecStyle.label} text-danger`}>
+                      {item.count}
+                    </div>
+                  </div>
+                </button>
+              ))}
           </div>
 
           {/* Document Table */}

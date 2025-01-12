@@ -499,9 +499,9 @@ body.dark-mode {
 	transition: all 0.3s ease;
   }
   
-  button:hover {
+  /* button:hover {
 	background-color: #444;
-  }
+  } */
   
   /* Text Styling */
   .text-light {

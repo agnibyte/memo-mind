@@ -1,0 +1,70 @@
+@import "../_variable.scss";
+@import "../_mixin.scss";
+/* Document card styling */
+.documentCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  padding: 1rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border: none;
+  
+
+  /* Hover effect */
+  &:hover {
+    // transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  }
+  .label{
+    font-size: 18px;
+  }
+
+  .h5 {
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+
+  .display-6 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #dc3545;
+  }
+
+  /* Button styling */
+  button {
+    width: 100%;
+    padding: 0.6rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    // transition: background-color 0.3s ease;
+
+    /* Hover effect */
+    &:hover {
+      background-color: #0056b3;
+    }
+
+    /* Active effect */
+    &:active {
+      transform: scale(0.98);
+    }
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 767px) {
+  .documentCard {
+    padding: 0 !important;
+    align-items: flex-start;
+    .labelWrap{   display: flex; flex-direction: row;}
+
+    .label{
+     margin-left: 5px;
+    }
+  }
+}

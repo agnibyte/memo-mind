@@ -62,7 +62,9 @@ export const InputWithVoice = ({ label, note, setNote }) => {
           value={note}
           name="note"
           onChange={(e) => setNote(e.target.value)}
-          placeholder="Type or speak your note here..."
+          placeholder={
+            isListening ? "Listening..." : "Type or speak your note here..."
+          }
           className="form-control me-2"
         />
         <button

@@ -38,7 +38,6 @@ const Dashboard = () => {
   ];
 
   const [selectedTab, setSelectedTab] = useState("");
-  console.log({ selectedTab });
 
   const addReminderData = async (data) => {
     const payload = {

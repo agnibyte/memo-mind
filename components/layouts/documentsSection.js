@@ -43,7 +43,6 @@ export default function DocumentsSection(props) {
 
       // Create a copy of documentsTypeList to avoid direct mutation
       const updatedTypeList = [...documentsTypes];
-      console.log("updatedTypeList", updatedTypeList);
 
       // Loop through the data and check if expiryDate is within 31 days
       data.forEach((item) => {

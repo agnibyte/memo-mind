@@ -343,10 +343,10 @@ body {
 	box-shadow: 0 5px 10px rgba(0, 123, 255, 0.1);
   }
   
-  .card-header .btn:hover {
+  /* .card-header .btn:hover {
 	background-color: #e9f5ff;
 	box-shadow: 0 5px 15px rgba(0, 123, 255, 0.2);
-  }
+  } */
   
   .nav-tabs .nav-link {
 	font-size: 16px;
@@ -411,7 +411,7 @@ body {
   }
   
   .addButton:hover {
-	background-color: #0056b3;
+	/* background-color: #0056b3; */
 	transform: translateY(-3px);
   }
   

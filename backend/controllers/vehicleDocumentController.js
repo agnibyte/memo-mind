@@ -73,10 +73,19 @@ export function deleteVehicleDocumentController(id) {
   });
 }
 
-export function editVehicleDocumentController(id, updatedFields) {
+export function editVehicleDocumentController(request) {
   return new Promise((resolve, reject) => {
     const response = {
       status: false,
+    };
+
+    const id = request.id;
+    const updatedFields = {
+      id: request.id,
+      vehicleNo: request.vehicleNo,
+      documentType: request.documentType,
+      expiryDate: request.expiryDate,
+      note: request.note,
     };
 
     editVehicleDocumentById(id, updatedFields)

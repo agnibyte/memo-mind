@@ -87,3 +87,38 @@ $form-invalid: #dc3545;
     }
   }
 }
+
+.voiceButton {
+  width: 48px; // Ensure consistent size
+  height: 48px;
+  background-color: #e0f7fa;
+  border: none;
+  border-radius: 50%;
+  padding: 10px; // Reduced padding for better alignment
+  cursor: pointer;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 10px;
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+  &:hover {
+    background-color: #e0f7fa;
+  }
+}
+
+.svgIcon {
+  svg {
+    font-size: 20px;
+    display: block;
+    margin: auto; // Center the SVG within the button
+    fill: #05001b; // Customize color
+    transition: transform 0.3s;
+    &:hover {
+      // transform: scale(1.2); // Zoom effect on hover
+    }
+  }
+}

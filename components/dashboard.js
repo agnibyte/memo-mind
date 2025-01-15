@@ -16,6 +16,8 @@ import dashboardStyle from "@/styles/dashBoard.module.scss";
 const Dashboard = () => {
   const [reminderModal, setReminderModal] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
+  const [updateLoading, setUpdateLoading] = useState(false);
+  const [addLoading, setAddLoading] = useState(false);
   const [reminderData, setReminderData] = useState("");
   const [documentTableData, setDocumentTableData] = useState([]);
 
@@ -46,24 +48,44 @@ const Dashboard = () => {
       expiryDate: data.expiryDate,
       note: data.note,
     };
+    setAddLoading(true);
     try {
       const response = await postApiData("ADD_NEW_VEHICALE_DOCUMENTS", payload);
       if (response.status) {
         const LatestData = [...documentTableData, { id: response.id, ...data }];
         setDocumentTableData(LatestData);
+        setReminderModal(false);
       }
     } catch (error) {
       console.error("Error occurred during form submission:", error);
     }
+    setAddLoading(false);
   };
 
-  const updateReminderData = (updatedData) => {
-    console.log("updatedData", updatedData);
-    setDocumentTableData((prevData) =>
-      prevData.map((item) =>
-        item.id === updatedData.id ? { ...item, ...updatedData } : item
-      )
-    );
+  const updateReminderData = async (updatedData) => {
+    const payload = {
+      id: updatedData.id,
+      vehicleNo: updatedData.vehicleNo,
+      documentType: updatedData.documentType,
+      expiryDate: updatedData.expiryDate,
+      note: updatedData.note,
+    };
+    setUpdateLoading(true);
+    try {
+      const response = await postApiData("UPDATE_VEHICALE_DOCUMENTS", payload);
+      if (response.status) {
+        setDocumentTableData((prevData) =>
+          prevData.map((item) =>
+            item.id === updatedData.id ? { ...item, ...updatedData } : item
+          )
+        );
+      }
+      setReminderModal(false);
+      setIsEdit(false);
+    } catch (error) {
+      console.error("Error occurred during form submission:", error);
+    }
+    setUpdateLoading(false);
   };
 
   const onClickDashboardTab = (val) => {
@@ -168,6 +190,7 @@ const Dashboard = () => {
           reminderData={reminderData}
           isEdit={isEdit}
           setIsEdit={setIsEdit}
+          isLoading={isEdit ? updateLoading : addLoading}
           updateReminderData={updateReminderData}
         />
       </CommonModal>

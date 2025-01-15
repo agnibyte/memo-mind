@@ -9,14 +9,15 @@ import CustomSearch from "../common/customSearch";
 import moment from "moment";
 import "../../styles/formStyles.module.scss";
 import { InputWithVoice } from "../common/inputWithVoice";
+import { getConstant } from "@/utilities/utils";
 
 export default function AddDocumentForm({
-  setReminderModal,
   addReminderData,
   reminderData,
   isEdit,
   setIsEdit,
   updateReminderData,
+  isLoading,
 }) {
   const defaultData = {
     // masterNo: "",
@@ -27,12 +28,28 @@ export default function AddDocumentForm({
     note: "",
   };
 
-  const [formData, setFormData] = useState(isEdit ? reminderData : defaultData);
+  const DOCUMENTS_TYPE_LIST_ARR = DOCUMENTS_TYPE_LIST;
+  const VEHICLE_NO_LIST_ARR = vehicleNoListArr;
+
+  const initialFormData = isEdit
+    ? {
+        ...reminderData,
+        vehicleNo:
+          VEHICLE_NO_LIST_ARR.find(
+            (el) => el.value === reminderData.vehicleNo
+          ) || null,
+        documentType:
+          DOCUMENTS_TYPE_LIST_ARR.find(
+            (el) => el.value === reminderData.documentType
+          ) || null,
+      }
+    : defaultData;
+
+  const [formData, setFormData] = useState(initialFormData);
   const [expiryDateError, setExpiryDateError] = useState("");
   const [expiryDate, setExpiryDate] = useState(
     isEdit ? reminderData.expiryDate : defaultData.expiryDate
   );
-  const [note, setNote] = useState("");
 
   const {
     register,
@@ -40,81 +57,52 @@ export default function AddDocumentForm({
     reset,
     control,
     formState: { errors },
-    clearErrors: clearErrors,
-    trigger,
+    clearErrors,
     setValue,
   } = useForm();
 
-  const validation = {
-    // masterNo: register("masterNo", DocValidation.masterNo),
-    vehicleNo: register("vehicleNo", DocValidation.vehicleNo),
-    documentType: register("documentType", DocValidation.documentType),
-    // expiryDate: register("expiryDate", DocValidation.expiryDate),
-    // alertDate: register("alertDate", DocValidation.alertDate),
-  };
+  useEffect(() => {
+    if (isEdit && reminderData) {
+      setValue("vehicleNo", initialFormData.vehicleNo);
+      setValue("documentType", initialFormData.documentType);
+      setValue("expiryDate", initialFormData.expiryDate);
+    }
+  }, [isEdit, reminderData, setValue]);
 
   const updateSelectedForm = (type, value) => {
-    const temp = { ...formData };
-    temp[type] = value;
-    setFormData(temp);
+    setFormData((prev) => ({ ...prev, [type]: value }));
   };
 
-  // const onChangeExpiryDate = (e) => {
-  //   // clearErrors("expiryDate");
-  //   // handleExpiryDateChange();
-  //   console.log({ e });
-  //   updateSelectedForm("expiryDate", e);
-  //   if (e == null) {
-  //     setExpiryDateError("Please enter the expiry date");
-  //   } else {
-  //     setExpiryDateError("");
-  //   }
-  // };
   const onChangeExpiryDate = (date) => {
-    if (date == null) {
+    if (!date) {
       setExpiryDateError("Please enter the expiry date");
     } else {
       setExpiryDateError("");
-      setExpiryDate(moment(date).toISOString()); // Save the updated date in ISO format
-      updateSelectedForm("expiryDate", moment(date).toISOString());
+      const formattedDate = moment(date).toISOString();
+      setExpiryDate(formattedDate);
+      updateSelectedForm("expiryDate", formattedDate);
     }
   };
 
   const onClickSubmit = () => {
-    if (formData.expiryDate == null) {
+    if (!formData.expiryDate) {
       setExpiryDateError("Please enter the expiry date");
       return;
     }
-    const addData = {
+
+    const newData = {
       ...formData,
-      vehicleNo: formData.vehicleNo.value,
-      documentType: formData.documentType.value,
+      vehicleNo: formData.vehicleNo?.value,
+      documentType: formData.documentType?.value,
     };
-    addReminderData(addData);
-    setReminderModal(false);
-    setIsEdit(false);
 
-    setFormData(defaultData);
-  };
-
-  useEffect(() => {
     if (isEdit) {
-      setValue("vehicleNo", reminderData.vehicleNo);
-      setValue("documentType", reminderData.documentType);
-      setFormData((prev) => ({
-        ...prev,
-        expiryDate: reminderData.expiryDate,
-      }));
-      // setValue("expiryDate", moment(reminderData.expiryDate));
+      updateReminderData(newData);
+    } else {
+      addReminderData(newData);
     }
-  }, []);
-  // }, [isEdit, setValue]);
 
-  const onClickEdit = () => {
-    updateReminderData(formData);
-    setReminderModal(false);
-    setIsEdit(false);
-    setFormData(defaultData);
+    reset(defaultData);
   };
 
   return (
@@ -146,10 +134,10 @@ export default function AddDocumentForm({
       <InputWithVoice
         note={formData.note}
         setNote={(value) => updateSelectedForm("note", value)}
-        label={"Add Note"}
+        label="Add Note"
       />
 
-      <div className="form-group  mt-3">
+      <div className="form-group mt-3">
         <label
           htmlFor="vehicleNo"
           className="form-label"
@@ -161,10 +149,10 @@ export default function AddDocumentForm({
           name="vehicleNo"
           render={({ field }) => (
             <CustomSearch
-              {...validation.vehicleNo}
-              name="vehicleNo"
-              selectedValue={formData["vehicleNo"]}
-              options={vehicleNoListArr}
+              {...field}
+              {...register("vehicleNo", DocValidation.vehicleNo)}
+              selectedValue={formData.vehicleNo}
+              options={VEHICLE_NO_LIST_ARR}
               onChange={(e) => {
                 field.onChange(e);
                 clearErrors("vehicleNo");
@@ -172,16 +160,16 @@ export default function AddDocumentForm({
               }}
               className="form-control"
               placeholder="Please Select Vehicle Number"
-              isSearchable={true}
+              isSearchable
             />
           )}
         />
-        {errors?.vehicleNo && (
+        {errors.vehicleNo && (
           <div className="text-danger">{errors.vehicleNo.message}</div>
         )}
       </div>
 
-      <div className="form-group  mt-3">
+      <div className="form-group mt-3">
         <label
           htmlFor="documentType"
           className="form-label"
@@ -193,29 +181,28 @@ export default function AddDocumentForm({
           name="documentType"
           render={({ field }) => (
             <CustomSearch
-              {...validation.documentType}
-              name="documentType"
-              selectedValue={formData["documentType"]}
-              options={DOCUMENTS_TYPE_LIST}
+              {...field}
+              {...register("documentType", DocValidation.documentType)}
+              selectedValue={formData.documentType}
+              options={DOCUMENTS_TYPE_LIST_ARR}
               onChange={(e) => {
                 field.onChange(e);
                 clearErrors("documentType");
                 updateSelectedForm("documentType", e);
               }}
-              className="form-control"
               placeholder="Please Select Document Type"
-              isSearchable={true}
+              isSearchable
             />
           )}
         />
-        {errors?.documentType && (
+        {errors.documentType && (
           <div className="text-danger">{errors.documentType.message}</div>
         )}
       </div>
 
-      <div className="form-group  mt-3">
+      <div className="form-group mt-3">
         <label
-          htmlFor="date"
+          htmlFor="expiryDate"
           className="form-label"
         >
           Select Expiry Date
@@ -223,7 +210,6 @@ export default function AddDocumentForm({
         <CustomDatePicker
           value={expiryDate ? moment(expiryDate) : null}
           onChange={onChangeExpiryDate}
-          className="form-control"
         />
         {expiryDateError && (
           <div className="text-danger">{expiryDateError}</div>
@@ -231,22 +217,16 @@ export default function AddDocumentForm({
       </div>
 
       <div className="form-actions mt-3">
-        {!isEdit ? (
-          <button
-            type="submit"
-            className="btn btn-primary"
-          >
-            Submit
-          </button>
-        ) : (
-          <button
-            type="button"
-            className="btn btn-warning"
-            onClick={onClickEdit}
-          >
-            Update
-          </button>
-        )}
+        <button
+          type="submit"
+          className={`btn ${isEdit ? "btn-warning" : "btn-primary"}`}
+        >
+          {isLoading
+            ? getConstant("LOADING_TEXT")
+            : isEdit
+            ? "Update"
+            : "Submit"}
+        </button>
       </div>
     </form>
   );

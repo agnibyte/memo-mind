@@ -106,15 +106,15 @@ function EnhancedTableHead({
   );
 }
 
-EnhancedTableHead.propTypes = {
-  headCells: PropTypes.array.isRequired,
-  onSelectAllClick: PropTypes.func.isRequired,
-  order: PropTypes.string.isRequired,
-  orderBy: PropTypes.string.isRequired,
-  selectedItems: PropTypes.array.isRequired,
-  rowCount: PropTypes.number.isRequired,
-  onRequestSort: PropTypes.func.isRequired,
-};
+// EnhancedTableHead.propTypes = {
+//   headCells: PropTypes.array.isRequired,
+//   onSelectAllClick: PropTypes.func.isRequired,
+//   order: PropTypes.string.isRequired,
+//   orderBy: PropTypes.string.isRequired,
+//   selectedItems: PropTypes.array.isRequired,
+//   rowCount: PropTypes.number.isRequired,
+//   onRequestSort: PropTypes.func.isRequired,
+// };
 
 // EnhancedTableToolbar Component
 function EnhancedTableToolbar({
@@ -193,16 +193,16 @@ function EnhancedTableToolbar({
   );
 }
 
-EnhancedTableToolbar.propTypes = {
-  numSelected: PropTypes.number.isRequired,
-  title: PropTypes.string.isRequired,
-};
+// EnhancedTableToolbar.propTypes = {
+//   numSelected: PropTypes.number.isRequired,
+//   title: PropTypes.string.isRequired,
+// };
 
 // Main DocumentTable Component
 const DocumentTable = ({
   rows,
   headCells,
-  title,
+  title = "",
   onClickDelete,
   onClickEdit,
 }) => {
@@ -420,14 +420,12 @@ const DocumentTable = ({
   );
 };
 
-DocumentTable.propTypes = {
-  rows: PropTypes.array.isRequired,
-  headCells: PropTypes.array.isRequired,
-  title: PropTypes.string,
-};
+// DocumentTable.propTypes = {
+//   rows: PropTypes.array.isRequired,
+//   headCells: PropTypes.array.isRequired,
+//   title: PropTypes.string,
+// };
 
-DocumentTable.defaultProps = {
-  title: "",
-};
+
 
 export default DocumentTable;

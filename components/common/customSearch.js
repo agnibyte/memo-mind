@@ -1,20 +1,18 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, forwardRef } from "react";
 import Select from "react-select";
 import customSearchStyle from "@/styles/common/customSearch.module.scss";
 import { getUniqueKey } from "@/utilities/utils";
 
-export default function CustomSearch(props) {
+const CustomSearch = forwardRef(({ selectedValue, options = [], onChange, className, ...props }, ref) => {
   const instanceId = getUniqueKey();
 
-  const options = {
-    instanceId: instanceId,
+  const mergedOptions = {
+    instanceId,
     placeholder: "Select Option",
-    selectedValue: {},
-    isSearchable: false,
+    isSearchable: true, // Ensure it's searchable
     menuPosition: "fixed",
     ...props,
-    className:
-      customSearchStyle[props.className] ?? customSearchStyle["form_search"],
+    className: customSearchStyle[className] ?? customSearchStyle["form_search"],
   };
 
   const colorStyles = {
@@ -29,19 +27,14 @@ export default function CustomSearch(props) {
         border: "1px solid #9AB7BC",
       },
     }),
-    option: (styles, { data, isDisabled, isFocused, isSelected }) => {
-      return {
-        ...styles,
-        backgroundColor: undefined,
-        color: isDisabled ? "#ccc" : isSelected ? "black" : data.color,
-        borderBottom: `1px solid #F3F3F3`,
-        cursor: isDisabled ? "not-allowed" : "default",
-        ":active": {
-          ...styles[":active"],
-        },
-        padding: "10px",
-      };
-    },
+    option: (styles, { isDisabled, isSelected }) => ({
+      ...styles,
+      color: isDisabled ? "#ccc" : isSelected ? "black" : "#333",
+      backgroundColor: isSelected ? "#f0f0f0" : "white",
+      borderBottom: "1px solid #F3F3F3",
+      cursor: isDisabled ? "not-allowed" : "pointer",
+      padding: "10px",
+    }),
   };
 
   const [isLoaded, setIsLoaded] = useState(false);
@@ -54,18 +47,20 @@ export default function CustomSearch(props) {
     <>
       {isLoaded ? (
         <Select
-          {...options}
-          value={props.options.filter(
-            (v) => v.value == props.selectedValue?.value
-          )}
-          onChange={props.onChange}
+          ref={ref}
+          {...mergedOptions}
+          options={options} // Ensure options are passed correctly
+          value={options.find((opt) => opt.value === selectedValue?.value) || null} // Fixed value selection
+          onChange={onChange}
           styles={colorStyles}
         />
       ) : (
         <select>
-          <option>{options.placeholder}</option>
+          <option>{mergedOptions.placeholder}</option>
         </select>
       )}
     </>
   );
-}
+});
+
+export default CustomSearch;

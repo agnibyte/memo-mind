@@ -40,11 +40,12 @@ export default function TopHeader() {
           href="/"
           className="navbar-brand"
         >
-          <img
+          {/* <img
             src="/logo.png"
             alt="Logo"
             width="120"
-          />
+          /> */}
+          Dashboard
         </Link>
         <Navbar.Toggle aria-controls="navbar-nav" />
         <Navbar.Collapse id="navbar-nav">
@@ -71,12 +72,13 @@ export default function TopHeader() {
           </Nav>
           <Dropdown align="end">
             <Dropdown.Toggle className="btn btn-light border-0">
-              <img
+              {/* <img
                 src="/profile-icon.png"
                 alt="Profile"
                 className="rounded-circle"
                 width="40"
-              />
+              /> */}
+              user
             </Dropdown.Toggle>
             <Dropdown.Menu>
               <Dropdown.Item href="/settings">Settings</Dropdown.Item>

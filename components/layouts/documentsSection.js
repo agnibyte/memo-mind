@@ -62,24 +62,24 @@ export default function DocumentsSection({
         title="All Records"
         onClickEdit={onClickEdit}
         onClickDelete={onClickDelete}
-        renderActions={(id) => (
-          <div className="d-flex justify-content-center">
-            <button
-              className="btn btn-warning btn-sm mx-1"
-              onClick={() => onClickEdit(id)}
-              title="Edit"
-            >
-              <FaEdit />
-            </button>
-            <button
-              className="btn btn-danger btn-sm mx-1"
-              onClick={() => onClickDelete(id)}
-              title="Delete"
-            >
-              <FaTrashAlt />
-            </button>
-          </div>
-        )}
+        // renderActions={(id) => (
+        //   <div className="d-flex justify-content-center">
+        //     <button
+        //       className="btn btn-warning btn-sm mx-1"
+        //       onClick={() => onClickEdit(id)}
+        //       title="Edit"
+        //     >
+        //       <FaEdit />
+        //     </button>
+        //     <button
+        //       className="btn btn-danger btn-sm mx-1"
+        //       onClick={() => onClickDelete(id)}
+        //       title="Delete"
+        //     >
+        //       <FaTrashAlt />
+        //     </button>
+        //   </div>
+        // )}
       />
     </div>
   );

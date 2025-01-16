@@ -378,10 +378,12 @@ const DocumentTable = ({
                     </TableCell>
                     <TableCell align="left">
                       <button
-                        className="btn  btn-outline-warning mx-2"
-                        variant="outline-warning "
-                        // style={{ backgroundColor: "transparent" }}
-                        onClick={() => onClickEdit(row.id)}
+                        className="btn btn-outline-warning mx-2"
+                        variant="outline-warning"
+                        onClick={(event) => {
+                          event.stopPropagation();
+                          onClickEdit(row.id);
+                        }}
                       >
                         Edit
                       </button>
@@ -425,7 +427,5 @@ const DocumentTable = ({
 //   headCells: PropTypes.array.isRequired,
 //   title: PropTypes.string,
 // };
-
-
 
 export default DocumentTable;

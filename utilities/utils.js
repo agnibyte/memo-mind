@@ -1,5 +1,6 @@
 import { constantsList } from "@/constants";
 import moment from "moment";
+import { DOCUMENTS_TYPE_LIST } from "./dummyData";
 
 export const getUniqueKey = (length = 12) => {
   let result = "";
@@ -74,3 +75,40 @@ export const checkUserDeviceTypeByUserAgent = (userAgent) => {
     )
   );
 };
+
+export const checkExpiryCounts = (data) => {
+  const result = DOCUMENTS_TYPE_LIST.map((doc) => ({
+    ...doc,
+    expiredCount: 0,
+    withinMonthExpiryCount: 0,
+    totalCount: 0,  // New field for total count
+  }));
+
+  data.forEach((item) => {
+    const expiryDate = moment(item.expiryDate);
+    const document = result.find((doc) => doc.value === item.documentType);
+
+    if (document) {
+      const isWithinMonth = expiryDate.isBetween(
+        moment(),
+        moment().add(1, "months"),
+        "day",
+        "[]"
+      );
+      const isExpired = expiryDate.isBefore(moment());
+
+      // Count for within month and expired
+      if (isWithinMonth && !isExpired) {
+        document.withinMonthExpiryCount += 1;
+      }
+      if (isExpired) {
+        document.expiredCount += 1;
+      }
+      // Increment total count for each matched document
+      document.totalCount += 1;
+    }
+  });
+
+  return result;
+};
+

@@ -81,7 +81,7 @@ export const checkExpiryCounts = (data) => {
     ...doc,
     expiredCount: 0,
     withinMonthExpiryCount: 0,
-    totalCount: 0,  // New field for total count
+    totalCount: 0, // New field for total count
   }));
 
   data.forEach((item) => {
@@ -91,10 +91,11 @@ export const checkExpiryCounts = (data) => {
     if (document) {
       const isWithinMonth = expiryDate.isBetween(
         moment(),
-        moment().add(1, "months"),
+        moment().add(getConstant("DAYS_BEFORE_ALERT"), "days"),
         "day",
         "[]"
       );
+
       const isExpired = expiryDate.isBefore(moment());
 
       // Count for within month and expired
@@ -111,4 +112,3 @@ export const checkExpiryCounts = (data) => {
 
   return result;
 };
-

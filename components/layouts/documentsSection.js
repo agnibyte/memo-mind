@@ -6,6 +6,8 @@ import DocumentTable from "../tabels/documentTable";
 import { docTableHeadCells } from "@/utilities/masterData";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import docSecStyle from "@/styles/docSec.module.scss";
+import CommonModal from "../common/commonModal";
+import modalStyle from "@/styles/modal.module.scss";
 
 export default function DocumentsSection({
   setReminderData,
@@ -15,6 +17,7 @@ export default function DocumentsSection({
   setTableData,
 }) {
   const [documentsTypeList, setDocumentsTypeList] = useState([]);
+  const [deletePopup, setDeletePopup] = useState(false);
 
   const onClickEdit = (id) => {
     const selectedItem = tableData.find((item) => item.id == id);
@@ -24,9 +27,10 @@ export default function DocumentsSection({
   };
 
   const onClickDelete = (id) => {
-    const updatedData = tableData.filter((item) => item.id !== id);
-    localStorage.setItem("reminderData", JSON.stringify(updatedData));
-    setTableData(updatedData);
+    console.log("delte id: " + id);
+    // const updatedData = tableData.filter((item) => item.id !== id);
+    // localStorage.setItem("reminderData", JSON.stringify(updatedData));
+    // setTableData(updatedData);
   };
 
   useEffect(() => {
@@ -61,7 +65,7 @@ export default function DocumentsSection({
         headCells={docTableHeadCells}
         title="All Records"
         onClickEdit={onClickEdit}
-        onClickDelete={onClickDelete}
+        onClickDelete={() => setDeletePopup(true)}
         // renderActions={(id) => (
         //   <div className="d-flex justify-content-center">
         //     <button
@@ -81,6 +85,31 @@ export default function DocumentsSection({
         //   </div>
         // )}
       />
+
+      <CommonModal
+        modalTitle={"Delete Document"}
+        modalOpen={deletePopup}
+        setModalOpen={setDeletePopup}
+        className={""}
+      >
+        <div className={modalStyle.deleteModal}>
+          <p className={modalStyle.conformationMsg}>Are you sure you want to delete this document?</p>
+          <div className={modalStyle.buttonsWrapper}>
+            <button
+              className={`${modalStyle.btn} ${modalStyle.cancel}`}
+              onClick={() => setDeletePopup(false)}
+            >
+              No
+            </button>
+            <button
+              className={`${modalStyle.btn} ${modalStyle.delete}`}
+              onClick={onClickDelete}
+            >
+              Yes
+            </button>
+          </div>
+        </div>
+      </CommonModal>
     </div>
   );
 }

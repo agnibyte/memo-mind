@@ -131,5 +131,54 @@
   }
  
   .blackButton{min-width: 280px;}
+  
 }
 
+.deleteModal {
+    padding: 20px;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #333;
+
+    .conformationMsg {
+      margin-bottom: 20px;
+      font-weight: 500;
+    }
+
+    .buttonsWrapper {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+
+      .btn {
+        padding: 8px 16px;
+        font-size: 14px;
+        border-radius: 4px;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+
+        &.cancel {
+          background-color: #e2e2e2;
+          color: #333;
+
+          &:hover {
+            background-color: #e0e0e0;
+          }
+        }
+
+        &.delete {
+          background-color: #ff4d4f;
+          color: white;
+
+          &:hover {
+            background-color: #d9363e;
+          }
+        }
+      }
+    }
+    @media (max-width: $surfaceDuo) {
+    padding: 0px;
+    }
+  
+}

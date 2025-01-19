@@ -26,17 +26,9 @@ const Dashboard = () => {
       id: "01",
       label: "Documents",
       value: "document",
-      component: (
-        <DocumentsSection
-          setReminderData={setReminderData}
-          setReminderModal={setReminderModal}
-          setIsEdit={setIsEdit}
-          tableData={documentTableData}
-          setTableData={setDocumentTableData}
-        />
-      ),
+      component: <></>,
     },
-    { id: "02", label: "EMI", value: "emi", component: <EmiSection /> },
+    { id: "02", label: "EMI", value: "emi", component: <></> },
   ];
 
   const [selectedTab, setSelectedTab] = useState("");

@@ -172,7 +172,7 @@ function EnhancedTableToolbar({
             <Button
               variant="contained"
               color="secondary"
-              onClick={onClickDelete}
+              onClick={() => onClickDelete(selectedItems[0])}
             >
               Delete
             </Button>
@@ -205,10 +205,11 @@ const DocumentTable = ({
   title = "",
   onClickDelete,
   onClickEdit,
+  selected,
+  setSelected,
 }) => {
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState(headCells[0].id);
-  const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [dense, setDense] = useState(false);
   const [rowsPerPage, setRowsPerPage] = useState(5);

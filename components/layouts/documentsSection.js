@@ -10,6 +10,7 @@ import CommonModal from "../common/commonModal";
 import modalStyle from "@/styles/modal.module.scss";
 import { postApiData } from "@/utilities/services/apiService";
 import commonStyle from "@/styles/common/common.module.scss";
+import DocumentsFilterCard from "../items/documentsFilterCard";
 
 export default function DocumentsSection({
   setReminderData,
@@ -23,6 +24,7 @@ export default function DocumentsSection({
   const [deleteLoad, setDeleteLoad] = useState(false);
   const [deleteError, setDeleteError] = useState("");
   const [selected, setSelected] = useState([]);
+  const [appliedFilter, setAppliedFilter] = useState([]);
 
   const onClickEdit = (id) => {
     const selectedItem = tableData.find((item) => item.id == id);
@@ -51,42 +53,67 @@ export default function DocumentsSection({
       );
     }
     setDeleteLoad(false);
-    // const updatedData = tableData.filter((item) => item.id !== id);
-    // localStorage.setItem("reminderData", JSON.stringify(updatedData));
-    // setTableData(updatedData);
   };
 
   useEffect(() => {
     setDocumentsTypeList(checkExpiryCounts(tableData));
   }, [tableData]);
 
+  const onFilterClick = (value) => {
+    setAppliedFilter(
+      (prevFilters) =>
+        prevFilters.includes(value)
+          ? prevFilters.filter((filtervalue) => filtervalue !== value) // Remove if already selected
+          : [...prevFilters, value] // Add if not already selected
+    );
+  };
+
+  const handleRemoveFilter = (value) => {
+    setAppliedFilter((prevFilters) =>
+      prevFilters.filter((filtervalue) => filtervalue !== value)
+    );
+  };
+
   return (
     <div>
       <div className="row mx-1">
         {documentsTypeList.map((item) => (
-          <button
+          <DocumentsFilterCard
             key={item.id}
-            className={`${docSecStyle.documentCard} col-12 col-md text-center`}
-          >
-            <div className={docSecStyle.labelWrap}>
-              <div className={`${docSecStyle.label} text-primary`}>
-                {item.label}
-              </div>
-              {/* <div className={`${docSecStyle.label} text-danger`}>
-                {item.totalCount}
-              </div> */}
-              <div className={`${docSecStyle.label} text-danger`}>
-                {item.withinMonthExpiryCount + item.expiredCount}
-              </div>
-            </div>
-          </button>
+            item={item}
+            isSelected={appliedFilter.includes(item.value)}
+            onFilterClick={onFilterClick}
+          />
         ))}
+      </div>
+
+      {/* Display selected filters */}
+      <div className={`${docSecStyle.appliedFiltersContainer} mt-4 ml-5`}>
+        {appliedFilter.length > 0 ? (
+          <div className={docSecStyle.filterChips}>
+            <h5>Records:</h5>
+            {documentsTypeList
+              .filter((item) => appliedFilter.includes(item.value))
+              .map((filteredItem) => (
+                <div
+                  key={filteredItem.id}
+                  className={docSecStyle.filterChip}
+                  onClick={() => handleRemoveFilter(filteredItem.value)}
+                >
+                  {filteredItem.label}
+                  <span className={docSecStyle.closeIcon}>×</span>
+                </div>
+              ))}
+          </div>
+        ) : (
+          <h5>All Records</h5>
+        )}
       </div>
 
       <DocumentTable
         rows={tableData}
         headCells={docTableHeadCells}
-        title="All Records"
+        // title="All Records"
         onClickEdit={onClickEdit}
         selected={selected}
         setSelected={setSelected}

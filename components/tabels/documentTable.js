@@ -179,15 +179,17 @@ function EnhancedTableToolbar({
           </div>
         </>
       ) : (
-        // Title Display
-        <Typography
-          sx={{ flex: "1 1 100%" }}
-          variant="h6"
-          id="tableTitle"
-          component="div"
-        >
-          {title}
-        </Typography>
+        title && (
+          // Title Display
+          <Typography
+            sx={{ flex: "1 1 100%" }}
+            variant="h6"
+            id="tableTitle"
+            component="div"
+          >
+            {title}
+          </Typography>
+        )
       )}
     </Toolbar>
   );

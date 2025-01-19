@@ -1,6 +1,6 @@
 import {
   addNewVehicleDocument,
-  deleteVehicleDocumentById,
+  deleteVehicleDocumentByIds,
   editVehicleDocumentById,
   getAllVehicleDocuments,
 } from "../models/vehicleDocumentModel";
@@ -55,7 +55,7 @@ export function deleteVehicleDocumentController(id) {
       status: false,
     };
 
-    deleteVehicleDocumentById(id)
+    deleteVehicleDocumentByIds(id)
       .then((result) => {
         if (result) {
           response.status = true;

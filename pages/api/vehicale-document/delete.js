@@ -2,12 +2,12 @@ import { deleteVehicleDocumentController } from "@/backend/controllers/vehicleDo
 
 export default function handler(req, res) {
   return new Promise((resolve, reject) => {
-    const request = req.body;
+    const deleteIds = req.body.ids;
     const response = {
       status: false,
     };
 
-    deleteVehicleDocumentController(request)
+    deleteVehicleDocumentController(deleteIds)
       .then((result) => {
         res.status(200).json(result);
         resolve(result);

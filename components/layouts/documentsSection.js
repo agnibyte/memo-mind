@@ -8,6 +8,8 @@ import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import docSecStyle from "@/styles/docSec.module.scss";
 import CommonModal from "../common/commonModal";
 import modalStyle from "@/styles/modal.module.scss";
+import { postApiData } from "@/utilities/services/apiService";
+import commonStyle from "@/styles/common/common.module.scss";
 
 export default function DocumentsSection({
   setReminderData,
@@ -18,6 +20,9 @@ export default function DocumentsSection({
 }) {
   const [documentsTypeList, setDocumentsTypeList] = useState([]);
   const [deletePopup, setDeletePopup] = useState(false);
+  const [deleteLoad, setDeleteLoad] = useState(false);
+  const [deleteError, setDeleteError] = useState("");
+  const [selected, setSelected] = useState([]);
 
   const onClickEdit = (id) => {
     const selectedItem = tableData.find((item) => item.id == id);
@@ -26,8 +31,26 @@ export default function DocumentsSection({
     setIsEdit(true);
   };
 
-  const onClickDelete = (id) => {
-    console.log("delte id: " + id);
+  const onClickDelete = async (ids) => {
+    const payload = {
+      ids: ids,
+    };
+    setDeleteLoad(true);
+    setDeleteError("");
+    try {
+      const response = await postApiData("DELETE_VEHICALE_DOCUMENTS", payload);
+      if (response.status) {
+        setTableData((prev) => prev.filter((item) => !ids.includes(item.id)));
+        setDeletePopup(false);
+        setSelected([]);
+      }
+    } catch (error) {
+      console.error("Error occurred during form submission:", error);
+      setDeleteError(
+        "Error occurred while deleting record, Please try again later"
+      );
+    }
+    setDeleteLoad(false);
     // const updatedData = tableData.filter((item) => item.id !== id);
     // localStorage.setItem("reminderData", JSON.stringify(updatedData));
     // setTableData(updatedData);
@@ -65,7 +88,11 @@ export default function DocumentsSection({
         headCells={docTableHeadCells}
         title="All Records"
         onClickEdit={onClickEdit}
-        onClickDelete={() => setDeletePopup(true)}
+        selected={selected}
+        setSelected={setSelected}
+        onClickDelete={() => {
+          setDeletePopup(true);
+        }}
         // renderActions={(id) => (
         //   <div className="d-flex justify-content-center">
         //     <button
@@ -93,7 +120,9 @@ export default function DocumentsSection({
         className={""}
       >
         <div className={modalStyle.deleteModal}>
-          <p className={modalStyle.conformationMsg}>Are you sure you want to delete this document?</p>
+          <p className={modalStyle.conformationMsg}>
+            Are you sure you want to delete this document?
+          </p>
           <div className={modalStyle.buttonsWrapper}>
             <button
               className={`${modalStyle.btn} ${modalStyle.cancel}`}
@@ -103,11 +132,14 @@ export default function DocumentsSection({
             </button>
             <button
               className={`${modalStyle.btn} ${modalStyle.delete}`}
-              onClick={onClickDelete}
+              onClick={() => onClickDelete(selected)}
             >
-              Yes
+              {deleteLoad ? getConstant("LOADING_TEXT") : "Yes"}
             </button>
           </div>
+          {deleteError && (
+            <span className={commonStyle["errorMsg"]}>{deleteError}</span>
+          )}
         </div>
       </CommonModal>
     </div>

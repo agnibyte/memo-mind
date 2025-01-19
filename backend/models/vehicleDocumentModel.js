@@ -49,23 +49,28 @@ export function getAllVehicleDocuments() {
   });
 }
 
-export function deleteVehicleDocumentById(id) {
+export function deleteVehicleDocumentByIds(ids) {
   return new Promise((resolve, reject) => {
-    const deleteQuery = `DELETE FROM vehicle_documents WHERE id = ?`;
+    if (!Array.isArray(ids) || ids.length == 0) {
+      return reject(new Error("Invalid or empty array of IDs"));
+    }
 
-    executeQuery(deleteQuery, [id])
+    const placeholders = ids.map(() => "?").join(","); // Create placeholders for the query
+    const deleteQuery = `DELETE FROM vehicle_documents WHERE id IN (${placeholders})`;
+
+    executeQuery(deleteQuery, ids)
       .then((deleteResult) => {
         if (deleteResult.affectedRows > 0) {
           resolve({
             success: true,
-            message: "Vehicle document deleted successfully",
+            message: `${deleteResult.affectedRows} vehicle document(s) deleted successfully`,
           });
         } else {
-          reject(new Error("No record found with the given ID"));
+          reject(new Error("No records found with the given IDs"));
         }
       })
       .catch((error) => {
-        console.error("Error deleting vehicle document:", error);
+        console.error("Error deleting vehicle documents:", error);
         reject(error);
       });
   });

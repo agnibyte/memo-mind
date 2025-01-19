@@ -11,9 +11,14 @@ const DocumentsFilterCard = ({ item, onFilterClick, isSelected }) => {
     >
       <div className={docSecStyle.labelWrap}>
         <div className={`${docSecStyle.label} text-primary`}>{item.label}</div>
-        <div className={`${docSecStyle.label} text-danger`}>
-          {item.withinMonthExpiryCount + item.expiredCount}
-        </div>
+        {item.totalCount ? (
+          <div className={`${docSecStyle.label} text-danger`}>
+            {item.withinMonthExpiryCount + item.expiredCount} /{" "}
+            {item.totalCount}
+          </div>
+        ) : (
+          <div className={`${docSecStyle.label} text-danger`}>-</div>
+        )}
       </div>
     </button>
   );

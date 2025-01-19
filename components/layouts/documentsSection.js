@@ -74,6 +74,19 @@ export default function DocumentsSection({
     );
   };
 
+  useEffect(() => {
+    if (appliedFilter.length > 0) {
+      console.log("tableData", tableData)
+      const filteredData = tableData.filter((item) =>
+        appliedFilter.includes(item.documentType)
+      );
+      setTableData(filteredData);
+    }
+    // else {
+    //   setTableData(initialTableData); // Reset to initial data when no filters are applied
+    // }
+  }, [appliedFilter]);
+
   return (
     <div>
       <div className="row mx-1">

@@ -124,7 +124,7 @@ export default function DocumentsSection({
       </div>
 
       <DocumentTable
-        rows={tableData}
+        rows={appliedFilter.length > 0 ? filteredData : tableData}
         headCells={docTableHeadCells}
         // title="All Records"
         onClickEdit={onClickEdit}
@@ -133,6 +133,7 @@ export default function DocumentsSection({
         onClickDelete={() => {
           setDeletePopup(true);
         }}
+        isFilterApplied={appliedFilter.length > 0}
         // renderActions={(id) => (
         //   <div className="d-flex justify-content-center">
         //     <button

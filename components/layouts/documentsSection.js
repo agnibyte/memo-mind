@@ -25,6 +25,7 @@ export default function DocumentsSection({
   const [deleteError, setDeleteError] = useState("");
   const [selected, setSelected] = useState([]);
   const [appliedFilter, setAppliedFilter] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
 
   const onClickEdit = (id) => {
     const selectedItem = tableData.find((item) => item.id == id);
@@ -76,15 +77,14 @@ export default function DocumentsSection({
 
   useEffect(() => {
     if (appliedFilter.length > 0) {
-      console.log("tableData", tableData)
-      const filteredData = tableData.filter((item) =>
+      console.log("tableData", tableData);
+      const filteredDataTemp = tableData.filter((item) =>
         appliedFilter.includes(item.documentType)
       );
-      setTableData(filteredData);
+      setFilteredData(filteredDataTemp);
+    } else {
+      setFilteredData([]);
     }
-    // else {
-    //   setTableData(initialTableData); // Reset to initial data when no filters are applied
-    // }
   }, [appliedFilter]);
 
   return (

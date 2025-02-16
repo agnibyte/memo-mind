@@ -6,6 +6,12 @@ export const docTableHeadCells = [
   //   label: "Master No.",
   // },
   {
+    id: "id",
+    numeric: false,
+    disablePadding: false,
+    label: "Sr. No.",
+  },
+  {
     id: "vehicleNo",
     numeric: false,
     disablePadding: false,

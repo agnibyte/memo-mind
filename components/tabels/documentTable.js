@@ -353,6 +353,12 @@ const DocumentTable = ({
                       {row.masterNo}
                     </TableCell> */}
                     <TableCell
+                      align={row.id ? "left" : "center"}
+                      title={row.id}
+                    >
+                     {row.id}
+                    </TableCell>
+                    <TableCell
                       align="left"
                       component="th"
                       id={labelId}

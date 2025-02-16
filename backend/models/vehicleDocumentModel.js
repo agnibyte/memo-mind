@@ -1,12 +1,23 @@
 import executeQuery from "@/helpers/dbConnection";
+import { getConstant } from "@/utilities/utils";
+import moment from "moment";
 
 export function addNewVehicleDocument(request) {
   return new Promise((resolve, reject) => {
+    // Convert expiryDate to a Date object and calculate alertDate
+    let alertDate = null;
+    if (request.expiryDate) {
+      alertDate = moment(request.expiryDate)
+        .subtract(getConstant("DAYS_BEFORE_ALERT"), "days")
+        .format("YYYY-MM-DD");
+    }
+
     const tempObj = {
       vehicleNo: request.vehicleNo,
       documentType: request.documentType,
-      expiryDate: request.expiryDate,
-      note: request.note,
+      expiryDate: request.expiryDate || null,
+      alertDate, // Store the calculated alertDate
+      note: request.note || null,
     };
 
     const insertQuery = `INSERT INTO vehicle_documents SET ?`;
@@ -14,10 +25,9 @@ export function addNewVehicleDocument(request) {
     executeQuery(insertQuery, [tempObj])
       .then((insertResult) => {
         if (insertResult.affectedRows > 0) {
-          const id = insertResult.insertId;
           resolve({
             success: true,
-            id,
+            id: insertResult.insertId,
             message: "Vehicle document added successfully",
           });
         } else {

@@ -1,6 +1,6 @@
 // import Footer from "@/common/layout/footer";
 import TopHeader from "@/components/layouts/topHeader";
-
+// trs
 export default function CommonLayout({ children }) {
 	return (
 		<>

@@ -136,7 +136,7 @@ export default function DocumentsSection({
         isFilterApplied={appliedFilter.length > 0}
         // renderActions={(id) => (
         //   <div className="d-flex justify-content-center">
-        //     <button
+        //     <button check
         //       className="btn btn-warning btn-sm mx-1"
         //       onClick={() => onClickEdit(id)}
         //       title="Edit"

@@ -14,7 +14,7 @@ export function addNewVehicleDocumentController(request) {
     addNewVehicleDocument(request)
       .then((result) => {
         if (result) {
-          response.status = true;
+          response.status = true;// test
           response.id = result.id;
           response.message = "Vehicle document added successfully";
           resolve(response);

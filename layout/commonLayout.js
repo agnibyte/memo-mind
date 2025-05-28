@@ -2,6 +2,7 @@
 import TopHeader from "@/components/layouts/topHeader";
 
 export default function CommonLayout({ children }) {
+console.log( children)
 	return (
 		<>
 			<TopHeader />

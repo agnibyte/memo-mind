@@ -276,13 +276,15 @@ const DocumentTable = ({
 
   return (
     <Box sx={{ width: "100%" }}>
-      <Paper sx={{ width: "100%", mb: 2 }}>
-        <EnhancedTableToolbar
-          selectedItems={selected}
-          title={title}
-          onClickDelete={onClickDelete}
-          onClickEdit={onClickEdit}
-        />
+      <Paper sx={{ width: "100%", my: 2 }}>
+        {selected.length > 0 && (
+          <EnhancedTableToolbar
+            selectedItems={selected}
+            title={title}
+            onClickDelete={onClickDelete}
+            onClickEdit={onClickEdit}
+          />
+        )}
         {/* {selected.length > 0 && (
           <div  className="d-flex justify-content-end" style={{}}>
             <div style={{ padding: "10px" }}>
@@ -356,7 +358,7 @@ const DocumentTable = ({
                       align={row.id ? "left" : "center"}
                       title={row.id}
                     >
-                     {row.id}
+                      {row.id}
                     </TableCell>
                     <TableCell
                       align="left"

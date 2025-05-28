@@ -108,7 +108,7 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard-container">
-      <div className="container mt-5">
+      <div className="m-5">
         <div className="card shadow-lg rounded-lg">
           <div className="card-header bg-gradient d-flex justify-content-between align-items-center p-4">
             <h1 className="h4 text-white mb-0">Dashboard</h1>

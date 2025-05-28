@@ -110,7 +110,7 @@ const Dashboard = () => {
     <div className="dashboard-container">
       <div className="m-5">
         <div className="card shadow-lg rounded-lg">
-          <div className="card-header bg-gradient d-flex justify-content-between align-items-center p-4">
+          <div className="card-header bg-gradient d-flex justify-content-between align-items-center p-2">
             <h1 className="h4 text-white mb-0">Dashboard</h1>
             <Button
               variant="success"

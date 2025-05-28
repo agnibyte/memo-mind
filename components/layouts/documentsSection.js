@@ -77,7 +77,6 @@ export default function DocumentsSection({
 
   useEffect(() => {
     if (appliedFilter.length > 0) {
-      console.log("tableData", tableData);
       const filteredDataTemp = tableData.filter((item) =>
         appliedFilter.includes(item.documentType)
       );

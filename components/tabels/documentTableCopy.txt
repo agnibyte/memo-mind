@@ -378,7 +378,6 @@ const DocumentTable = () => {
         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage),
     [order, orderBy, page, rowsPerPage]
   );
-console.log('visibleRows', visibleRows)
   return (
     <>
       <Box sx={{ width: "100%" }}>

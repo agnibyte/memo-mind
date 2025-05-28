@@ -18,12 +18,7 @@ const FormWithDatePicker = () => {
     },
   });
 
-  const onSubmit = (data) => {
-    console.log("Form Data:", {
-      ...data,
-      date: data.date ? moment(data.date).format("YYYY-MM-DD") : null,
-    });
-  };
+  const onSubmit = (data) => {};
 
   return (
     <LocalizationProvider dateAdapter={AdapterMoment}>
@@ -86,7 +81,11 @@ const FormWithDatePicker = () => {
         />
 
         {/* Submit Button */}
-        <Button type="submit" variant="contained" color="primary">
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+        >
           Submit
         </Button>
       </form>

@@ -19,7 +19,7 @@ export default function executeQuery(query, values = []) {
         resolve(JSON.parse(JSON.stringify(results)));
       });
     } catch (error) {
-      console.log("error in connecting db====", error);
+      console.error("error in connecting db====", error);
       resolve([]);
     }
   });

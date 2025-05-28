@@ -46,7 +46,6 @@ const AddReminderForm = ({
 
   const submitform = () => {
     addReminderData(formData);
-    console.log("New Reminder:", formData);
     setFormData(defaultData);
     setReminderModal(false);
     reset();

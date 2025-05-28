@@ -4,19 +4,27 @@ import moment from "moment";
 
 export function addNewVehicleDocument(request) {
   return new Promise((resolve, reject) => {
-    // Convert expiryDate to a Date object and calculate alertDate
+    // Calculate alertDate (30 days before expiryDate)
     let alertDate = null;
+    let isInAlertDate = 0; // Default: Not in alert period
+
     if (request.expiryDate) {
       alertDate = moment(request.expiryDate)
         .subtract(getConstant("DAYS_BEFORE_ALERT"), "days")
         .format("YYYY-MM-DD");
+
+      // Check if today is on or after alertDate
+      if (moment().isSameOrAfter(alertDate, "day")) {
+        isInAlertDate = 1; // Set as true
+      }
     }
 
     const tempObj = {
       vehicleNo: request.vehicleNo,
       documentType: request.documentType,
       expiryDate: request.expiryDate || null,
-      alertDate, // Store the calculated alertDate
+      alertDate,
+      isInAlertDate,
       note: request.note || null,
     };
 

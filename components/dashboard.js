@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 import AddReminderForm from "./molecules/addReminderForm";
 import CommonModal from "./common/commonModal";
-import Tab from "react-bootstrap/Tab";
-import Tabs from "react-bootstrap/Tabs";
 import DocumentsSection from "./layouts/documentsSection";
 import EmiSection from "./layouts/emiSection";
 import AddDocumentForm from "./molecules/addDocumentForm";
 import { postApiData } from "@/utilities/services/apiService";
-import { Button, Row, Col } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import TabComponent from "./common/tabComponent";
@@ -112,17 +110,16 @@ const Dashboard = () => {
         <div className="card shadow-lg rounded-lg">
           <div className="card-header bg-gradient d-flex justify-content-between align-items-center p-2">
             <h1 className="h4 text-white mb-0">Dashboard</h1>
-            <Button
-              variant="success"
+            <button
               onClick={onClickAddReminder}
-              className="d-flex align-items-center addButton"
+              className="d-flex align-items-center addButton btn btn-primary"
             >
               <FontAwesomeIcon
                 icon={faPlusCircle}
                 className="me-2"
               />
               Add Reminder
-            </Button>
+            </button>
           </div>
           <div className={dashboardStyle["mainTabel"]}>
             <TabComponent

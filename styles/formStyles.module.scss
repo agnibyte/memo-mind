@@ -66,12 +66,12 @@ $form-invalid: #dc3545;
       cursor: pointer;
 
       &.btn-primary {
-        background-color: #007bff;
+        background-color: #100452;
         color: #fff;
         border: none;
 
         &:hover {
-          background-color: darken(#007bff, 10%);
+          background-color: darken(#100452, 10%);
         }
       }
 

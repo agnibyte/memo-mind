@@ -43,3 +43,53 @@ export const docTableHeadCells = [
   },
   { id: "action", numeric: false, disablePadding: false, label: "Action" },
 ];
+export const menuItems = [
+  {
+    title: "Dashboard",
+    icon: "🌐",
+    children: [],
+  },
+  {
+    title: "Messager",
+    icon: "📦",
+    url: "/messager",
+
+  },
+  {
+    title: "UI Elements",
+    icon: "🎨",
+    children: [
+      {
+        title: "Basic Elements",
+        children: [],
+      },
+      {
+        title: "Advanced Elements",
+        children: [],
+      },
+      {
+        title: "Forms & Tables",
+        children: [
+          { title: "Form Elements" },
+          { title: "Advanced Forms" },
+          { title: "Basic Tables" },
+          { title: "Data Tables" },
+        ],
+      },
+      {
+        title: "Icons",
+        children: [],
+      },
+    ],
+  },
+  {
+    title: "Pages",
+    icon: "🌍",
+    children: [],
+  },
+  {
+    title: "Apps",
+    icon: "⚙️",
+    children: [],
+  },
+];

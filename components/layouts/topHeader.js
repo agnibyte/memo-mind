@@ -4,7 +4,7 @@ import { Dropdown, Nav, Navbar, NavDropdown } from "react-bootstrap";
 import headerJson from "../../public/json/header.json";
 import { Container } from "reactstrap";
 
-import styles from "@/styles/common/header.module.scss"; // Import SCSS
+import styles from "@/styles/common/topHeader.module.scss"; // Import SCSS
 
 export default function TopHeader() {
   const [menuItems, setMenuItems] = useState(headerJson.menu);

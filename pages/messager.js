@@ -1,7 +1,10 @@
-import React from 'react'
+import MessageWrapper from "@/components/message/messageWrapper";
+import React from "react";
 
 export default function Messager() {
   return (
-    <div>Messager</div>
-  )
+    <>
+      <MessageWrapper />
+    </>
+  );
 }

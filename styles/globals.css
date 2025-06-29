@@ -439,7 +439,7 @@ textarea {
 	border: 1px solid #ddd;
 	padding: 12px;
 	font-size: 14px;
-	width: 100%;
+	/* width: 100%; */
 	transition: border-color 0.3s ease;
 }
 

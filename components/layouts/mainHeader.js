@@ -7,7 +7,7 @@ import Link from "next/link";
 export default function MainHeader() {
   // menuData.js
 
-  const [activeMenu, setActiveMenu] = useState(2);
+  const [activeMenu, setActiveMenu] = useState(null);
   const [activeSubMenu, setActiveSubMenu] = useState(null);
 
   const toggleMenu = (index) => {

@@ -12,37 +12,39 @@ export default async function sendMessage(req, res) {
   }
 
   const { message, contacts } = req.body;
+  const response = {
+    status: false,
+  };
 
+  // Validation
   if (
     !message ||
     !contacts ||
     !Array.isArray(contacts) ||
     contacts.length === 0
   ) {
-    return res
-      .status(400)
-      .json({ error: "Message and at least one contact are required." });
+    response.message = "Message and at least one contact are required.";
+    return res.status(400).json(response);
   }
 
   try {
     for (const contact of contacts) {
       await client.messages.create({
         body: message,
-        from: process.env.TWILIO_SENDER_PHONE_NO,
+        from: process.env.TWILIO_SENDER_PHONE_NO, // ensure this is in E.164 format, e.g. +1234567890
         to: contact.trim(),
       });
     }
 
-    return res
-      .status(200)
-      .json({ success: true, message: "Messages sent successfully" });
+    response.status = true;
+    response.message = "Messages sent successfully";
+
+    return res.status(200).json(response);
   } catch (error) {
     console.error("Error sending message:", error);
-    return res.status(500).json({
-      success: false,
-      error: "Failed to send message",
-      details: error.message,
-    });
+    response.message = "Failed to send message";
+    response.error = error.message;
+    return res.status(500).json(response);
   }
 }
 

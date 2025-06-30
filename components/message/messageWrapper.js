@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import styles from "@/styles/messageStyle.module.css";
+import { postApiData, postSiteApiData } from "@/utilities/services/apiService";
 
 export default function MessageWrapper() {
   const contacts = [
-    { id: "01", contactNo: "148368765873", name: "John Doe" },
+    { id: "01", contactNo: "+917039529129", name: "Suraj Sangale" },
     { id: "02", contactNo: "248368765873", name: "Jane Doe" },
     { id: "03", contactNo: "348368765873", name: "Rick Roe" },
   ];
@@ -18,27 +19,31 @@ export default function MessageWrapper() {
 
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState(null);
+  const [contactsError, setContactsError] = useState(false);
+  const [selectedTab, setSelectedTab] = useState("contacts");
 
   const onSubmit = async (data) => {
     if (!data.contacts || data.contacts.length === 0) {
-    //   errors.contacts = {
-    //     type: "required",
-    //     message: "Please select at least one contact.",
-    //   };
-      console.log('errors', errors)
+      setContactsError(true);
 
       return;
     }
 
     setLoading(true);
+    const req = {
+      message: " hkjk\n",
+      contacts: ["148368765873"],
+    };
+    const payload = {
+      message: data.message,
+      contacts: data.contacts,
+    };
+    console.log("payload:", payload);
+    setLoading(true);
+    const response = await postApiData("SEND_MESSAGE", payload);
+    console.log("response", response);
 
-    // Simulated API call
-    setTimeout(() => {
-      console.log("Submitted Data:", data);
-      setFormData(data);
-      setLoading(false);
-      alert("Message sent successfully!");
-    }, 1500);
+    setLoading(false);
   };
 
   console.log("errors", errors);
@@ -54,6 +59,13 @@ export default function MessageWrapper() {
           <textarea
             {...register("message", { required: true })}
             className={styles.textArea}
+            rows="4"
+            // defaultValue={formData ? formData.message : ""}
+            // onChange={() => setContactsError(false)}
+            style={errors.message ? { borderColor: "red" } : {}}
+            name="message"
+            id="message"
+            auto
             placeholder="Type a message..."
           />
           {errors.message && (
@@ -90,32 +102,41 @@ export default function MessageWrapper() {
           <button
             type="button"
             className={`${styles.tab} ${styles.active}`}
+            onClick={() => setSelectedTab("contacts")}
           >
             Contacts
           </button>
           <button
             type="button"
             className={styles.tab}
+            onClick={() => setSelectedTab("groups")}
           >
             Groups
           </button>
         </div>
 
-        <div className={styles.contactList}>
-          {contacts.map((contact, i) => (
-            <label
-              key={contact.id}
-              className={styles.contactItem}
-            >
-              <input
-                type="checkbox"
-                value={contact.contactNo}
-                {...register("contacts")}
-              />
-              {contact.name}
-            </label>
-          ))}
-        </div>
+        {selectedTab == "contacts" && (
+          <div className={styles.contactList}>
+            {contacts.map((contact, i) => (
+              <label
+                key={contact.id}
+                className={styles.contactItem}
+              >
+                <input
+                  type="checkbox"
+                  value={contact.contactNo}
+                  {...register("contacts")}
+                />
+                {contact.name}
+              </label>
+            ))}
+          </div>
+        )}
+        {contactsError && (
+          <span style={{ color: "red", fontSize: "0.9rem" }}>
+            Please select at least one contact.
+          </span>
+        )}
       </div>
     </form>
   );

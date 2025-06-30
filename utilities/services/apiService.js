@@ -39,8 +39,8 @@ const callFetchMethod = (
     //   apiParams["headers"]["Authorization"] = authToken;
     // }
 
-    //  console.log("apiEndpoint", apiEndpoint);
-    //  console.log("apiParams", apiParams);
+     console.log("apiEndpoint", apiEndpoint);
+     console.log("apiParams", apiParams);
 
     fetch(apiEndpoint, apiParams)
       .then((response) => {
@@ -68,6 +68,40 @@ export function postApiData(action, payload = {}) {
           resolve(response.json());
         })
         .catch((error) => {
+          reject(error);
+        });
+    }
+  });
+}
+
+
+// POST API call to NodeJs API
+export function postSiteApiData(
+  action,
+  payload,
+  accessToken = "",
+  variables = {}
+) {
+  console.log("action==================", action);
+  console.log("payload", payload);
+  return new Promise((resolve, reject) => {
+    if (typeof apiList[action] != "undefined") {
+      const apiCall = callFetchMethod(
+        process.env.NODE_API_URL + apiList[action],
+        payload,
+        accessToken == "" ? process.env.NODE_API_URL : "Bearer " + accessToken,
+        "POST",
+        variables
+      );
+
+      apiCall
+        .then((response) => {
+          const responseData = response.json();
+          // console.log("response", responseData);
+          resolve(responseData);
+        })
+        .catch((error) => {
+          console.log("error", error);
           reject(error);
         });
     }

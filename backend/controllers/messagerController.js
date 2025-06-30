@@ -28,7 +28,7 @@ export default async function sendMessage(req, res) {
     for (const contact of contacts) {
       await client.messages.create({
         body: message,
-        from: TWILIO_SENDER_PHONE_NO,
+        from: process.env.TWILIO_SENDER_PHONE_NO,
         to: contact.trim(),
       });
     }
@@ -45,3 +45,19 @@ export default async function sendMessage(req, res) {
     });
   }
 }
+
+// postSiteApiData("SEND_SMS", request)
+//   .then((result) => {
+//     if (result.status) {
+//       response.status = true;
+//       response.message = "Message sent successfully";
+//     } else {
+//       response.message = result.message || "Failed to send message.";
+//     }
+//     resolve(response);
+//   })
+//   .catch((error) => {
+//     response.message =
+//       error.message || "An error occurred while sending the message.";
+//     reject(response);
+//   });

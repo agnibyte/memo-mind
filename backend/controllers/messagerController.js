@@ -28,7 +28,7 @@ export default async function sendMessage(req, res) {
     for (const contact of contacts) {
       await client.messages.create({
         body: message,
-        from: "+12694823264", // your Twilio number
+        from: TWILIO_SENDER_PHONE_NO,
         to: contact.trim(),
       });
     }

@@ -98,14 +98,18 @@ export default function MessageWrapper() {
         <div className={styles.tabs}>
           <button
             type="button"
-            className={`${styles.tab} ${styles.active}`}
+            className={`${styles.tab} ${
+              selectedTab === "contacts" && styles.active
+            } `}
             onClick={() => setSelectedTab("contacts")}
           >
             Contacts
           </button>
           <button
             type="button"
-            className={styles.tab}
+            className={`${styles.tab} ${
+              selectedTab === "groups" && styles.active
+            } `}
             onClick={() => setSelectedTab("groups")}
           >
             Groups

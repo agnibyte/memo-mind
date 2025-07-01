@@ -39,8 +39,8 @@ const callFetchMethod = (
     //   apiParams["headers"]["Authorization"] = authToken;
     // }
 
-     console.log("apiEndpoint", apiEndpoint);
-     console.log("apiParams", apiParams);
+    //  console.log("apiEndpoint", apiEndpoint);
+    //  console.log("apiParams", apiParams);
 
     fetch(apiEndpoint, apiParams)
       .then((response) => {
@@ -82,8 +82,6 @@ export function postSiteApiData(
   accessToken = "",
   variables = {}
 ) {
-  console.log("action==================", action);
-  console.log("payload", payload);
   return new Promise((resolve, reject) => {
     if (typeof apiList[action] != "undefined") {
       const apiCall = callFetchMethod(

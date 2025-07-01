@@ -38,15 +38,12 @@ export default function MessageWrapper() {
       message: data.message,
       contacts: data.contacts,
     };
-    console.log("payload:", payload);
     setLoading(true);
     const response = await postApiData("SEND_MESSAGE", payload);
-    console.log("response", response);
 
     setLoading(false);
   };
 
-  console.log("errors", errors);
   return (
     <form
       className={styles.container}

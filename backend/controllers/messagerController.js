@@ -10,6 +10,12 @@ export default async function sendMessage(req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method Not Allowed" });
   }
+  console.log(
+    "data:----",
+    process.env.ACCOUNT_SID,
+    process.env.AUTH_TOKEN,
+    process.env.TWILIO_SENDER_PHONE_NO
+  );
 
   const { message, contacts } = req.body;
   const response = {

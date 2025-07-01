@@ -5,7 +5,6 @@ import DocumentsSection from "./layouts/documentsSection";
 import EmiSection from "./layouts/emiSection";
 import AddDocumentForm from "./molecules/addDocumentForm";
 import { postApiData } from "@/utilities/services/apiService";
-import { Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import TabComponent from "./common/tabComponent";

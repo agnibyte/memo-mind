@@ -7,7 +7,7 @@ export default function MessageWrapper() {
   const contacts = [
     { id: "01", contactNo: "+917039529129", name: "Suraj Sangale" },
     { id: "02", contactNo: "+919702392028", name: "Dnyandev Sangale" },
-    { id: "03", contactNo: "348368765873", name: "Rick Roe" },
+    { id: "03", contactNo: "+917039997894", name: "Dnyaneshwar Shekade" },
   ];
 
   const {

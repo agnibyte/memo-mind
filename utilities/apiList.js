@@ -1,5 +1,5 @@
 import { internalList } from "./apiList/internal.js";
 
-export const apiList = {
+export const apiList = { //
   ...internalList,
 };

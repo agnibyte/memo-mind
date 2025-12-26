@@ -1,10 +1,11 @@
 import Head from "next/head";
 import Dashboard from "@/components/dashboard";
+import MultiSocketExample from "@/components/examples/MultiSocketExample";
 
 export default function Home() {
   return (
     <div>
-      <Head>
+      {/* <Head>
         <title>My Dashboard</title>
         <meta
           name="description"
@@ -14,8 +15,9 @@ export default function Home() {
           rel="icon"
           href="/favicon.ico"
         />
-      </Head>
-      <Dashboard />
+      </Head> */}
+      {/* <Dashboard /> */}
+      <MultiSocketExample />
     </div>
   );
 }
